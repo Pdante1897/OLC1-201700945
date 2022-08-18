@@ -19,9 +19,11 @@ import java_cup.runtime.*;
 blancos = [ \t\r\n]+
 letra = [a-zA-Z]
 digito = [0-9]+
-caracter = ["("|")"|"/"|"!"|"#"|"$"|"&"|"'"|"@"|"`"|"<"|"["|"]"|"^"|"_"|"\\"]+
+caracter = "'"["("|")"|"/"|"!"|"#"|"$"|"&"|"@"|"`"|"<"|"["|"]"|"^"|"_"|"\\"]+"'"
 cadena = (\"([^\"\\\n]|\\.)*\")
 identificador = {letra}({letra}|"_"|{digito})*
+var_identificador = "_"{letra}({letra}|"_"|{digito})*"_"
+
 comentariolinea = ("//".*\n)|("//".*\r)
 cmultilinea = ("/""*"[^\!]*"*""/") 
 %{
@@ -31,6 +33,9 @@ cmultilinea = ("/""*"[^\!]*"*""/")
 \n {yycolumn=1;}
 "+" {return new Symbol(sym.suma,yycolumn,yyline,yytext());}
 "*" {return new Symbol(sym.por,yycolumn,yyline,yytext());}
+"POTENCIA" {return new Symbol(sym.potencia,yycolumn,yyline,yytext());}
+"MOD" {return new Symbol(sym.modulo,yycolumn,yyline,yytext());}
+
 "|" {return new Symbol(sym.disyuncion,yycolumn,yyline,yytext());}
 "." {return new Symbol(sym.punto,yycolumn,yyline,yytext());}
 "¿" {return new Symbol(sym.interrogacionA,yycolumn,yyline,yytext());}
@@ -49,9 +54,20 @@ cmultilinea = ("/""*"[^\!]*"*""/")
 "\\n" {return new Symbol(sym.salto,yycolumn,yyline,yytext());}
 "\\'" {return new Symbol(sym.comillasimple,yycolumn,yyline,yytext());}
 "\\\"" {return new Symbol(sym.comillasd,yycolumn,yyline,yytext());}
+//tipos de dato
+"NUMERO" {return new Symbol(sym.tnumero,yycolumn,yyline,yytext());}
+"CADENA" {return new Symbol(sym.tcadena,yycolumn,yyline,yytext());}
+"BOOLEAN" {return new Symbol(sym.tbooleano,yycolumn,yyline,yytext());}
+"CARACTER" {return new Symbol(sym.tcaracter,yycolumn,yyline,yytext());}
+
 //inicio y fin
 "INICIO" {return new Symbol(sym.inicio,yycolumn,yyline,yytext());}
 "FIN" {return new Symbol(sym.fin,yycolumn,yyline,yytext());}
+//declaracion variables
+"INGRESAR" {return new Symbol(sym.ingresar,yycolumn,yyline,yytext());}
+"COMO" {return new Symbol(sym.como,yycolumn,yyline,yytext());}
+"CON_VALOR" {return new Symbol(sym.CON_VALOR,yycolumn,yyline,yytext());}
+
 //condicion Si o if
 "SI" {return new Symbol(sym.si,yycolumn,yyline,yytext());}
 "ENTONCES" {return new Symbol(sym.entonces,yycolumn,yyline,yytext());}
@@ -82,12 +98,20 @@ cmultilinea = ("/""*"[^\!]*"*""/")
 //funciones
 "FUNCION" {return new Symbol(sym.funcion,yycolumn,yyline,yytext());}
 "FIN_FUNCION" {return new Symbol(sym.fin_funcion,yycolumn,yyline,yytext());}
+"CON_PARAMETROS" {return new Symbol(sym.con_parametros,yycolumn,yyline,yytext());}
+
 //llamada de funciones y metodos
 "EJECUTAR" {return new Symbol(sym.ejecutar,yycolumn,yyline,yytext());}
+
+//impresion
+"IMPRIMIR" {return new Symbol(sym.imprimir,yycolumn,yyline,yytext());}
+"IMPRIMIR_NL" {return new Symbol(sym.imprimir_nl,yycolumn,yyline,yytext());}
+
 
 
 {cadena} {return new Symbol(sym.cadena,yycolumn,yyline,yytext());}
 {identificador} {return new Symbol(sym.identificador,yycolumn,yyline,yytext());}
+{var_identificador} {return new Symbol(sym.identificador,yycolumn,yyline,yytext());}
 {digito} {return new Symbol(sym.digito,yycolumn,yyline,yytext());}
 {caracter} {return new Symbol(sym.caracter,yycolumn,yyline,yytext());}
 {blancos} {/*Se ignoran*/} // Espacios en Blanco
@@ -95,7 +119,7 @@ cmultilinea = ("/""*"[^\!]*"*""/")
 {cmultilinea} {/*Se ignoran*/}
 . {
    // JOptionPane.showMessageDialog(null, "Se Encontraron Errores Lexicos");
-  // System.err.println("Error lexico: "+yytext()+ " Linea:"+(yyline)+" Columna:"+(yycolumn));
+    System.err.println("Error lexico: "+yytext()+ " Linea:"+(yyline)+" Columna:"+(yycolumn));
     //ErrorLexicoySintactico.listaerrores.add(new ErrorLexicoySintactico("Error Lexico", "El caracter :"+yytext()+"no pertenece al lenguaje",  (yyline), (yycolumn)));
      //ErrorLexicoySintactico.contadorerror++;
   }
