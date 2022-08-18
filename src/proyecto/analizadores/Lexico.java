@@ -497,8 +497,8 @@ public class Lexico implements java_cup.runtime.Scanner {
    * @param   in  the java.io.Reader to read input from.
    */
   public Lexico(java.io.Reader in) {
-       yyline=1;
-     yycolumn=1;
+  	yyline = 1; 
+	yychar = 1; 
     this.zzReader = in;
   }
 
@@ -753,6 +753,8 @@ public class Lexico implements java_cup.runtime.Scanner {
     while (true) {
       zzMarkedPosL = zzMarkedPos;
 
+      yychar+= zzMarkedPosL-zzStartRead;
+
       boolean zzR = false;
       int zzCh;
       int zzCharCount;
@@ -768,12 +770,10 @@ public class Lexico implements java_cup.runtime.Scanner {
         case '\u2028':  // fall through
         case '\u2029':
           yyline++;
-          yycolumn = 0;
           zzR = false;
           break;
         case '\r':
           yyline++;
-          yycolumn = 0;
           zzR = true;
           break;
         case '\n':
@@ -781,12 +781,10 @@ public class Lexico implements java_cup.runtime.Scanner {
             zzR = false;
           else {
             yyline++;
-            yycolumn = 0;
           }
           break;
         default:
           zzR = false;
-          yycolumn += zzCharCount;
         }
       }
 
@@ -910,7 +908,7 @@ public class Lexico implements java_cup.runtime.Scanner {
             // fall through
           case 56: break;
           case 7: 
-            { return new Symbol(sym.kleene,yycolumn,yyline,yytext());
+            { return new Symbol(sym.por,yycolumn,yyline,yytext());
             } 
             // fall through
           case 57: break;
@@ -945,7 +943,7 @@ public class Lexico implements java_cup.runtime.Scanner {
             // fall through
           case 63: break;
           case 14: 
-            { return new Symbol(sym.comaa,yycolumn,yyline,yytext());
+            { return new Symbol(sym.coma,yycolumn,yyline,yytext());
             } 
             // fall through
           case 64: break;
@@ -1100,7 +1098,7 @@ public class Lexico implements java_cup.runtime.Scanner {
             // fall through
           case 94: break;
           case 45: 
-            { return new Symbol(sym.fi_segun,yycolumn,yyline,yytext());
+            { return new Symbol(sym.fin_segun,yycolumn,yyline,yytext());
             } 
             // fall through
           case 95: break;

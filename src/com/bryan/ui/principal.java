@@ -4,6 +4,8 @@
  */
 package com.bryan.ui;
 
+import java.io.StringReader;
+import proyecto.analizadores.*;
 /**
  *
  * @author gerar
@@ -75,6 +77,11 @@ public class principal extends javax.swing.JFrame {
         jScrollPane3.setViewportView(jTextArea3);
 
         jButton1.setText("Traducir");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jTextArea4.setEditable(false);
         jTextArea4.setBackground(new java.awt.Color(0, 0, 0));
@@ -198,6 +205,14 @@ public class principal extends javax.swing.JFrame {
     private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jMenuItem4ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        try {
+            parser parser = new parser(new Lexico(new StringReader(jTextArea1.getText())));
+            parser.parse();
+        } catch (Exception ex) {
+            //Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+        }    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments

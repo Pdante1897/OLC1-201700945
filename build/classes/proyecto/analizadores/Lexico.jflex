@@ -3,19 +3,17 @@ import java_cup.runtime.*;
 %%
 
 %class Lexico
-%cupsym sym
-%cup 
-%public
-%unicode
+%public 
 %line 
-%column
+%char 
+%cup 
+%unicode
 %ignorecase
 
-
-%init{
-     yyline=1;
-     yycolumn=1;
-%init}
+%init{ 
+	yyline = 1; 
+	yychar = 1; 
+%init} 
 
 
 blancos = [ \t\r\n]+
@@ -32,14 +30,14 @@ cmultilinea = ("/""*"[^\!]*"*""/")
 %%
 \n {yycolumn=1;}
 "+" {return new Symbol(sym.suma,yycolumn,yyline,yytext());}
-"*" {return new Symbol(sym.kleene,yycolumn,yyline,yytext());}
+"*" {return new Symbol(sym.por,yycolumn,yyline,yytext());}
 "|" {return new Symbol(sym.disyuncion,yycolumn,yyline,yytext());}
 "." {return new Symbol(sym.punto,yycolumn,yyline,yytext());}
 "¿" {return new Symbol(sym.interrogacionA,yycolumn,yyline,yytext());}
 "?" {return new Symbol(sym.interrogacionC,yycolumn,yyline,yytext());}
 //
 "-" {return new Symbol(sym.resta,yycolumn,yyline,yytext());}
-"," {return new Symbol(sym.comaa,yycolumn,yyline,yytext());}
+"," {return new Symbol(sym.coma,yycolumn,yyline,yytext());}
 "~" {return new Symbol(sym.colocho,yycolumn,yyline,yytext());}
 "%" {return new Symbol(sym.porcentaje,yycolumn,yyline,yytext());}
 ":" {return new Symbol(sym.dospuntos,yycolumn,yyline,yytext());}
@@ -63,7 +61,7 @@ cmultilinea = ("/""*"[^\!]*"*""/")
 //condicion Segun o case switch 
 "SEGUN" {return new Symbol(sym.segun,yycolumn,yyline,yytext());}
 "HACER" {return new Symbol(sym.hacer,yycolumn,yyline,yytext());}
-"FIN_SEGUN" {return new Symbol(sym.fi_segun,yycolumn,yyline,yytext());}
+"FIN_SEGUN" {return new Symbol(sym.fin_segun,yycolumn,yyline,yytext());}
 //ciclo para o for
 "PARA" {return new Symbol(sym.para,yycolumn,yyline,yytext());}
 "HASTA" {return new Symbol(sym.hasta,yycolumn,yyline,yytext());}

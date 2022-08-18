@@ -1,0 +1,46 @@
+package proyecto.analizadores;
+import java_cup.runtime.*;
+
+import java.util.ArrayList;
+
+
+parser code
+{:  
+    public static int contador=1;
+    public static int num=1;
+    //public static ArrayList<ErrorA> errores = new ArrayList<ErrorA>();
+    
+    
+    //-----------------------------------------para errores sintacticos-------------------------------------------------------------------------------------------
+    public void syntax_error(Symbol s)
+    {
+        System.err.println("Error SINTACTICO en la Línea " + (s.right) +" Columna "+(s.left+1)+ ". Identificador "+s.value + " no reconocido. Se ha recuperado del error." );
+        
+    }
+    public void unrecovered_syntax_error(Symbol s) throws java.lang.Exception
+    {
+        System.err.println("Error SINTACTICO en la Línea " + (s.right)+ " Columna "+(s.left+1)+". Identificador " +s.value + " no reconocido.");
+    }
+    //-------------------------------------------------------------------------------------------------------------------------------------------------------------
+:}
+
+action code {:
+:}
+
+terminal String suma, por, disyuncion, punto, interrogacionA, interrogacionC, resta, coma, colocho;
+terminal String porcentaje, dospuntos, puntocoma, mayor, cllave, allave, salto, comillasimple, comillasd;
+terminal String inicio, fin, si, entonces, de_lo_contrario, o_si, fin_si, segun, hacer, fin_segun;
+terminal String para, hasta, con, pasito, fin_para, mientras, fin_mientras, hasta_que, repetir, retornar, metodo, fin_metodo;
+terminal String funcion, fin_funcion, ejecutar, cadena, identificador, digito, caracter;
+non terminal INICIO;
+
+
+start with INICIO;
+
+INICIO::= cadena;
+
+
+/* para los puntos colocar en parser
+
+
+*/

@@ -20,6 +20,9 @@ public class Generar {
             System.out.println(ruta);
 
             
+            String opcCUP[] = {"-destdir", ruta, "-parser", "parser", ruta + "Sintactico.cup"};
+            java_cup.Main.main(opcCUP);
+            
         } catch (Exception e) {
             e.printStackTrace();
             
