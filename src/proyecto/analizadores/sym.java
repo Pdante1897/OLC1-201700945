@@ -8,61 +8,82 @@ package proyecto.analizadores;
 /** CUP generated class containing symbol constants. */
 public class sym {
   /* terminals */
-  public static final int allave = 16;
-  public static final int suma = 2;
-  public static final int cllave = 15;
-  public static final int resta = 8;
-  public static final int interrogacionC = 7;
-  public static final int interrogacionA = 6;
-  public static final int con = 32;
-  public static final int hasta = 31;
-  public static final int hasta_que = 37;
-  public static final int disyuncion = 4;
-  public static final int coma = 9;
-  public static final int entonces = 23;
-  public static final int identificador = 46;
-  public static final int pasito = 33;
-  public static final int fin_funcion = 43;
-  public static final int inicio = 20;
-  public static final int comillasd = 19;
-  public static final int caracter = 48;
-  public static final int repetir = 38;
-  public static final int fin_metodo = 41;
-  public static final int si = 22;
-  public static final int mientras = 35;
-  public static final int comillasimple = 18;
-  public static final int fin_si = 26;
-  public static final int porcentaje = 11;
-  public static final int fin_mientras = 36;
+  public static final int allave = 20;
+  public static final int como = 31;
+  public static final int suma = 3;
+  public static final int cllave = 19;
+  public static final int resta = 11;
+  public static final int imprimir = 59;
+  public static final int con_parametros = 57;
+  public static final int interrogacionC = 10;
+  public static final int interrogacionA = 9;
+  public static final int con = 43;
+  public static final int hasta = 42;
+  public static final int hasta_que = 48;
+  public static final int disyuncion = 5;
+  public static final int coma = 12;
+  public static final int entonces = 34;
+  public static final int igual = 2;
+  public static final int identificador = 62;
+  public static final int tbooleano = 26;
+  public static final int tcadena = 25;
+  public static final int fin_funcion = 56;
+  public static final int inicio = 28;
+  public static final int comillasd = 23;
+  public static final int caracter = 66;
+  public static final int repetir = 49;
+  public static final int fin_metodo = 52;
+  public static final int si = 33;
+  public static final int mientras = 46;
+  public static final int comillasimple = 22;
+  public static final int fin_si = 37;
+  public static final int menor = 18;
+  public static final int porcentaje = 14;
+  public static final int var_identificador = 63;
+  public static final int fin_mientras = 47;
   public static final int EOF = 0;
-  public static final int para = 30;
+  public static final int verdadero = 53;
+  public static final int para = 41;
+  public static final int fin_para = 45;
   public static final int error = 1;
-  public static final int fin_para = 34;
-  public static final int mayor = 14;
-  public static final int metodo = 40;
-  public static final int por = 3;
-  public static final int punto = 5;
-  public static final int funcion = 42;
-  public static final int dospuntos = 12;
-  public static final int fin_segun = 29;
-  public static final int segun = 27;
-  public static final int hacer = 28;
-  public static final int fin = 21;
-  public static final int de_lo_contrario = 24;
-  public static final int salto = 17;
-  public static final int puntocoma = 13;
-  public static final int retornar = 39;
-  public static final int o_si = 25;
-  public static final int ejecutar = 44;
-  public static final int digito = 47;
-  public static final int colocho = 10;
-  public static final int cadena = 45;
+  public static final int mayor = 17;
+  public static final int metodo = 51;
+  public static final int incremental = 44;
+  public static final int por = 4;
+  public static final int punto = 8;
+  public static final int funcion = 55;
+  public static final int dospuntos = 15;
+  public static final int imprimir_nl = 60;
+  public static final int potencia = 6;
+  public static final int falso = 54;
+  public static final int fin_segun = 40;
+  public static final int segun = 38;
+  public static final int tnumero = 24;
+  public static final int hacer = 39;
+  public static final int tcaracter = 27;
+  public static final int ingresar = 30;
+  public static final int con_valor = 32;
+  public static final int fin = 29;
+  public static final int de_lo_contrario = 35;
+  public static final int salto = 21;
+  public static final int puntocoma = 16;
+  public static final int retornar = 50;
+  public static final int o_si = 36;
+  public static final int ejecutar = 58;
+  public static final int decimal = 65;
+  public static final int modulo = 7;
+  public static final int digito = 64;
+  public static final int colocho = 13;
+  public static final int cadena = 61;
   public static final String[] terminalNames = new String[] {
   "EOF",
   "error",
+  "igual",
   "suma",
   "por",
   "disyuncion",
+  "potencia",
+  "modulo",
   "punto",
   "interrogacionA",
   "interrogacionC",
@@ -73,13 +94,21 @@ public class sym {
   "dospuntos",
   "puntocoma",
   "mayor",
+  "menor",
   "cllave",
   "allave",
   "salto",
   "comillasimple",
   "comillasd",
+  "tnumero",
+  "tcadena",
+  "tbooleano",
+  "tcaracter",
   "inicio",
   "fin",
+  "ingresar",
+  "como",
+  "con_valor",
   "si",
   "entonces",
   "de_lo_contrario",
@@ -91,7 +120,7 @@ public class sym {
   "para",
   "hasta",
   "con",
-  "pasito",
+  "incremental",
   "fin_para",
   "mientras",
   "fin_mientras",
@@ -100,12 +129,19 @@ public class sym {
   "retornar",
   "metodo",
   "fin_metodo",
+  "verdadero",
+  "falso",
   "funcion",
   "fin_funcion",
+  "con_parametros",
   "ejecutar",
+  "imprimir",
+  "imprimir_nl",
   "cadena",
   "identificador",
+  "var_identificador",
   "digito",
+  "decimal",
   "caracter"
   };
 }

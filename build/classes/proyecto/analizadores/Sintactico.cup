@@ -27,17 +27,44 @@ parser code
 action code {:
 :}
 
-terminal String suma, por, disyuncion, punto, interrogacionA, interrogacionC, resta, coma, colocho;
-terminal String porcentaje, dospuntos, puntocoma, mayor, cllave, allave, salto, comillasimple, comillasd;
-terminal String inicio, fin, si, entonces, de_lo_contrario, o_si, fin_si, segun, hacer, fin_segun;
-terminal String para, hasta, con, pasito, fin_para, mientras, fin_mientras, hasta_que, repetir, retornar, metodo, fin_metodo;
-terminal String funcion, fin_funcion, ejecutar, cadena, identificador, digito, caracter;
-non terminal INICIO;
+terminal String igual, suma, por, disyuncion, potencia, modulo, punto, interrogacionA, interrogacionC, resta, coma, colocho;
+terminal String porcentaje, dospuntos, puntocoma, mayor, menor, cllave, allave, salto, comillasimple, comillasd;
+terminal String tnumero, tcadena, tbooleano, tcaracter, inicio, fin, ingresar, como, con_valor, si, entonces, de_lo_contrario, o_si, fin_si, segun, hacer, fin_segun;
+terminal String para, hasta, con, incremental, fin_para, mientras, fin_mientras, hasta_que, repetir, retornar, metodo, fin_metodo, verdadero, falso;
+terminal String funcion, fin_funcion, con_parametros, ejecutar, imprimir, imprimir_nl, cadena, identificador, var_identificador, digito, decimal, caracter;
 
+non terminal COMIENZO, CONTENIDO, CODIGO, DECLARACION, TIPODATO, EXPRESION;
+non terminal INSTRUCCIONES, LISTA_NOM, NOMBRES, NOMBRE;
 
-start with INICIO;
+start with COMIENZO;
 
-INICIO::= cadena;
+COMIENZO ::= CONTENIDO;
+CONTENIDO ::= inicio CODIGO fin;
+
+CODIGO ::= INSTRUCCIONES  
+                    |CODIGO INSTRUCCIONES;
+INSTRUCCIONES ::= DECLARACION puntocoma
+                    |LISTA_NOM puntocoma;
+DECLARACION ::= ingresar var_identificador como TIPODATO con_valor EXPRESION;
+
+LISTA_NOM ::= var_identificador igual NOMBRES;
+NOMBRES ::= NOMBRE
+            |NOMBRES NOMBRE;
+
+NOMBRE ::=  var_identificador coma
+            |var_identificador;
+
+TIPODATO ::= tcadena
+                |tnumero
+                |tbooleano
+                |tcaracter;
+EXPRESION ::= digito
+                |decimal
+                |cadena
+                |caracter
+                |verdadero
+                |falso;
+
 
 
 /* para los puntos colocar en parser

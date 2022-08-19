@@ -19,10 +19,11 @@ import java_cup.runtime.*;
 blancos = [ \t\r\n]+
 letra = [a-zA-Z]
 digito = [0-9]+
+decimal= [0-9]+"."[0-9]+ 
 caracter = "'"["("|")"|"/"|"!"|"#"|"$"|"&"|"@"|"`"|"<"|"["|"]"|"^"|"_"|"\\"]+"'"
 cadena = (\"([^\"\\\n]|\\.)*\")
+var_identificador = "_"({letra}({letra}|"_"|{digito})*)"_"
 identificador = {letra}({letra}|"_"|{digito})*
-var_identificador = "_"{letra}({letra}|"_"|{digito})*"_"
 
 comentariolinea = ("//".*\n)|("//".*\r)
 cmultilinea = ("/""*"[^\!]*"*""/") 
@@ -31,6 +32,7 @@ cmultilinea = ("/""*"[^\!]*"*""/")
 
 %%
 \n {yycolumn=1;}
+"=" {return new Symbol(sym.igual,yycolumn,yyline,yytext());}
 "+" {return new Symbol(sym.suma,yycolumn,yyline,yytext());}
 "*" {return new Symbol(sym.por,yycolumn,yyline,yytext());}
 "POTENCIA" {return new Symbol(sym.potencia,yycolumn,yyline,yytext());}
@@ -48,6 +50,8 @@ cmultilinea = ("/""*"[^\!]*"*""/")
 ":" {return new Symbol(sym.dospuntos,yycolumn,yyline,yytext());}
 ";" {return new Symbol(sym.puntocoma,yycolumn,yyline,yytext());}
 ">" {return new Symbol(sym.mayor,yycolumn,yyline,yytext());}
+"<" {return new Symbol(sym.menor,yycolumn,yyline,yytext());}
+
 "}" {return new Symbol(sym.cllave,yycolumn,yyline,yytext());}
 "{" {return new Symbol(sym.allave,yycolumn,yyline,yytext());}
 //ESPECIALES
@@ -66,7 +70,7 @@ cmultilinea = ("/""*"[^\!]*"*""/")
 //declaracion variables
 "INGRESAR" {return new Symbol(sym.ingresar,yycolumn,yyline,yytext());}
 "COMO" {return new Symbol(sym.como,yycolumn,yyline,yytext());}
-"CON_VALOR" {return new Symbol(sym.CON_VALOR,yycolumn,yyline,yytext());}
+"CON_VALOR" {return new Symbol(sym.con_valor,yycolumn,yyline,yytext());}
 
 //condicion Si o if
 "SI" {return new Symbol(sym.si,yycolumn,yyline,yytext());}
@@ -82,7 +86,7 @@ cmultilinea = ("/""*"[^\!]*"*""/")
 "PARA" {return new Symbol(sym.para,yycolumn,yyline,yytext());}
 "HASTA" {return new Symbol(sym.hasta,yycolumn,yyline,yytext());}
 "CON" {return new Symbol(sym.con,yycolumn,yyline,yytext());}
-"PASITO" {return new Symbol(sym.pasito,yycolumn,yyline,yytext());}
+"INCREMENTAL" {return new Symbol(sym.incremental,yycolumn,yyline,yytext());}
 "FIN_PARA" {return new Symbol(sym.fin_para,yycolumn,yyline,yytext());}
 //ciclo mientras o while
 "MIENTRAS" {return new Symbol(sym.mientras,yycolumn,yyline,yytext());}
@@ -107,12 +111,16 @@ cmultilinea = ("/""*"[^\!]*"*""/")
 "IMPRIMIR" {return new Symbol(sym.imprimir,yycolumn,yyline,yytext());}
 "IMPRIMIR_NL" {return new Symbol(sym.imprimir_nl,yycolumn,yyline,yytext());}
 
+"VERDADERO" {return new Symbol(sym.verdadero,yycolumn,yyline,yytext());}
+"FALSO" {return new Symbol(sym.falso,yycolumn,yyline,yytext());}
 
+
+{var_identificador} {return new Symbol(sym.var_identificador,yycolumn,yyline,yytext());}
 
 {cadena} {return new Symbol(sym.cadena,yycolumn,yyline,yytext());}
 {identificador} {return new Symbol(sym.identificador,yycolumn,yyline,yytext());}
-{var_identificador} {return new Symbol(sym.identificador,yycolumn,yyline,yytext());}
 {digito} {return new Symbol(sym.digito,yycolumn,yyline,yytext());}
+{decimal} {return new Symbol(sym.decimal,yycolumn,yyline,yytext());}
 {caracter} {return new Symbol(sym.caracter,yycolumn,yyline,yytext());}
 {blancos} {/*Se ignoran*/} // Espacios en Blanco
 {comentariolinea} {/*Se ignoran*/}

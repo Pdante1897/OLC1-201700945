@@ -1,0 +1,9 @@
+inicio 
+	ingresar _esta_ como cadena con_valor "esta mierda";
+	_indice_ = _nombredeesta_, _otro_;
+fin
+
+inicio 
+	ingresar _esta_ como cadena con_valor "esta mierda";
+	ingresar _esta_ como cadena con_valor "esta mierda";
+fin
