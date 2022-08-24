@@ -6,7 +6,9 @@
 package proyecto.analizadores;
 
 import java_cup.runtime.*;
+import proyecto.main.*;
 import java.util.ArrayList;
+import proyecto.estructuras.*;
 import java_cup.runtime.XMLElement;
 
 /** CUP v0.11b 20160615 (GIT 4ac7450) generated parser.
@@ -129,6 +131,9 @@ public class parser extends java_cup.runtime.lr_parser {
   
     public static int contador=1;
     public static int num=1;
+    public static NodoAST nodo_aux = new NodoAST();
+    public static ArrayList<NodoAST> lista_auxNodo = new ArrayList<NodoAST>();
+    //public static Datos.ArbolAST Datos.arbol = new Datos.ArbolAST();
     //public static ArrayList<ErrorA> errores = new ArrayList<ErrorA>();
     
     
@@ -148,6 +153,7 @@ public class parser extends java_cup.runtime.lr_parser {
 /** Cup generated class to encapsulate user supplied action code.*/
 @SuppressWarnings({"rawtypes", "unchecked", "unused"})
 class CUP$parser$actions {
+
 
 
 
@@ -190,7 +196,10 @@ class CUP$parser$actions {
           case 1: // COMIENZO ::= CONTENIDO 
             {
               Object RESULT =null;
-
+		
+                        
+                                                
+                        
               CUP$parser$result = parser.getSymbolFactory().newSymbol("COMIENZO",0, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -199,7 +208,61 @@ class CUP$parser$actions {
           case 2: // CONTENIDO ::= inicio CODIGO fin 
             {
               Object RESULT =null;
+		int varinleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).left;
+		int varinright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).right;
+		String varin = (String)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-2)).value;
+		int varfinleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
+		int varfinright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
+		String varfin = (String)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
+		 
+                                                
+                                                NodoAST t_inicio = new NodoAST();
+                                                t_inicio.Nodos = new ArrayList<NodoAST>();
+                                                t_inicio.setToken("T_inicio");
+                                                t_inicio.setTipo("T_inicio");
+                                                System.out.println(t_inicio.token);
 
+                                                NodoAST n_inicio = new NodoAST();
+                                                n_inicio.setToken(varin);
+                                                n_inicio.setTipo("token");
+                                                System.out.println(n_inicio.token);
+
+                                                NodoAST t_codigo = new NodoAST();
+                                                t_codigo.Nodos = new ArrayList<NodoAST>();
+                                                t_codigo.setToken("<Instrucciones>");
+                                                t_codigo.setTipo("Instrucciones");
+                                                System.out.println(t_codigo.token);
+
+                                                t_codigo.Nodos.add(nodo_aux);
+                                                System.out.println("se agrego token instruccion");
+
+                                                NodoAST n_fin = new NodoAST();
+                                                n_fin.setToken(varfin);
+                                                n_fin.setTipo("token");
+                                                System.out.println(n_fin.token);
+                                                
+                                                NodoAST t_fin = new NodoAST();
+                                                t_fin.Nodos = new ArrayList<NodoAST>();
+                                                t_fin.setToken("T_fin");
+                                                t_fin.setTipo("T_fin");
+                                                System.out.println(t_fin.token);
+                                                System.out.println(varfin);
+
+                                                
+
+                                                t_inicio.Nodos.add(n_inicio);
+                                                System.out.println("se agrego token");
+                                                t_fin.Nodos.add(n_fin);
+                                                System.out.println("se agrego token");
+                                                Datos.arbol.raiz.Nodos.add(t_inicio);
+                                                System.out.println("se agrego token Al arbol");
+                                                Datos.arbol.raiz.Nodos.add(t_codigo);
+                                                System.out.println("se agrego token Al arbol");
+                                                Datos.arbol.raiz.Nodos.add(t_fin);
+                                                System.out.println("se agrego token Al arbol");
+                                                System.out.println(Datos.arbol.raiz.getToken() + " Nodo del Datos.arbol");
+
+                                                
               CUP$parser$result = parser.getSymbolFactory().newSymbol("CONTENIDO",1, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -208,7 +271,17 @@ class CUP$parser$actions {
           case 3: // CODIGO ::= INSTRUCCIONES 
             {
               Object RESULT =null;
+		
+                            NodoAST t_instrucciones = new NodoAST();
+                            t_instrucciones.Nodos = lista_auxNodo; 
+                            System.out.println("Se agregaron nodos a <Instrucciones>");
+                            t_instrucciones.setToken("<Instrucciones>");
+                            t_instrucciones.setTipo("Instrucciones");
+                            System.out.println(t_instrucciones.token + " 2");
 
+
+                            nodo_aux = t_instrucciones;
+                        
               CUP$parser$result = parser.getSymbolFactory().newSymbol("CODIGO",2, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -226,7 +299,34 @@ class CUP$parser$actions {
           case 5: // INSTRUCCIONES ::= DECLARACION puntocoma 
             {
               Object RESULT =null;
+		int var_pycleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
+		int var_pycright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
+		String var_pyc = (String)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
+		
+                                            NodoAST t_declaracion = new NodoAST();
+                                            t_declaracion.Nodos = new ArrayList<NodoAST>(); //cambiar por lista auxiliar
+                                            t_declaracion.setToken("<Declaracion>");
+                                            t_declaracion.setTipo("Declaracion");
 
+                                            NodoAST t_pyc = new NodoAST();
+                                            t_pyc.Nodos = new ArrayList<NodoAST>(); 
+                                            t_pyc.setToken("<T_pto_coma>");
+                                            t_pyc.setTipo("punto y coma");
+                                            
+                                            NodoAST n_pyc = new NodoAST();
+                                            n_pyc.setToken(var_pyc);
+                                            n_pyc.setTipo("token");
+                                            
+                                            t_pyc.Nodos.add(n_pyc);
+                                            System.out.println("se agrego token punto y coma");
+                                            
+                                            
+                                            
+                                            lista_auxNodo= new ArrayList<NodoAST>();
+                                            lista_auxNodo.add(t_declaracion);
+                                            lista_auxNodo.add(t_pyc);
+
+                                        
               CUP$parser$result = parser.getSymbolFactory().newSymbol("INSTRUCCIONES",6, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;

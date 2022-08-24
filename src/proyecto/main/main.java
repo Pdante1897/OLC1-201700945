@@ -4,15 +4,13 @@
  */
 package proyecto.main;
 import com.bryan.ui.principal;
+import proyecto.estructuras.ArbolAST;
 /**
  *
  * @author gerar
  */
 public class main {
 
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String[] args) {
         principal principal = new principal();
         principal.show();

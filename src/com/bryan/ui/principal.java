@@ -5,7 +5,12 @@
 package com.bryan.ui;
 
 import java.io.StringReader;
+import java.util.ArrayList;
 import proyecto.analizadores.*;
+import proyecto.estructuras.ArbolAST;
+import proyecto.estructuras.NodoAST;
+import proyecto.main.*;
+
 /**
  *
  * @author gerar
@@ -52,7 +57,7 @@ public class principal extends javax.swing.JFrame {
 
         jTextArea1.setBackground(new java.awt.Color(0, 0, 0));
         jTextArea1.setColumns(20);
-        jTextArea1.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        jTextArea1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jTextArea1.setForeground(new java.awt.Color(255, 255, 255));
         jTextArea1.setRows(5);
         jTextArea1.setCaretColor(new java.awt.Color(255, 255, 255));
@@ -199,12 +204,26 @@ public class principal extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem4ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        Datos.arbol = new ArbolAST();
+        Datos.arbol.raiz = new NodoAST();
+        Datos.arbol.raiz.Nodos = new ArrayList<NodoAST>();
+        Datos.arbol.raiz.setToken("Global");
+        Datos.arbol.raiz.setTipo("Global");
+        System.out.println(Datos.arbol.raiz.getToken() + " Raiz del arbol");
         try {
             parser parser = new parser(new Lexico(new StringReader(jTextArea1.getText())));
             parser.parse();
         } catch (Exception ex) {
             //Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
-        }    }//GEN-LAST:event_jButton1ActionPerformed
+        }    
+        System.out.println("--------------------------------------");
+        System.out.println(Datos.arbol.raiz.Nodos.get(1).getToken());
+        System.out.println(Datos.arbol.raiz.Nodos.get(1).Nodos.get(0).getToken());
+        System.out.println(Datos.arbol.raiz.Nodos.get(1).Nodos.get(0).Nodos.get(0).getToken());
+        System.out.println(Datos.arbol.raiz.Nodos.get(1).Nodos.get(0).Nodos.get(1).getToken());
+
+
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
