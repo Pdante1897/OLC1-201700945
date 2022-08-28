@@ -219,8 +219,8 @@ public class principal extends javax.swing.JFrame {
         System.out.println("--------------------------------------");
         System.out.println(Datos.arbol.raiz.Nodos.get(1).getToken());
         System.out.println(Datos.arbol.raiz.Nodos.get(1).Nodos.get(0).getToken());
-  //      System.out.println(Datos.arbol.raiz.Nodos.get(1).Nodos.get(0).Nodos.get(0).getToken());
-//        System.out.println(Datos.arbol.raiz.Nodos.get(1).Nodos.get(0).Nodos.get(1).getToken());
+        System.out.println(Datos.arbol.raiz.Nodos.get(1).Nodos.get(0).Nodos.get(1).getToken());
+        //System.out.println(Datos.arbol.raiz.Nodos.get(1).Nodos.get(1).Nodos.get(0).getToken());
 
         System.out.println("--------------------------------------");
         

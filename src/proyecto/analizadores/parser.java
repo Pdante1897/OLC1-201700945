@@ -137,6 +137,7 @@ public class parser extends java_cup.runtime.lr_parser {
 
     public static ArrayList<NodoAST> lista_auxNodo = new ArrayList<NodoAST>();
     public static ArrayList<NodoAST> lista_auxNodo2 = new ArrayList<NodoAST>();
+    public static ArrayList<NodoAST> lista_auxNodo3 = new ArrayList<NodoAST>(); //arreglo de nombres
 
     //public static Datos.ArbolAST Datos.arbol = new Datos.ArbolAST();
     //public static ArrayList<ErrorA> errores = new ArrayList<ErrorA>();
@@ -284,8 +285,8 @@ class CUP$parser$actions {
                             t_instrucciones.setTipo("Instrucciones");
                             System.out.println(t_instrucciones.token + " 2");
 
-
                             nodo_aux = t_instrucciones;
+
                         
               CUP$parser$result = parser.getSymbolFactory().newSymbol("CODIGO",2, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -339,7 +340,35 @@ class CUP$parser$actions {
           case 6: // INSTRUCCIONES ::= LISTA_NOM puntocoma 
             {
               Object RESULT =null;
+		int var_pycleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
+		int var_pycright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
+		String var_pyc = (String)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
+		
+                        
+                        NodoAST t_listaNom = new NodoAST();
+                        t_listaNom.Nodos = lista_auxNodo; //acarreo de nodos inferiores
+                        t_listaNom.setToken("<Lista Nombres>");
+                        t_listaNom.setTipo("lista nombres");
+                        
+                        NodoAST t_pyc = new NodoAST();
+                        t_pyc.Nodos = new ArrayList<NodoAST>(); 
+                        t_pyc.setToken("<T_pto_coma>");
+                        t_pyc.setTipo("t punto y coma");
+                                            
+                        NodoAST n_pyc = new NodoAST();
+                        n_pyc.setToken(var_pyc);
+                        n_pyc.setTipo("token");
+                    
+                        t_pyc.Nodos.add(n_pyc);
+                        t_listaNom.Nodos.add(t_pyc);
+                        System.out.println("se agrego token punto y coma");
+                        
+                        lista_auxNodo = new ArrayList<NodoAST>();
+                        lista_auxNodo2.add(t_listaNom);
+                        System.out.println("se agregaron todos los nombres al nodo de la produccion de Instrucciones");
 
+                    
+                    
               CUP$parser$result = parser.getSymbolFactory().newSymbol("INSTRUCCIONES",6, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -373,8 +402,8 @@ class CUP$parser$actions {
                                             
                                             NodoAST t_como = new NodoAST();
                                             t_como.Nodos = new ArrayList<NodoAST>(); 
-                                            t_como.setToken("<T_pto_coma>");
-                                            t_como.setTipo("t punto y coma");
+                                            t_como.setToken("<T_como>");
+                                            t_como.setTipo("t como");
                                             
                                             NodoAST t_con_valor = new NodoAST();
                                             t_con_valor.Nodos = new ArrayList<NodoAST>(); 
@@ -431,7 +460,47 @@ class CUP$parser$actions {
           case 8: // LISTA_NOM ::= var_identificador igual NOMBRES 
             {
               Object RESULT =null;
+		int var_idleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).left;
+		int var_idright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).right;
+		String var_id = (String)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-2)).value;
+		int var_iguleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).left;
+		int var_iguright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).right;
+		String var_igu = (String)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-1)).value;
+		
+                        NodoAST t_identificador = new NodoAST();
+                        t_identificador.Nodos = new ArrayList<NodoAST>(); 
+                        t_identificador.setToken("<T_identificador>");
+                        t_identificador.setTipo("t identificador");
+                        
+                        NodoAST n_identificador = new NodoAST();
+                        n_identificador.setToken(var_id);
+                        n_identificador.setTipo("token");
 
+                        NodoAST t_igual = new NodoAST();
+                        t_igual.Nodos = new ArrayList<NodoAST>(); 
+                        t_igual.setToken("<T_igual>");
+                        t_igual.setTipo("t igual");
+                        
+                        NodoAST n_igual = new NodoAST();
+                        n_igual.setToken(var_igu);
+                        n_igual.setTipo("token");
+
+                        t_identificador.Nodos.add(n_identificador);
+                        t_igual.Nodos.add(n_igual);
+
+                        lista_auxNodo.add(t_identificador);
+                        lista_auxNodo.add(t_igual);
+
+                        for(int i=1; i<lista_auxNodo3.size(); i++){
+                            lista_auxNodo.add(lista_auxNodo3.get(i));
+                            System.out.println("Se agregaron con exito los nodos de la produccion listaNom");
+
+                        }
+                        lista_auxNodo.add(lista_auxNodo3.get(0));
+
+                        lista_auxNodo3 = new ArrayList<NodoAST>();
+
+            
               CUP$parser$result = parser.getSymbolFactory().newSymbol("LISTA_NOM",7, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -440,7 +509,7 @@ class CUP$parser$actions {
           case 9: // NOMBRES ::= NOMBRE 
             {
               Object RESULT =null;
-
+		lista_auxNodo3.add(nodo_aux_td);
               CUP$parser$result = parser.getSymbolFactory().newSymbol("NOMBRES",8, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -449,7 +518,10 @@ class CUP$parser$actions {
           case 10: // NOMBRES ::= NOMBRES NOMBRE 
             {
               Object RESULT =null;
-
+		
+                        lista_auxNodo3.add(nodo_aux_td);
+                        lista_auxNodo3.add(nodo_aux_val);
+            
               CUP$parser$result = parser.getSymbolFactory().newSymbol("NOMBRES",8, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -458,7 +530,37 @@ class CUP$parser$actions {
           case 11: // NOMBRE ::= var_identificador coma 
             {
               Object RESULT =null;
+		int var_idleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).left;
+		int var_idright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).right;
+		String var_id = (String)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-1)).value;
+		int var_comaleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
+		int var_comaright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
+		String var_coma = (String)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
+		
+                        NodoAST t_identificador = new NodoAST();
+                        t_identificador.Nodos = new ArrayList<NodoAST>(); 
+                        t_identificador.setToken("<T_identificador>");
+                        t_identificador.setTipo("t identificador");     
+                        
+                        NodoAST n_identificador = new NodoAST();
+                        n_identificador.setToken(var_id);
+                        n_identificador.setTipo("token");
 
+                        NodoAST t_coma = new NodoAST();
+                        t_coma.Nodos = new ArrayList<NodoAST>(); 
+                        t_coma.setToken("<T_coma>");
+                        t_coma.setTipo("t coma");     
+                        
+                        NodoAST n_coma = new NodoAST();
+                        n_coma.setToken(var_coma);
+                        n_coma.setTipo("token");       
+                        
+                        t_identificador.Nodos.add(n_identificador);
+                        t_coma.Nodos.add(n_coma);
+
+                        nodo_aux_td = t_identificador;
+                        nodo_aux_val = t_coma;
+                        
               CUP$parser$result = parser.getSymbolFactory().newSymbol("NOMBRE",9, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -467,7 +569,24 @@ class CUP$parser$actions {
           case 12: // NOMBRE ::= var_identificador 
             {
               Object RESULT =null;
+		int var_idleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
+		int var_idright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
+		String var_id = (String)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
+		
+            
+                        NodoAST t_identificador = new NodoAST();
+                        t_identificador.Nodos = new ArrayList<NodoAST>(); 
+                        t_identificador.setToken("<T_identificador>");
+                        t_identificador.setTipo("t identificador");     
+                        
+                        NodoAST n_identificador = new NodoAST();
+                        n_identificador.setToken(var_id);
+                        n_identificador.setTipo("token");
+                        
+                        t_identificador.Nodos.add(n_identificador);
+                        nodo_aux_td = t_identificador;
 
+            
               CUP$parser$result = parser.getSymbolFactory().newSymbol("NOMBRE",9, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;

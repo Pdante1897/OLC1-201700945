@@ -14,6 +14,7 @@ parser code
 
     public static ArrayList<NodoAST> lista_auxNodo = new ArrayList<NodoAST>();
     public static ArrayList<NodoAST> lista_auxNodo2 = new ArrayList<NodoAST>();
+    public static ArrayList<NodoAST> lista_auxNodo3 = new ArrayList<NodoAST>(); //arreglo de nombres
 
     //public static Datos.ArbolAST Datos.arbol = new Datos.ArbolAST();
     //public static ArrayList<ErrorA> errores = new ArrayList<ErrorA>();
@@ -109,10 +110,10 @@ CODIGO ::= INSTRUCCIONES {:
                             t_instrucciones.setTipo("Instrucciones");
                             System.out.println(t_instrucciones.token + " 2");
 
-
                             nodo_aux = t_instrucciones;
+
                         :} 
-                    |CODIGO INSTRUCCIONES;
+                    |CODIGO INSTRUCCIONES ;
 INSTRUCCIONES ::= DECLARACION puntocoma:var_pyc{:
                                             NodoAST t_declaracion = new NodoAST();
                                             t_declaracion.Nodos = lista_auxNodo; //acarreo de nodos inferiores
@@ -137,7 +138,32 @@ INSTRUCCIONES ::= DECLARACION puntocoma:var_pyc{:
                                             lista_auxNodo2.add(t_declaracion);
 
                                         :}
-                    |LISTA_NOM puntocoma;
+                    |LISTA_NOM puntocoma:var_pyc{:
+                        
+                        NodoAST t_listaNom = new NodoAST();
+                        t_listaNom.Nodos = lista_auxNodo; //acarreo de nodos inferiores
+                        t_listaNom.setToken("<Lista Nombres>");
+                        t_listaNom.setTipo("lista nombres");
+                        
+                        NodoAST t_pyc = new NodoAST();
+                        t_pyc.Nodos = new ArrayList<NodoAST>(); 
+                        t_pyc.setToken("<T_pto_coma>");
+                        t_pyc.setTipo("t punto y coma");
+                                            
+                        NodoAST n_pyc = new NodoAST();
+                        n_pyc.setToken(var_pyc);
+                        n_pyc.setTipo("token");
+                    
+                        t_pyc.Nodos.add(n_pyc);
+                        t_listaNom.Nodos.add(t_pyc);
+                        System.out.println("se agrego token punto y coma");
+                        
+                        lista_auxNodo = new ArrayList<NodoAST>();
+                        lista_auxNodo2.add(t_listaNom);
+                        System.out.println("se agregaron todos los nombres al nodo de la produccion de Instrucciones");
+
+                    
+                    :};
 DECLARACION ::= ingresar:var_ing var_identificador:var_id como:var_como TIPODATO con_valor:var_con_valor EXPRESIONNUM{:
                                             NodoAST t_ingresar = new NodoAST();
                                             t_ingresar.Nodos = new ArrayList<NodoAST>(); 
@@ -202,12 +228,87 @@ DECLARACION ::= ingresar:var_ing var_identificador:var_id como:var_como TIPODATO
                                         
                                         :};
 
-LISTA_NOM ::= var_identificador igual NOMBRES;
-NOMBRES ::= NOMBRE
-            |NOMBRES NOMBRE;
+LISTA_NOM ::= var_identificador:var_id igual:var_igu NOMBRES{:
+                        NodoAST t_identificador = new NodoAST();
+                        t_identificador.Nodos = new ArrayList<NodoAST>(); 
+                        t_identificador.setToken("<T_identificador>");
+                        t_identificador.setTipo("t identificador");
+                        
+                        NodoAST n_identificador = new NodoAST();
+                        n_identificador.setToken(var_id);
+                        n_identificador.setTipo("token");
 
-NOMBRE ::=  var_identificador coma
-            |var_identificador;
+                        NodoAST t_igual = new NodoAST();
+                        t_igual.Nodos = new ArrayList<NodoAST>(); 
+                        t_igual.setToken("<T_igual>");
+                        t_igual.setTipo("t igual");
+                        
+                        NodoAST n_igual = new NodoAST();
+                        n_igual.setToken(var_igu);
+                        n_igual.setTipo("token");
+
+                        t_identificador.Nodos.add(n_identificador);
+                        t_igual.Nodos.add(n_igual);
+
+                        lista_auxNodo.add(t_identificador);
+                        lista_auxNodo.add(t_igual);
+
+                        for(int i=1; i<lista_auxNodo3.size(); i++){
+                            lista_auxNodo.add(lista_auxNodo3.get(i));
+                            System.out.println("Se agregaron con exito los nodos de la produccion listaNom");
+
+                        }
+                        lista_auxNodo.add(lista_auxNodo3.get(0));
+
+                        lista_auxNodo3 = new ArrayList<NodoAST>();
+
+            :};
+NOMBRES ::= NOMBRE{:lista_auxNodo3.add(nodo_aux_td);:}
+            |NOMBRES NOMBRE {:
+                        lista_auxNodo3.add(nodo_aux_td);
+                        lista_auxNodo3.add(nodo_aux_val);
+            :};
+
+NOMBRE ::=  var_identificador:var_id coma:var_coma{:
+                        NodoAST t_identificador = new NodoAST();
+                        t_identificador.Nodos = new ArrayList<NodoAST>(); 
+                        t_identificador.setToken("<T_identificador>");
+                        t_identificador.setTipo("t identificador");     
+                        
+                        NodoAST n_identificador = new NodoAST();
+                        n_identificador.setToken(var_id);
+                        n_identificador.setTipo("token");
+
+                        NodoAST t_coma = new NodoAST();
+                        t_coma.Nodos = new ArrayList<NodoAST>(); 
+                        t_coma.setToken("<T_coma>");
+                        t_coma.setTipo("t coma");     
+                        
+                        NodoAST n_coma = new NodoAST();
+                        n_coma.setToken(var_coma);
+                        n_coma.setTipo("token");       
+                        
+                        t_identificador.Nodos.add(n_identificador);
+                        t_coma.Nodos.add(n_coma);
+
+                        nodo_aux_td = t_identificador;
+                        nodo_aux_val = t_coma;
+                        :}
+            |var_identificador:var_id{:
+            
+                        NodoAST t_identificador = new NodoAST();
+                        t_identificador.Nodos = new ArrayList<NodoAST>(); 
+                        t_identificador.setToken("<T_identificador>");
+                        t_identificador.setTipo("t identificador");     
+                        
+                        NodoAST n_identificador = new NodoAST();
+                        n_identificador.setToken(var_id);
+                        n_identificador.setTipo("token");
+                        
+                        t_identificador.Nodos.add(n_identificador);
+                        nodo_aux_td = t_identificador;
+
+            :};
 
 TIPODATO ::= tcadena:var_tipod{:
                         NodoAST n_tipodato = new NodoAST();                  
