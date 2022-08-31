@@ -1,11 +1,39 @@
 inicio 
-	ingresar _esta_ como cadena con_valor "esta mierda";
+	ingresar _indice_ como cadena con_valor "esta mierda";
 	_indice_ = _nombredeesta_, _otro_, _aver_;
+	ingresar _indice2_ como cadena con_valor "esta mierda";
+	_indice2_ = _nombredeesta2_, _otro2_, _aver2_;
 	ingresar _esta_ como cadena con_valor "esta mierda";
-	ingresar _esta_ como cadena con_valor "esta mierda";
+	_nombreesta_ -> 1+1;
+	_esta_ -> -_nombredeesta_+_esta_;
 fin
 
 inicio 
 	ingresar _esta_ como cadena con_valor "esta mierda";
 	ingresar _esta_ como cadena con_valor "esta mierda";
+fin
+
+inicio 
+	
+	_esta_ -> 1+1;
+fin
+
+
+inicio 
+	ingresar _indice_ como cadena con_valor "esta mierda";
+	_indice_ = _nombredeesta_, _otro_, _aver_;
+	ingresar _indice2_ como cadena con_valor "esta mierda";
+	_indice2_ = _nombredeesta2_, _otro2_, _aver2_;
+	ingresar _esta_ como cadena con_valor "esta mierda";
+	_nombreesta_ -> 1+1;
+	_esta_ -> -_nombredeesta_+_esta_;
+	
+
+	si _x_ mayor 1 entonces
+		_nombreesta_ -> 1+1;
+	o_si _x_ menor 1
+		_nombreesta_ -> 1+2;
+	de_lo_contrario
+		_nombreesta_ -> 1+3;
+	fin_si
 fin

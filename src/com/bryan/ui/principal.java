@@ -217,9 +217,9 @@ public class principal extends javax.swing.JFrame {
             //Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
         }    
         System.out.println("--------------------------------------");
-        System.out.println(Datos.arbol.raiz.Nodos.get(1).getToken());
-        System.out.println(Datos.arbol.raiz.Nodos.get(1).Nodos.get(0).getToken());
-        System.out.println(Datos.arbol.raiz.Nodos.get(1).Nodos.get(0).Nodos.get(1).getToken());
+        //System.out.println(Datos.arbol.raiz.Nodos.get(1).getToken());
+        //System.out.println(Datos.arbol.raiz.Nodos.get(1).Nodos.get(0).getToken());
+        //System.out.println(Datos.arbol.raiz.Nodos.get(1).Nodos.get(0).Nodos.get(1).getToken());
         //System.out.println(Datos.arbol.raiz.Nodos.get(1).Nodos.get(1).Nodos.get(0).getToken());
 
         System.out.println("--------------------------------------");

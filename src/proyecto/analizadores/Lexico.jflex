@@ -5,8 +5,8 @@ import java_cup.runtime.*;
 %class Lexico
 %public 
 %line 
-%char 
-%cup 
+%char
+%cup
 %unicode
 %ignorecase
 
@@ -35,8 +35,11 @@ cmultilinea = ("/""*"[^\!]*"*""/")
 "=" {return new Symbol(sym.igual,yycolumn,yyline,yytext());}
 "+" {return new Symbol(sym.suma,yycolumn,yyline,yytext());}
 "*" {return new Symbol(sym.por,yycolumn,yyline,yytext());}
+"/" {return new Symbol(sym.div,yycolumn,yyline,yytext());}
+
 "POTENCIA" {return new Symbol(sym.potencia,yycolumn,yyline,yytext());}
 "MOD" {return new Symbol(sym.modulo,yycolumn,yyline,yytext());}
+"->" {return new Symbol(sym.flecha,yycolumn,yyline,yytext());}
 
 "|" {return new Symbol(sym.disyuncion,yycolumn,yyline,yytext());}
 "." {return new Symbol(sym.punto,yycolumn,yyline,yytext());}
@@ -49,8 +52,21 @@ cmultilinea = ("/""*"[^\!]*"*""/")
 "%" {return new Symbol(sym.porcentaje,yycolumn,yyline,yytext());}
 ":" {return new Symbol(sym.dospuntos,yycolumn,yyline,yytext());}
 ";" {return new Symbol(sym.puntocoma,yycolumn,yyline,yytext());}
-">" {return new Symbol(sym.mayor,yycolumn,yyline,yytext());}
-"<" {return new Symbol(sym.menor,yycolumn,yyline,yytext());}
+"mayor" {return new Symbol(sym.mayor,yycolumn,yyline,yytext());}
+"menor" {return new Symbol(sym.menor,yycolumn,yyline,yytext());}
+"mayor_o_igual" {return new Symbol(sym.mayorigual,yycolumn,yyline,yytext());}
+"menor_o_igual" {return new Symbol(sym.menorigual,yycolumn,yyline,yytext());}
+
+"es_igual" {return new Symbol(sym.esigual,yycolumn,yyline,yytext());}
+"es_diferente" {return new Symbol(sym.esdiferente,yycolumn,yyline,yytext());}
+
+"or" {return new Symbol(sym.or,yycolumn,yyline,yytext());}
+"and" {return new Symbol(sym.and,yycolumn,yyline,yytext());}
+"not" {return new Symbol(sym.not,yycolumn,yyline,yytext());}
+
+
+")" {return new Symbol(sym.cparentecis,yycolumn,yyline,yytext());}
+"(" {return new Symbol(sym.aparentecis,yycolumn,yyline,yytext());}
 
 "}" {return new Symbol(sym.cllave,yycolumn,yyline,yytext());}
 "{" {return new Symbol(sym.allave,yycolumn,yyline,yytext());}
@@ -74,7 +90,7 @@ cmultilinea = ("/""*"[^\!]*"*""/")
 
 //condicion Si o if
 "SI" {return new Symbol(sym.si,yycolumn,yyline,yytext());}
-"ENTONCES" {return new Symbol(sym.entonces,yycolumn,yyline,yytext());}
+"ENTONCES" {return new Symbol(sym.enton,yycolumn,yyline,yytext());}
 "DE_LO_CONTRARIO" {return new Symbol(sym.de_lo_contrario,yycolumn,yyline,yytext());}
 "O_SI" {return new Symbol(sym.o_si,yycolumn,yyline,yytext());}
 "FIN_SI" {return new Symbol(sym.fin_si,yycolumn,yyline,yytext());}

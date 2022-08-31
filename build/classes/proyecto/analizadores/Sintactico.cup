@@ -11,11 +11,15 @@ parser code
     public static NodoAST nodo_aux = new NodoAST();
     public static NodoAST nodo_aux_td = new NodoAST();
     public static NodoAST nodo_aux_val = new NodoAST();
-
+    public static boolean flag_exp1=false;
+    public static boolean flag_exp2=false;
     public static ArrayList<NodoAST> lista_auxNodo = new ArrayList<NodoAST>();
     public static ArrayList<NodoAST> lista_auxNodo2 = new ArrayList<NodoAST>();
     public static ArrayList<NodoAST> lista_auxNodo3 = new ArrayList<NodoAST>(); //arreglo de nombres
+    public static ArrayList<NodoAST> lista_auxNodo4 = new ArrayList<NodoAST>(); //expresiones1
+    public static ArrayList<NodoAST> lista_auxNodo5 = new ArrayList<NodoAST>(); //expresiones2
 
+    
     //public static Datos.ArbolAST Datos.arbol = new Datos.ArbolAST();
     //public static ArrayList<ErrorA> errores = new ArrayList<ErrorA>();
     
@@ -37,22 +41,42 @@ action code {:
 
 :}
 
-terminal String igual, suma, por, disyuncion, potencia, modulo, punto, interrogacionA, interrogacionC, resta, coma, colocho;
-terminal String porcentaje, dospuntos, puntocoma, mayor, menor, cllave, allave, salto, comillasimple, comillasd;
-terminal String tnumero, tcadena, tbooleano, tcaracter, inicio, fin, ingresar, como, con_valor, si, entonces, de_lo_contrario, o_si, fin_si, segun, hacer, fin_segun;
+terminal String igual, suma, por, div, disyuncion, potencia, modulo, punto, interrogacionA, interrogacionC, resta, coma, colocho;
+terminal String porcentaje, dospuntos, puntocoma, mayor, menor, mayorigual, menorigual, esdiferente, esigual, or, and, not, cllave, allave, cparentecis, aparentecis, salto, comillasimple, comillasd, flecha;
+terminal String tnumero, tcadena, tbooleano, tcaracter, inicio, fin, ingresar, como, con_valor, si, enton, de_lo_contrario, o_si, fin_si, segun, hacer, fin_segun;
 terminal String para, hasta, con, incremental, fin_para, mientras, fin_mientras, hasta_que, repetir, retornar, metodo, fin_metodo, verdadero, falso;
 terminal String funcion, fin_funcion, con_parametros, ejecutar, imprimir, imprimir_nl, cadena, identificador, var_identificador, digito, decimal, caracter;
 
-non terminal COMIENZO, CONTENIDO, CODIGO, DECLARACION, TIPODATO, EXPRESIONNUM;
-non terminal INSTRUCCIONES, LISTA_NOM, NOMBRES, NOMBRE;
+
+non terminal ArrayList<NodoAST>  COMIENZO, CODIGO,CONTENIDO,  DECLARACION, TIPODATO, EXPRESIONVAL;
+non terminal ArrayList<NodoAST> INSTRUCCIONES, LISTA_NOM, NOMBRES, NOMBRE, ASIGNACION, EXPRESION;
+non terminal ArrayList<NodoAST> INST_SI, OSI, DELOCONTRARIO, CONDELOSI, INST_SEGUN, CASO, CASOS;
+
+
+precedence left suma, resta;
+precedence left por, div, modulo;
+precedence left or, and;
+precedence right not;
+precedence left esigual, esdiferente, menor, mayor, menorigual, mayorigual;
+precedence left potencia, resta;
+
+
+
+//precedence right UMENOS; 
+
 
 start with COMIENZO;
 
 COMIENZO ::= CONTENIDO{:
-                        
-                                                
+                        lista_auxNodo4 = new ArrayList<NodoAST>();
+                        lista_auxNodo3 = new ArrayList<NodoAST>();
+                        lista_auxNodo2 = new ArrayList<NodoAST>();
+                        lista_auxNodo = new ArrayList<NodoAST>();
+                        nodo_aux = new NodoAST();    
+                        nodo_aux_td = new NodoAST(); 
+                        nodo_aux_val = new NodoAST();                  
                         :};
-CONTENIDO ::= inicio:varin CODIGO fin:varfin {: 
+CONTENIDO ::= inicio:varin CODIGO:lista_codigo fin:varfin {: 
                                                 
                                                 NodoAST t_inicio = new NodoAST();
                                                 t_inicio.Nodos = new ArrayList<NodoAST>();
@@ -66,12 +90,11 @@ CONTENIDO ::= inicio:varin CODIGO fin:varfin {:
                                                 System.out.println(n_inicio.token);
 
                                                 NodoAST t_codigo = new NodoAST();
-                                                t_codigo.Nodos = new ArrayList<NodoAST>();
+                                                t_codigo.Nodos = lista_codigo;
                                                 t_codigo.setToken("<Instrucciones>");
                                                 t_codigo.setTipo("Instrucciones");
                                                 System.out.println(t_codigo.token);
 
-                                                t_codigo.Nodos.add(nodo_aux); //insertando nodos inferiores
                                                 System.out.println("se agrego token instruccion");
 
                                                 NodoAST n_fin = new NodoAST();
@@ -102,21 +125,36 @@ CONTENIDO ::= inicio:varin CODIGO fin:varfin {:
 
                                                 :};
 
-CODIGO ::= INSTRUCCIONES {:
+CODIGO ::= INSTRUCCIONES:lista_instrucciones {:
                             NodoAST t_instrucciones = new NodoAST();
-                            t_instrucciones.Nodos = lista_auxNodo2; //acarreo de nodos inferiores
+                            t_instrucciones.Nodos = lista_instrucciones; //acarreo de nodos inferiores
                             System.out.println("Se agregaron nodos a <Instrucciones>");
                             t_instrucciones.setToken("<Instrucciones>");
                             t_instrucciones.setTipo("Instrucciones");
                             System.out.println(t_instrucciones.token + " 2");
 
                             nodo_aux = t_instrucciones;
-
+                            RESULT= new ArrayList<NodoAST>();
+                            RESULT.add(t_instrucciones);
                         :} 
-                    |CODIGO INSTRUCCIONES ;
-INSTRUCCIONES ::= DECLARACION puntocoma:var_pyc{:
+                    |CODIGO:lista_codigo INSTRUCCIONES:lista_instrucciones{:
+                        NodoAST t_Codigo = new NodoAST();
+                        t_Codigo.Nodos = new ArrayList<NodoAST>(); 
+                        t_Codigo.setToken("<Instrucciones>");
+                        t_Codigo.setTipo("Instrucciones");
+                        t_Codigo.Nodos = lista_codigo;
+                        NodoAST t_expresion2 = new NodoAST();
+                        t_expresion2.Nodos = new ArrayList<NodoAST>(); 
+                        t_expresion2.setToken("<Instruccion>");
+                        t_expresion2.setTipo("Instruccion");
+                        t_expresion2.Nodos = lista_instrucciones;
+                        RESULT = new ArrayList<NodoAST>(); 
+                        RESULT.add(t_Codigo);
+                        RESULT.add(t_expresion2);
+                        :} ;
+INSTRUCCIONES ::= DECLARACION:lista_dec puntocoma:var_pyc{:
                                             NodoAST t_declaracion = new NodoAST();
-                                            t_declaracion.Nodos = lista_auxNodo; //acarreo de nodos inferiores
+                                            t_declaracion.Nodos = lista_dec; //acarreo de nodos inferiores
                                             t_declaracion.setToken("<Declaracion>");
                                             t_declaracion.setTipo("Declaracion");
 
@@ -134,14 +172,14 @@ INSTRUCCIONES ::= DECLARACION puntocoma:var_pyc{:
                                             System.out.println("se agrego token punto y coma");
                                             
                                             
-                                            lista_auxNodo = new ArrayList<NodoAST>();
-                                            lista_auxNodo2.add(t_declaracion);
+                                            RESULT = new ArrayList<NodoAST>();
+                                            RESULT.add(t_declaracion);
 
                                         :}
-                    |LISTA_NOM puntocoma:var_pyc{:
+                    |LISTA_NOM:lista_nom puntocoma:var_pyc{:
                         
                         NodoAST t_listaNom = new NodoAST();
-                        t_listaNom.Nodos = lista_auxNodo; //acarreo de nodos inferiores
+                        t_listaNom.Nodos = lista_nom; //acarreo de nodos inferiores
                         t_listaNom.setToken("<Lista Nombres>");
                         t_listaNom.setTipo("lista nombres");
                         
@@ -158,13 +196,67 @@ INSTRUCCIONES ::= DECLARACION puntocoma:var_pyc{:
                         t_listaNom.Nodos.add(t_pyc);
                         System.out.println("se agrego token punto y coma");
                         
-                        lista_auxNodo = new ArrayList<NodoAST>();
-                        lista_auxNodo2.add(t_listaNom);
+                        RESULT = new ArrayList<NodoAST>();
+                        RESULT.add(t_listaNom);
                         System.out.println("se agregaron todos los nombres al nodo de la produccion de Instrucciones");
 
                     
-                    :};
-DECLARACION ::= ingresar:var_ing var_identificador:var_id como:var_como TIPODATO con_valor:var_con_valor EXPRESIONNUM{:
+                    :}
+                    |ASIGNACION:lista_asig puntocoma:var_pyc{:
+                        NodoAST t_asignacion = new NodoAST();
+                        t_asignacion.Nodos = lista_asig; //acarreo de nodos inferiores
+                        t_asignacion.setToken("<Asingascion>");
+                        t_asignacion.setTipo("asignacion");
+                        
+                        NodoAST t_pyc = new NodoAST();
+                        t_pyc.Nodos = new ArrayList<NodoAST>(); 
+                        t_pyc.setToken("<T_pto_coma>");
+                        t_pyc.setTipo("t punto y coma");
+                                            
+                        NodoAST n_pyc = new NodoAST();
+                        n_pyc.setToken(var_pyc);
+                        n_pyc.setTipo("token");
+                    
+                        t_pyc.Nodos.add(n_pyc);
+                        t_asignacion.Nodos.add(t_pyc);
+                        System.out.println("se agrego token punto y coma");
+                        
+                        RESULT = new ArrayList<NodoAST>();
+                        RESULT.add(t_asignacion);
+                        System.out.println("se agregaron todos los nombres al nodo de la produccion de Instrucciones");
+
+                    
+                    
+                    
+                    
+                    :}
+                    |INST_SI:lista_si fin_si:vari{:
+                        NodoAST t_si = new NodoAST();
+                        t_si.Nodos = lista_si; //acarreo de nodos inferiores
+                        t_si.setToken("<Si>");
+                        t_si.setTipo("SI");
+                        
+                        NodoAST t_fin_si = new NodoAST();
+                        t_fin_si.Nodos = new ArrayList<NodoAST>(); 
+                        t_fin_si.setToken("<T_fin_si>");
+                        t_fin_si.setTipo("t fin si");
+                                            
+                        NodoAST n_fin_si = new NodoAST();
+                        n_fin_si.setToken(vari);
+                        n_fin_si.setTipo("fin si");
+                    
+                        t_fin_si.Nodos.add(n_fin_si);
+                        t_si.Nodos.add(t_fin_si);
+                        System.out.println("se agrego token punto y coma");
+                        
+                        RESULT = new ArrayList<NodoAST>();
+                        RESULT.add(t_si);
+                        System.out.println("se agregaron Instrucciones SI");
+                    :}
+                    
+                    |INST_SEGUN:lista_segun fin_segun:vari;
+
+DECLARACION ::= ingresar:var_ing var_identificador:var_id como:var_como TIPODATO con_valor:var_con_valor EXPRESIONVAL{:
                                             NodoAST t_ingresar = new NodoAST();
                                             t_ingresar.Nodos = new ArrayList<NodoAST>(); 
                                             t_ingresar.setToken("<T_ingresar>");
@@ -212,13 +304,14 @@ DECLARACION ::= ingresar:var_ing var_identificador:var_id como:var_como TIPODATO
                                             t_con_valor.Nodos.add(n_con_valor);
                                             t_tipodato.Nodos.add(nodo_aux_td); //acarreo de nodo
                                             t_expresion.Nodos.add(nodo_aux_val); //acarreo de nodo
-
-                                            lista_auxNodo.add(t_ingresar);  
-                                            lista_auxNodo.add(t_identificador);
-                                            lista_auxNodo.add(t_como);  
-                                            lista_auxNodo.add(t_tipodato);
-                                            lista_auxNodo.add(t_con_valor);  
-                                            lista_auxNodo.add(t_expresion);
+                                            
+                                            RESULT = new ArrayList<NodoAST>();
+                                            RESULT.add(t_ingresar);  
+                                            RESULT.add(t_identificador);
+                                            RESULT.add(t_como);  
+                                            RESULT.add(t_tipodato);
+                                            RESULT.add(t_con_valor);  
+                                            RESULT.add(t_expresion);
 
                                             System.out.println("Se agregaron con exito los nodos de la produccion Declaracion");
 
@@ -250,15 +343,16 @@ LISTA_NOM ::= var_identificador:var_id igual:var_igu NOMBRES{:
                         t_identificador.Nodos.add(n_identificador);
                         t_igual.Nodos.add(n_igual);
 
-                        lista_auxNodo.add(t_identificador);
-                        lista_auxNodo.add(t_igual);
+                        RESULT = new ArrayList<NodoAST>(); 
+                        RESULT.add(t_identificador);
+                        RESULT.add(t_igual);
 
                         for(int i=1; i<lista_auxNodo3.size(); i++){
-                            lista_auxNodo.add(lista_auxNodo3.get(i));
+                            RESULT.add(lista_auxNodo3.get(i));
                             System.out.println("Se agregaron con exito los nodos de la produccion listaNom");
 
                         }
-                        lista_auxNodo.add(lista_auxNodo3.get(0));
+                        RESULT.add(lista_auxNodo3.get(0));
 
                         lista_auxNodo3 = new ArrayList<NodoAST>();
 
@@ -335,7 +429,7 @@ TIPODATO ::= tcadena:var_tipod{:
                         nodo_aux_td = n_tipodato;
                     :};
 
-EXPRESIONNUM ::= digito:var_val{:
+EXPRESIONVAL ::= digito:var_val{:
                         NodoAST n_expresion = new NodoAST();                  
                         n_expresion.setToken(var_val);
                         n_expresion.setTipo("token");
@@ -371,6 +465,862 @@ EXPRESIONNUM ::= digito:var_val{:
                         n_expresion.setTipo("token");
                         nodo_aux_val = n_expresion;
                     :};
+
+
+ASIGNACION ::= NOMBRES flecha:var_fecha EXPRESION:lista_expresiones {:
+                        NodoAST t_expresion = new NodoAST();
+                        t_expresion.Nodos = lista_expresiones; 
+                        t_expresion.setToken("<T_expresion>");
+                        t_expresion.setTipo("t expresion");
+                        
+
+                        NodoAST t_flecha = new NodoAST();
+                        t_flecha.Nodos = new ArrayList<NodoAST>(); 
+                        t_flecha.setToken("<T_flecha>");
+                        t_flecha.setTipo("t flecha");
+                        
+                        NodoAST n_flecha = new NodoAST();
+                        n_flecha.setToken(var_fecha);
+                        n_flecha.setTipo("token");
+
+                        t_flecha.Nodos.add(n_flecha);
+
+                        for(int i=1; i<lista_auxNodo3.size(); i++){
+                            lista_auxNodo.add(lista_auxNodo3.get(i));
+                            System.out.println("Se agregaron con exito los nodos de la produccion listaNom");
+
+                        }
+                        RESULT = new ArrayList<NodoAST>();
+                        RESULT.add(lista_auxNodo3.get(0));
+                        RESULT.add(t_flecha);
+                        RESULT.add(t_expresion);
+                        lista_auxNodo3 = new ArrayList<NodoAST>();
+
+:};
+
+EXPRESION ::= EXPRESION:lista_expresionesI suma:vari EXPRESION:lista_expresionesD{:
+                        NodoAST t_expresionI = new NodoAST();
+                        t_expresionI.Nodos = new ArrayList<NodoAST>(); 
+                        t_expresionI.setToken("<T_expresion>");
+                        t_expresionI.setTipo("t expresion");
+                        t_expresionI.Nodos = lista_expresionesI;
+                        
+                        NodoAST tnodo = new NodoAST();
+                        tnodo.Nodos = new ArrayList<NodoAST>(); 
+                        tnodo.setToken("<T_"+vari+">");
+                        tnodo.setTipo("<t "+vari+">");     
+                        
+                        NodoAST token = new NodoAST();
+                        token.setToken(vari);
+                        token.setTipo("token");
+
+                        NodoAST t_expresionD = new NodoAST();
+                        t_expresionD.Nodos = new ArrayList<NodoAST>(); 
+                        t_expresionD.setToken("<T_expresion>");
+                        t_expresionD.setTipo("t expresion");
+                        t_expresionD.Nodos = lista_expresionesD;
+
+                        tnodo.Nodos.add(token);
+
+                        RESULT = new ArrayList<NodoAST>();
+                        RESULT.add(t_expresionI);
+                        RESULT.add(tnodo);
+                        RESULT.add(t_expresionD);
+                        :}
+                |EXPRESION:lista_expresionesI resta:vari EXPRESION:lista_expresionesD{:
+                        NodoAST t_expresionI = new NodoAST();
+                        t_expresionI.Nodos = new ArrayList<NodoAST>(); 
+                        t_expresionI.setToken("<T_expresion>");
+                        t_expresionI.setTipo("t expresion");
+                        t_expresionI.Nodos = lista_expresionesI;
+                        
+                        NodoAST tnodo = new NodoAST();
+                        tnodo.Nodos = new ArrayList<NodoAST>(); 
+                        tnodo.setToken("<T_"+vari+">");
+                        tnodo.setTipo("<t "+vari+">");     
+                        
+                        NodoAST token = new NodoAST();
+                        token.setToken(vari);
+                        token.setTipo("token");
+
+                        NodoAST t_expresionD = new NodoAST();
+                        t_expresionD.Nodos = new ArrayList<NodoAST>(); 
+                        t_expresionD.setToken("<T_expresion>");
+                        t_expresionD.setTipo("t expresion");
+                        t_expresionD.Nodos = lista_expresionesD;
+
+                        tnodo.Nodos.add(token);
+                        
+                        RESULT = new ArrayList<NodoAST>();
+                        RESULT.add(t_expresionI);
+                        RESULT.add(tnodo);
+                        RESULT.add(t_expresionD);
+                        :}
+                |EXPRESION:lista_expresionesI por:vari EXPRESION:lista_expresionesD{:
+                        NodoAST t_expresionI = new NodoAST();
+                        t_expresionI.Nodos = new ArrayList<NodoAST>(); 
+                        t_expresionI.setToken("<T_expresion>");
+                        t_expresionI.setTipo("t expresion");
+                        t_expresionI.Nodos = lista_expresionesI;
+                        
+                        NodoAST tnodo = new NodoAST();
+                        tnodo.Nodos = new ArrayList<NodoAST>(); 
+                        tnodo.setToken("<T_"+vari+">");
+                        tnodo.setTipo("<t "+vari+">");     
+                        
+                        NodoAST token = new NodoAST();
+                        token.setToken(vari);
+                        token.setTipo("token");
+
+                        NodoAST t_expresionD = new NodoAST();
+                        t_expresionD.Nodos = new ArrayList<NodoAST>(); 
+                        t_expresionD.setToken("<T_expresion>");
+                        t_expresionD.setTipo("t expresion");
+                        t_expresionD.Nodos = lista_expresionesD;
+
+                        tnodo.Nodos.add(token);
+                        
+                        RESULT = new ArrayList<NodoAST>();
+                        RESULT.add(t_expresionI);
+                        RESULT.add(tnodo);
+                        RESULT.add(t_expresionD);
+                        :}
+                |EXPRESION:lista_expresionesI div:vari EXPRESION:lista_expresionesD{:
+                        NodoAST t_expresionI = new NodoAST();
+                        t_expresionI.Nodos = new ArrayList<NodoAST>(); 
+                        t_expresionI.setToken("<T_expresion>");
+                        t_expresionI.setTipo("t expresion");
+                        t_expresionI.Nodos = lista_expresionesI;
+                        
+                        NodoAST tnodo = new NodoAST();
+                        tnodo.Nodos = new ArrayList<NodoAST>(); 
+                        tnodo.setToken("<T_"+vari+">");
+                        tnodo.setTipo("<t "+vari+">");     
+                        
+                        NodoAST token = new NodoAST();
+                        token.setToken(vari);
+                        token.setTipo("token");
+
+                        NodoAST t_expresionD = new NodoAST();
+                        t_expresionD.Nodos = new ArrayList<NodoAST>(); 
+                        t_expresionD.setToken("<T_expresion>");
+                        t_expresionD.setTipo("t expresion");
+                        t_expresionD.Nodos = lista_expresionesD;
+
+                        tnodo.Nodos.add(token);
+                        
+                        RESULT = new ArrayList<NodoAST>();
+                        RESULT.add(t_expresionI);
+                        RESULT.add(tnodo);
+                        RESULT.add(t_expresionD);
+                        :}
+                |EXPRESION:lista_expresionesI potencia:vari EXPRESION:lista_expresionesD{:
+                        NodoAST t_expresionI = new NodoAST();
+                        t_expresionI.Nodos = new ArrayList<NodoAST>(); 
+                        t_expresionI.setToken("<T_expresion>");
+                        t_expresionI.setTipo("t expresion");
+                        t_expresionI.Nodos = lista_expresionesI;
+                        
+                        NodoAST tnodo = new NodoAST();
+                        tnodo.Nodos = new ArrayList<NodoAST>(); 
+                        tnodo.setToken("<T_"+vari+">");
+                        tnodo.setTipo("<t "+vari+">");     
+                        
+                        NodoAST token = new NodoAST();
+                        token.setToken(vari);
+                        token.setTipo("token");
+
+                        NodoAST t_expresionD = new NodoAST();
+                        t_expresionD.Nodos = new ArrayList<NodoAST>(); 
+                        t_expresionD.setToken("<T_expresion>");
+                        t_expresionD.setTipo("t expresion");
+                        t_expresionD.Nodos = lista_expresionesD;
+
+                        tnodo.Nodos.add(token);
+                        
+                        RESULT = new ArrayList<NodoAST>();
+                        RESULT.add(t_expresionI);
+                        RESULT.add(tnodo);
+                        RESULT.add(t_expresionD);
+                        :}
+                |EXPRESION:lista_expresionesI modulo:vari EXPRESION:lista_expresionesD{:
+                        NodoAST t_expresionI = new NodoAST();
+                        t_expresionI.Nodos = new ArrayList<NodoAST>(); 
+                        t_expresionI.setToken("<T_expresion>");
+                        t_expresionI.setTipo("t expresion");
+                        t_expresionI.Nodos = lista_expresionesI;
+                        
+                        NodoAST tnodo = new NodoAST();
+                        tnodo.Nodos = new ArrayList<NodoAST>(); 
+                        tnodo.setToken("<T_"+vari+">");
+                        tnodo.setTipo("<t "+vari+">");     
+                        
+                        NodoAST token = new NodoAST();
+                        token.setToken(vari);
+                        token.setTipo("token");
+
+                        NodoAST t_expresionD = new NodoAST();
+                        t_expresionD.Nodos = new ArrayList<NodoAST>(); 
+                        t_expresionD.setToken("<T_expresion>");
+                        t_expresionD.setTipo("t expresion");
+                        t_expresionD.Nodos = lista_expresionesD;
+
+                        tnodo.Nodos.add(token);
+                        
+                        RESULT = new ArrayList<NodoAST>();
+                        RESULT.add(t_expresionI);
+                        RESULT.add(tnodo);
+                        RESULT.add(t_expresionD);
+                        :}
+                |EXPRESION:lista_expresionesI mayor:vari EXPRESION:lista_expresionesD{:
+                        NodoAST t_expresionI = new NodoAST();
+                        t_expresionI.Nodos = new ArrayList<NodoAST>(); 
+                        t_expresionI.setToken("<T_expresion>");
+                        t_expresionI.setTipo("t expresion");
+                        t_expresionI.Nodos = lista_expresionesI;
+                        
+                        NodoAST tnodo = new NodoAST();
+                        tnodo.Nodos = new ArrayList<NodoAST>(); 
+                        tnodo.setToken("<T_"+vari+">");
+                        tnodo.setTipo("<t "+vari+">");     
+                        
+                        NodoAST token = new NodoAST();
+                        token.setToken(vari);
+                        token.setTipo("token");
+
+                        NodoAST t_expresionD = new NodoAST();
+                        t_expresionD.Nodos = new ArrayList<NodoAST>(); 
+                        t_expresionD.setToken("<T_expresion>");
+                        t_expresionD.setTipo("t expresion");
+                        t_expresionD.Nodos = lista_expresionesD;
+
+                        tnodo.Nodos.add(token);
+                        
+                        RESULT = new ArrayList<NodoAST>();
+                        RESULT.add(t_expresionI);
+                        RESULT.add(tnodo);
+                        RESULT.add(t_expresionD);
+                        :}
+                |EXPRESION: lista_expresionesI menor:vari EXPRESION:lista_expresionesD{:
+                        NodoAST t_expresionI = new NodoAST();
+                        t_expresionI.Nodos = new ArrayList<NodoAST>(); 
+                        t_expresionI.setToken("<T_expresion>");
+                        t_expresionI.setTipo("t expresion");
+                        t_expresionI.Nodos = lista_expresionesI;
+                        
+                        NodoAST tnodo = new NodoAST();
+                        tnodo.Nodos = new ArrayList<NodoAST>(); 
+                        tnodo.setToken("<T_"+vari+">");
+                        tnodo.setTipo("<t "+vari+">");     
+                        
+                        NodoAST token = new NodoAST();
+                        token.setToken(vari);
+                        token.setTipo("token");
+
+                        NodoAST t_expresionD = new NodoAST();
+                        t_expresionD.Nodos = new ArrayList<NodoAST>(); 
+                        t_expresionD.setToken("<T_expresion>");
+                        t_expresionD.setTipo("t expresion");
+                        t_expresionD.Nodos = lista_expresionesD;
+
+                        tnodo.Nodos.add(token);
+                        
+                        RESULT = new ArrayList<NodoAST>();
+                        RESULT.add(t_expresionI);
+                        RESULT.add(tnodo);
+                        RESULT.add(t_expresionD);
+                        :}
+                |EXPRESION:lista_expresionesI mayorigual:vari EXPRESION:lista_expresionesD{:
+                        NodoAST t_expresionI = new NodoAST();
+                        t_expresionI.Nodos = new ArrayList<NodoAST>(); 
+                        t_expresionI.setToken("<T_expresion>");
+                        t_expresionI.setTipo("t expresion");
+                        t_expresionI.Nodos = lista_expresionesI;
+                        
+                        NodoAST tnodo = new NodoAST();
+                        tnodo.Nodos = new ArrayList<NodoAST>(); 
+                        tnodo.setToken("<T_"+vari+">");
+                        tnodo.setTipo("<t "+vari+">");     
+                        
+                        NodoAST token = new NodoAST();
+                        token.setToken(vari);
+                        token.setTipo("token");
+
+                        NodoAST t_expresionD = new NodoAST();
+                        t_expresionD.Nodos = new ArrayList<NodoAST>(); 
+                        t_expresionD.setToken("<T_expresion>");
+                        t_expresionD.setTipo("t expresion");
+                        t_expresionD.Nodos = lista_expresionesD;
+
+                        tnodo.Nodos.add(token);
+                        
+                        RESULT = new ArrayList<NodoAST>();
+                        RESULT.add(t_expresionI);
+                        RESULT.add(tnodo);
+                        RESULT.add(t_expresionD);
+                        :}
+                |EXPRESION:lista_expresionesI menorigual:vari EXPRESION:lista_expresionesD{:
+                        NodoAST t_expresionI = new NodoAST();
+                        t_expresionI.Nodos = new ArrayList<NodoAST>(); 
+                        t_expresionI.setToken("<T_expresion>");
+                        t_expresionI.setTipo("t expresion");
+                        t_expresionI.Nodos = lista_expresionesI;
+                        
+                        NodoAST tnodo = new NodoAST();
+                        tnodo.Nodos = new ArrayList<NodoAST>(); 
+                        tnodo.setToken("<T_"+vari+">");
+                        tnodo.setTipo("<t "+vari+">");     
+                        
+                        NodoAST token = new NodoAST();
+                        token.setToken(vari);
+                        token.setTipo("token");
+
+                        NodoAST t_expresionD = new NodoAST();
+                        t_expresionD.Nodos = new ArrayList<NodoAST>(); 
+                        t_expresionD.setToken("<T_expresion>");
+                        t_expresionD.setTipo("t expresion");
+                        t_expresionD.Nodos = lista_expresionesD;
+
+                        tnodo.Nodos.add(token);
+                        
+                        RESULT = new ArrayList<NodoAST>();
+                        RESULT.add(t_expresionI);
+                        RESULT.add(tnodo);
+                        RESULT.add(t_expresionD);
+                        :}
+                |EXPRESION:lista_expresionesI esigual:vari EXPRESION:lista_expresionesD{:
+                        NodoAST t_expresionI = new NodoAST();
+                        t_expresionI.Nodos = new ArrayList<NodoAST>(); 
+                        t_expresionI.setToken("<T_expresion>");
+                        t_expresionI.setTipo("t expresion");
+                        t_expresionI.Nodos = lista_expresionesI;
+                        
+                        NodoAST tnodo = new NodoAST();
+                        tnodo.Nodos = new ArrayList<NodoAST>(); 
+                        tnodo.setToken("<T_"+vari+">");
+                        tnodo.setTipo("<t "+vari+">");     
+                        
+                        NodoAST token = new NodoAST();
+                        token.setToken(vari);
+                        token.setTipo("token");
+
+                        NodoAST t_expresionD = new NodoAST();
+                        t_expresionD.Nodos = new ArrayList<NodoAST>(); 
+                        t_expresionD.setToken("<T_expresion>");
+                        t_expresionD.setTipo("t expresion");
+                        t_expresionD.Nodos = lista_expresionesD;
+
+                        tnodo.Nodos.add(token);
+                        
+                        RESULT = new ArrayList<NodoAST>();
+                        RESULT.add(t_expresionI);
+                        RESULT.add(tnodo);
+                        RESULT.add(t_expresionD);
+                        :}
+                |EXPRESION:lista_expresionesI esdiferente:vari EXPRESION:lista_expresionesD{:
+                        NodoAST t_expresionI = new NodoAST();
+                        t_expresionI.Nodos = new ArrayList<NodoAST>(); 
+                        t_expresionI.setToken("<T_expresion>");
+                        t_expresionI.setTipo("t expresion");
+                        t_expresionI.Nodos = lista_expresionesI;
+                        
+                        NodoAST tnodo = new NodoAST();
+                        tnodo.Nodos = new ArrayList<NodoAST>(); 
+                        tnodo.setToken("<T_"+vari+">");
+                        tnodo.setTipo("<t "+vari+">");     
+                        
+                        NodoAST token = new NodoAST();
+                        token.setToken(vari);
+                        token.setTipo("token");
+
+                        NodoAST t_expresionD = new NodoAST();
+                        t_expresionD.Nodos = new ArrayList<NodoAST>(); 
+                        t_expresionD.setToken("<T_expresion>");
+                        t_expresionD.setTipo("t expresion");
+                        t_expresionD.Nodos = lista_expresionesD;
+
+                        tnodo.Nodos.add(token);
+                        
+                        RESULT = new ArrayList<NodoAST>();
+                        RESULT.add(t_expresionI);
+                        RESULT.add(tnodo);
+                        RESULT.add(t_expresionD);
+                        :}
+                |EXPRESION:lista_expresionesI or:vari EXPRESION:lista_expresionesD{:
+                        NodoAST t_expresionI = new NodoAST();
+                        t_expresionI.Nodos = new ArrayList<NodoAST>(); 
+                        t_expresionI.setToken("<T_expresion>");
+                        t_expresionI.setTipo("t expresion");
+                        t_expresionI.Nodos = lista_expresionesI;
+                        
+                        NodoAST tnodo = new NodoAST();
+                        tnodo.Nodos = new ArrayList<NodoAST>(); 
+                        tnodo.setToken("<T_"+vari+">");
+                        tnodo.setTipo("<t "+vari+">");     
+                        
+                        NodoAST token = new NodoAST();
+                        token.setToken(vari);
+                        token.setTipo("token");
+
+                        NodoAST t_expresionD = new NodoAST();
+                        t_expresionD.Nodos = new ArrayList<NodoAST>(); 
+                        t_expresionD.setToken("<T_expresion>");
+                        t_expresionD.setTipo("t expresion");
+                        t_expresionD.Nodos = lista_expresionesD;
+
+                        tnodo.Nodos.add(token);
+                        
+                        RESULT = new ArrayList<NodoAST>();
+                        RESULT.add(t_expresionI);
+                        RESULT.add(tnodo);
+                        RESULT.add(t_expresionD);
+                        
+                :}
+                |EXPRESION:lista_expresionesI and:var_and EXPRESION:lista_expresionesD{:
+                        NodoAST t_expresionI = new NodoAST();
+                        t_expresionI.Nodos = new ArrayList<NodoAST>(); 
+                        t_expresionI.setToken("<T_expresion>");
+                        t_expresionI.setTipo("t expresion");
+                        t_expresionI.Nodos = lista_expresionesI;
+                        
+                        NodoAST t_and = new NodoAST();
+                        t_and.Nodos = new ArrayList<NodoAST>(); 
+                        t_and.setToken("<T_and>");
+                        t_and.setTipo("t and");     
+                        
+                        NodoAST n_and = new NodoAST();
+                        n_and.setToken(var_and);
+                        n_and.setTipo("token");
+
+                        NodoAST t_expresionD = new NodoAST();
+                        t_expresionD.Nodos = new ArrayList<NodoAST>(); 
+                        t_expresionD.setToken("<T_expresion>");
+                        t_expresionD.setTipo("t expresion");
+                        t_expresionD.Nodos = lista_expresionesD;
+
+                        t_and.Nodos.add(n_and);
+                        
+                        RESULT = new ArrayList<NodoAST>();
+                        RESULT.add(t_expresionI);
+                        RESULT.add(t_and);
+                        RESULT.add(t_expresionD);
+                        
+                :}                
+                |resta:var_resta EXPRESION:lista_expresiones{:
+                        NodoAST t_resta = new NodoAST();
+                        t_resta.Nodos = new ArrayList<NodoAST>(); 
+                        t_resta.setToken("<T_abre_parentesis>");
+                        t_resta.setTipo("t abre parentesis");     
+                        
+                        NodoAST n_resta = new NodoAST();
+                        n_resta.setToken(var_resta);
+                        n_resta.setTipo("token");
+
+                        NodoAST t_expresion = new NodoAST();
+                        t_expresion.Nodos = new ArrayList<NodoAST>(); 
+                        t_expresion.setToken("<T_expresion>");
+                        t_expresion.setTipo("t expresion");
+                        t_expresion.Nodos = lista_expresiones;
+
+                        t_resta.Nodos.add(n_resta);
+                        
+                        RESULT = new ArrayList<NodoAST>();
+                        RESULT.add(t_resta);
+                        RESULT.add(t_expresion);
+                        
+                :}
+                |not:var_not EXPRESION:lista_expresiones{:
+                        NodoAST t_not = new NodoAST();
+                        t_not.Nodos = new ArrayList<NodoAST>(); 
+                        t_not.setToken("<T_abre_parentesis>");
+                        t_not.setTipo("t abre parentesis");     
+                        
+                        NodoAST n_not = new NodoAST();
+                        n_not.setToken(var_not);
+                        n_not.setTipo("token");
+
+                        NodoAST t_expresion = new NodoAST();
+                        t_expresion.Nodos = new ArrayList<NodoAST>(); 
+                        t_expresion.setToken("<T_expresion>");
+                        t_expresion.setTipo("t expresion");
+                        t_expresion.Nodos = lista_expresiones;
+
+                        t_not.Nodos.add(n_not);
+                        
+                        RESULT = new ArrayList<NodoAST>();
+                        RESULT.add(t_not);
+                        RESULT.add(t_expresion);
+                        
+
+                :}
+                |aparentecis: apar EXPRESION:lista_expresiones cparentecis:cpar{:
+                        NodoAST t_apar = new NodoAST();
+                        t_apar.Nodos = new ArrayList<NodoAST>(); 
+                        t_apar.setToken("<T_abre_parentesis>");
+                        t_apar.setTipo("t abre parentesis");     
+                        
+                        NodoAST n_apar = new NodoAST();
+                        n_apar.setToken(apar);
+                        n_apar.setTipo("token");
+
+                        NodoAST t_expresion = new NodoAST();
+                        t_expresion.Nodos = lista_expresiones; 
+                        t_expresion.setToken("<T_expresion>");
+                        t_expresion.setTipo("t expresion");
+
+                        NodoAST t_cpar = new NodoAST();
+                        t_cpar.Nodos = new ArrayList<NodoAST>(); 
+                        t_cpar.setToken("<T_cierra_parentesis>");
+                        t_cpar.setTipo("t cierra parentesis");     
+                        
+                        NodoAST n_cpar = new NodoAST();
+                        n_cpar.setToken(cpar);
+                        n_cpar.setTipo("token");
+
+                        t_apar.Nodos.add(n_apar);
+                        t_cpar.Nodos.add(n_cpar);
+                        
+                        RESULT = new ArrayList<NodoAST>();
+                        RESULT.add(t_apar);
+                        RESULT.add(t_expresion);
+                        RESULT.add(t_cpar);
+                        
+
+
+
+                :}
+                |var_identificador:var_id{:
+                        NodoAST t_identificador = new NodoAST();
+                        t_identificador.Nodos = new ArrayList<NodoAST>(); 
+                        t_identificador.setToken("<T_identificador>");
+                        t_identificador.setTipo("t identificador");     
+                        
+                        NodoAST n_identificador = new NodoAST();
+                        n_identificador.setToken(var_id);
+                        n_identificador.setTipo("token");
+                        
+                        t_identificador.Nodos.add(n_identificador);
+                        NodoAST t_expresion = new NodoAST();
+                        t_expresion.Nodos = new ArrayList<NodoAST>(); 
+                        t_expresion.setToken("<T_expresion>");
+                        t_expresion.setTipo("t expresion");
+                        t_expresion.Nodos.add(t_identificador);
+                        
+                        RESULT = new ArrayList<NodoAST>(); 
+                        RESULT.add(t_expresion);
+                        
+
+                        
+
+                :}
+                |EXPRESIONVAL{:
+                        NodoAST t_expresion = new NodoAST();
+                        t_expresion.Nodos = new ArrayList<NodoAST>(); 
+                        t_expresion.setToken("<T_expresion>");
+                        t_expresion.setTipo("t expresion");
+                        t_expresion.Nodos.add(nodo_aux_val);
+                        
+                        RESULT = new ArrayList<NodoAST>(); 
+                        RESULT.add(t_expresion);
+                        
+
+                :};
+
+
+INST_SI ::= si:vari1 EXPRESION:lista_expresiones enton:vari2 CODIGO:lista_codigo {:
+                        NodoAST t_expresionI = new NodoAST();
+                        t_expresionI.Nodos = lista_expresiones; 
+                        t_expresionI.setToken("<T_expresion>");
+                        t_expresionI.setTipo("t expresion");
+                        
+                        NodoAST tnodo = new NodoAST();
+                        tnodo.Nodos = new ArrayList<NodoAST>(); 
+                        tnodo.setToken("<T_"+vari1+">");
+                        tnodo.setTipo("<t "+vari1+">");     
+                        
+                        NodoAST token = new NodoAST();
+                        token.setToken(vari1);
+                        token.setTipo("token");
+
+                        NodoAST tnodo2 = new NodoAST();
+                        tnodo2.Nodos = new ArrayList<NodoAST>(); 
+                        tnodo2.setToken("<T_"+vari2+">");
+                        tnodo2.setTipo("<t "+vari2+">");     
+                        
+                        NodoAST token2 = new NodoAST();
+                        token2.setToken(vari2);
+                        token2.setTipo("token");                        
+
+                        NodoAST t_codigoI = new NodoAST();
+                        t_codigoI.Nodos = new ArrayList<NodoAST>(); 
+                        t_codigoI.setToken("<T_Instrucciones>");
+                        t_codigoI.setTipo("t T_Instrucciones");
+                        t_codigoI.Nodos = lista_codigo;
+
+                        
+                        
+                        tnodo.Nodos.add(token);
+                        tnodo2.Nodos.add(token2);
+
+                        
+                        RESULT = new ArrayList<NodoAST>();
+                        RESULT.add(tnodo);
+                        RESULT.add(t_expresionI);
+                        RESULT.add(tnodo2);
+                        RESULT.add(t_codigoI);
+
+            
+            
+            :}
+            |si:vari1 EXPRESION:lista_expresiones enton:vari2 CODIGO:lista_codigo de_lo_contrario:vari3 CODIGO:lista_codigo2{:
+                        NodoAST t_expresionI = new NodoAST();
+                        t_expresionI.Nodos = new ArrayList<NodoAST>(); 
+                        t_expresionI.setToken("<T_expresion>");
+                        t_expresionI.setTipo("t expresion");
+                        t_expresionI.Nodos = lista_expresiones;
+                        
+                        NodoAST tnodo = new NodoAST();
+                        tnodo.Nodos = new ArrayList<NodoAST>(); 
+                        tnodo.setToken("<T_"+vari1+">");
+                        tnodo.setTipo("<t "+vari1+">");     
+                        
+                        NodoAST token = new NodoAST();
+                        token.setToken(vari1);
+                        token.setTipo("token");
+
+                        NodoAST tnodo2 = new NodoAST();
+                        tnodo2.Nodos = new ArrayList<NodoAST>(); 
+                        tnodo2.setToken("<T_"+vari2+">");
+                        tnodo2.setTipo("<t "+vari2+">");     
+                        
+                        NodoAST token2 = new NodoAST();
+                        token2.setToken(vari2);
+                        token2.setTipo("token");
+
+                        NodoAST tnodo3 = new NodoAST();
+                        tnodo3.Nodos = new ArrayList<NodoAST>(); 
+                        tnodo3.setToken("<T_"+vari3+">");
+                        tnodo3.setTipo("<t "+vari3+">");     
+                        
+                        NodoAST token3 = new NodoAST();
+                        token3.setToken(vari3);
+                        token3.setTipo("token");
+
+                        NodoAST t_codigoI = new NodoAST();
+                        t_codigoI.Nodos = new ArrayList<NodoAST>(); 
+                        t_codigoI.setToken("<T_Instrucciones>");
+                        t_codigoI.setTipo("t T_Instrucciones");
+                        t_codigoI.Nodos = lista_codigo;
+
+                        NodoAST t_codigoD = new NodoAST();
+                        t_codigoD.Nodos = new ArrayList<NodoAST>(); 
+                        t_codigoD.setToken("<T_Instrucciones>");
+                        t_codigoD.setTipo("t T_Instrucciones");
+                        t_codigoD.Nodos = lista_codigo2;
+
+                        
+                        
+                        tnodo.Nodos.add(token);
+                        tnodo2.Nodos.add(token2);
+                        tnodo3.Nodos.add(token3);
+
+                        
+                        RESULT = new ArrayList<NodoAST>();
+                        RESULT.add(tnodo);
+                        RESULT.add(t_expresionI);
+                        RESULT.add(tnodo2);
+                        RESULT.add(t_codigoI);
+                        RESULT.add(tnodo3);
+                        RESULT.add(t_codigoD);
+
+            
+            
+            :}
+            |si:vari1 EXPRESION:lista_expresiones enton:vari2 CODIGO:lista_codigo OSI:lista_osi{:
+                        NodoAST t_expresionI = new NodoAST();
+                        t_expresionI.Nodos = new ArrayList<NodoAST>(); 
+                        t_expresionI.setToken("<T_expresion>");
+                        t_expresionI.setTipo("t expresion");
+                        t_expresionI.Nodos = lista_expresiones;
+                        
+                        NodoAST tnodo = new NodoAST();
+                        tnodo.Nodos = new ArrayList<NodoAST>(); 
+                        tnodo.setToken("<T_"+vari1+">");
+                        tnodo.setTipo("<t "+vari1+">");     
+                        
+                        NodoAST token = new NodoAST();
+                        token.setToken(vari1);
+                        token.setTipo("token");
+
+                        NodoAST tnodo2 = new NodoAST();
+                        tnodo2.Nodos = new ArrayList<NodoAST>(); 
+                        tnodo2.setToken("<T_"+vari2+">");
+                        tnodo2.setTipo("<t "+vari2+">");     
+                        
+                        NodoAST token2 = new NodoAST();
+                        token2.setToken(vari2);
+                        token2.setTipo("token");                        
+
+                        NodoAST t_codigoI = new NodoAST();
+                        t_codigoI.Nodos = new ArrayList<NodoAST>(); 
+                        t_codigoI.setToken("<T_Instrucciones>");
+                        t_codigoI.setTipo("t T_Instrucciones");
+                        t_codigoI.Nodos = lista_codigo;
+
+                        NodoAST t_expresionO = new NodoAST();
+                        t_expresionO.Nodos = new ArrayList<NodoAST>(); 
+                        t_expresionO.setToken("<T_OSI>");
+                        t_expresionO.setTipo("t expresion");
+                        t_expresionO.Nodos = lista_osi;
+                        
+                        tnodo.Nodos.add(token);
+                        tnodo2.Nodos.add(token2);
+
+                        
+                        RESULT = new ArrayList<NodoAST>();
+                        RESULT.add(tnodo);
+                        RESULT.add(t_expresionI);
+                        RESULT.add(tnodo2);
+                        RESULT.add(t_codigoI);
+                        RESULT.add(t_expresionO);
+
+            
+            
+            :}
+            |si:vari1 EXPRESION:lista_expresiones enton:vari2 CODIGO:lista_codigo OSI:lista_osi de_lo_contrario:vari3 CODIGO:lista_codigo2{:
+                        NodoAST t_expresionI = new NodoAST();
+                        t_expresionI.Nodos = new ArrayList<NodoAST>(); 
+                        t_expresionI.setToken("<T_expresion>");
+                        t_expresionI.setTipo("t expresion");
+                        t_expresionI.Nodos = lista_expresiones;
+                        
+                        NodoAST tnodo = new NodoAST();
+                        tnodo.Nodos = new ArrayList<NodoAST>(); 
+                        tnodo.setToken("<T_"+vari1+">");
+                        tnodo.setTipo("<t "+vari1+">");     
+                        
+                        NodoAST token = new NodoAST();
+                        token.setToken(vari1);
+                        token.setTipo("token");
+
+                        NodoAST tnodo2 = new NodoAST();
+                        tnodo2.Nodos = new ArrayList<NodoAST>(); 
+                        tnodo2.setToken("<T_"+vari2+">");
+                        tnodo2.setTipo("<t "+vari2+">");     
+                        
+                        NodoAST token2 = new NodoAST();
+                        token2.setToken(vari2);
+                        token2.setTipo("token");
+
+                        NodoAST tnodo3 = new NodoAST();
+                        tnodo3.Nodos = new ArrayList<NodoAST>(); 
+                        tnodo3.setToken("<T_"+vari3+">");
+                        tnodo3.setTipo("<t "+vari3+">");     
+                        
+                        NodoAST token3 = new NodoAST();
+                        token3.setToken(vari3);
+                        token3.setTipo("token");
+
+                        NodoAST t_codigoI = new NodoAST();
+                        t_codigoI.Nodos = new ArrayList<NodoAST>(); 
+                        t_codigoI.setToken("<T_Instrucciones>");
+                        t_codigoI.setTipo("t T_Instrucciones");
+                        t_codigoI.Nodos = lista_codigo;
+
+                        NodoAST t_codigoD = new NodoAST();
+                        t_codigoD.Nodos = new ArrayList<NodoAST>(); 
+                        t_codigoD.setToken("<T_Instrucciones>");
+                        t_codigoD.setTipo("t T_Instrucciones");
+                        t_codigoD.Nodos = lista_codigo2;
+
+                        NodoAST t_expresionO = new NodoAST();
+                        t_expresionO.Nodos = new ArrayList<NodoAST>(); 
+                        t_expresionO.setToken("<T_OSI>");
+                        t_expresionO.setTipo("t expresion");
+                        t_expresionO.Nodos = lista_osi;
+                        
+                        tnodo.Nodos.add(token);
+                        tnodo2.Nodos.add(token2);
+                        tnodo3.Nodos.add(token3);
+
+                        
+                        RESULT = new ArrayList<NodoAST>();
+                        RESULT.add(tnodo);
+                        RESULT.add(t_expresionI);
+                        RESULT.add(tnodo2);
+                        RESULT.add(t_codigoI);
+                        RESULT.add(t_expresionO);
+                        RESULT.add(tnodo3);
+                        RESULT.add(t_codigoD);
+
+
+
+            :};
+
+OSI ::= OSI:lista_osi CONDELOSI:lista_conosi{:
+                        NodoAST t_expresion = new NodoAST();
+                        t_expresion.Nodos = new ArrayList<NodoAST>(); 
+                        t_expresion.setToken("<T_expresion>");
+                        t_expresion.setTipo("t expresion");
+                        t_expresion.Nodos = lista_osi;
+                        NodoAST t_expresion2 = new NodoAST();
+                        t_expresion2.Nodos = new ArrayList<NodoAST>(); 
+                        t_expresion2.setToken("<T_expresion>");
+                        t_expresion2.setTipo("t expresion");
+                        t_expresion2.Nodos = lista_osi;
+                        RESULT = new ArrayList<NodoAST>(); 
+                        RESULT.add(t_expresion);
+                        RESULT.add(t_expresion2);
+                        :}
+        |CONDELOSI:lista_conosi{:
+                        NodoAST t_expresion = new NodoAST();
+                        t_expresion.Nodos = new ArrayList<NodoAST>(); 
+                        t_expresion.setToken("<T_expresion>");
+                        t_expresion.setTipo("t expresion");
+                        t_expresion.Nodos = lista_conosi;
+                        RESULT = new ArrayList<NodoAST>(); 
+                        RESULT.add(t_expresion);
+        :};
+
+CONDELOSI ::= o_si:vari EXPRESION:lista_expresionesI CODIGO{:
+                        NodoAST t_expresion = new NodoAST();
+                        t_expresion.Nodos = new ArrayList<NodoAST>(); 
+                        t_expresion.setToken("<T_expresion>");
+                        t_expresion.setTipo("t expresion");
+                        t_expresion.Nodos = lista_expresionesI;
+                        
+                        NodoAST tnodo = new NodoAST();
+                        tnodo.Nodos = new ArrayList<NodoAST>(); 
+                        tnodo.setToken("<T_"+vari+">");
+                        tnodo.setTipo("<t "+vari+">");     
+                        
+                        NodoAST token = new NodoAST();
+                        token.setToken(vari);
+                        token.setTipo("token");
+
+                        
+
+                        tnodo.Nodos.add(token);
+                        
+                        RESULT = new ArrayList<NodoAST>();
+                        RESULT.add(tnodo);
+                        RESULT.add(t_expresion);
+                        RESULT.add(nodo_aux);
+                        
+:};
+
+
+
+INST_SEGUN::= segun var_identificador hacer CASOS de_lo_contrario CODIGO
+                |segun var_identificador hacer CASOS
+                |segun var_identificador hacer de_lo_contrario CODIGO;
+
+CASOS::= CASOS CASO
+        |CASO;
+
+CASO ::= interrogacionA var_identificador interrogacionC enton CODIGO;
+
+
 
 
 

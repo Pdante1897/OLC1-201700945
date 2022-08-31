@@ -34,14 +34,25 @@ public class parser extends java_cup.runtime.lr_parser {
   /** Production table. */
   protected static final short _production_table[][] = 
     unpackFromStrings(new String[] {
-    "\000\027\000\002\002\004\000\002\002\003\000\002\003" +
-    "\005\000\002\004\003\000\002\004\004\000\002\010\004" +
-    "\000\002\010\004\000\002\005\010\000\002\011\005\000" +
-    "\002\012\003\000\002\012\004\000\002\013\004\000\002" +
-    "\013\003\000\002\006\003\000\002\006\003\000\002\006" +
-    "\003\000\002\006\003\000\002\007\003\000\002\007\003" +
-    "\000\002\007\003\000\002\007\003\000\002\007\003\000" +
-    "\002\007\003" });
+    "\000\073\000\002\002\004\000\002\002\003\000\002\004" +
+    "\005\000\002\003\003\000\002\003\004\000\002\010\004" +
+    "\000\002\010\004\000\002\010\004\000\002\010\004\000" +
+    "\002\010\004\000\002\005\010\000\002\011\005\000\002" +
+    "\012\003\000\002\012\004\000\002\013\004\000\002\013" +
+    "\003\000\002\006\003\000\002\006\003\000\002\006\003" +
+    "\000\002\006\003\000\002\007\003\000\002\007\003\000" +
+    "\002\007\003\000\002\007\003\000\002\007\003\000\002" +
+    "\007\003\000\002\014\005\000\002\015\005\000\002\015" +
+    "\005\000\002\015\005\000\002\015\005\000\002\015\005" +
+    "\000\002\015\005\000\002\015\005\000\002\015\005\000" +
+    "\002\015\005\000\002\015\005\000\002\015\005\000\002" +
+    "\015\005\000\002\015\005\000\002\015\005\000\002\015" +
+    "\004\000\002\015\004\000\002\015\005\000\002\015\003" +
+    "\000\002\015\003\000\002\016\006\000\002\016\010\000" +
+    "\002\016\007\000\002\016\011\000\002\017\004\000\002" +
+    "\017\003\000\002\021\005\000\002\022\010\000\002\022" +
+    "\006\000\002\022\007\000\002\024\004\000\002\024\003" +
+    "\000\002\023\007" });
 
   /** Access to production table. */
   public short[][] production_table() {return _production_table;}
@@ -49,27 +60,196 @@ public class parser extends java_cup.runtime.lr_parser {
   /** Parse-action table. */
   protected static final short[][] _action_table = 
     unpackFromStrings(new String[] {
-    "\000\044\000\004\036\006\001\002\000\004\002\000\001" +
-    "\002\000\004\002\046\001\002\000\006\040\013\101\012" +
-    "\001\002\000\004\022\045\001\002\000\004\022\044\001" +
-    "\002\000\010\037\ufffe\040\ufffe\101\ufffe\001\002\000\004" +
-    "\004\036\001\002\000\004\101\017\001\002\000\010\037" +
-    "\016\040\013\101\012\001\002\000\010\037\ufffd\040\ufffd" +
-    "\101\ufffd\001\002\000\004\002\uffff\001\002\000\004\041" +
-    "\020\001\002\000\012\032\025\033\022\034\021\035\024" +
-    "\001\002\000\004\042\ufff2\001\002\000\004\042\ufff4\001" +
-    "\002\000\004\042\026\001\002\000\004\042\ufff1\001\002" +
-    "\000\004\042\ufff3\001\002\000\016\067\031\070\034\077" +
-    "\032\102\027\103\030\104\035\001\002\000\004\022\ufff0" +
-    "\001\002\000\004\022\uffef\001\002\000\004\022\uffec\001" +
-    "\002\000\004\022\uffee\001\002\000\004\022\ufffa\001\002" +
-    "\000\004\022\uffeb\001\002\000\004\022\uffed\001\002\000" +
-    "\004\101\040\001\002\000\006\022\ufff9\101\040\001\002" +
-    "\000\010\016\042\022\ufff5\101\ufff5\001\002\000\006\022" +
-    "\ufff8\101\ufff8\001\002\000\006\022\ufff6\101\ufff6\001\002" +
-    "\000\006\022\ufff7\101\ufff7\001\002\000\010\037\ufffc\040" +
-    "\ufffc\101\ufffc\001\002\000\010\037\ufffb\040\ufffb\101\ufffb" +
-    "\001\002\000\004\002\001\001\002" });
+    "\000\157\000\004\051\006\001\002\000\004\002\000\001" +
+    "\002\000\004\002\161\001\002\000\012\053\016\056\013" +
+    "\063\015\114\010\001\002\000\004\062\160\001\002\000" +
+    "\012\004\156\017\030\044\ufff2\114\ufff2\001\002\000\004" +
+    "\023\155\001\002\000\004\023\154\001\002\000\026\016" +
+    "\033\034\034\040\032\102\040\103\041\112\035\114\031" +
+    "\115\036\116\037\117\042\001\002\000\014\052\136\053" +
+    "\016\056\013\063\015\114\010\001\002\000\004\114\117" +
+    "\001\002\000\004\114\106\001\002\000\004\023\105\001" +
+    "\002\000\026\014\ufffe\052\ufffe\053\ufffe\056\ufffe\060\ufffe" +
+    "\061\ufffe\062\ufffe\063\ufffe\065\ufffe\114\ufffe\001\002\000" +
+    "\010\023\ufff5\044\ufff5\114\ufff5\001\002\000\006\044\025" +
+    "\114\026\001\002\000\004\065\024\001\002\000\026\014" +
+    "\ufff8\052\ufff8\053\ufff8\056\ufff8\060\ufff8\061\ufff8\062\ufff8" +
+    "\063\ufff8\065\ufff8\114\ufff8\001\002\000\026\016\033\034" +
+    "\034\040\032\102\040\103\041\112\035\114\031\115\036" +
+    "\116\037\117\042\001\002\000\012\017\030\023\ufff2\044" +
+    "\ufff2\114\ufff2\001\002\000\010\023\ufff4\044\ufff4\114\ufff4" +
+    "\001\002\000\010\023\ufff3\044\ufff3\114\ufff3\001\002\000" +
+    "\054\005\uffd5\006\uffd5\007\uffd5\011\uffd5\012\uffd5\016\uffd5" +
+    "\023\uffd5\024\uffd5\025\uffd5\026\uffd5\027\uffd5\030\uffd5\031" +
+    "\uffd5\032\uffd5\033\uffd5\037\uffd5\053\uffd5\056\uffd5\057\uffd5" +
+    "\063\uffd5\114\uffd5\001\002\000\026\016\033\034\034\040" +
+    "\032\102\040\103\041\112\035\114\031\115\036\116\037" +
+    "\117\042\001\002\000\026\016\033\034\034\040\032\102" +
+    "\040\103\041\112\035\114\031\115\036\116\037\117\042" +
+    "\001\002\000\026\016\033\034\034\040\032\102\040\103" +
+    "\041\112\035\114\031\115\036\116\037\117\042\001\002" +
+    "\000\054\005\uffeb\006\uffeb\007\uffeb\011\uffeb\012\uffeb\016" +
+    "\uffeb\023\uffeb\024\uffeb\025\uffeb\026\uffeb\027\uffeb\030\uffeb" +
+    "\031\uffeb\032\uffeb\033\uffeb\037\uffeb\053\uffeb\056\uffeb\057" +
+    "\uffeb\063\uffeb\114\uffeb\001\002\000\054\005\uffed\006\uffed" +
+    "\007\uffed\011\uffed\012\uffed\016\uffed\023\uffed\024\uffed\025" +
+    "\uffed\026\uffed\027\uffed\030\uffed\031\uffed\032\uffed\033\uffed" +
+    "\037\uffed\053\uffed\056\uffed\057\uffed\063\uffed\114\uffed\001" +
+    "\002\000\054\005\uffec\006\uffec\007\uffec\011\uffec\012\uffec" +
+    "\016\uffec\023\uffec\024\uffec\025\uffec\026\uffec\027\uffec\030" +
+    "\uffec\031\uffec\032\uffec\033\uffec\037\uffec\053\uffec\056\uffec" +
+    "\057\uffec\063\uffec\114\uffec\001\002\000\054\005\uffe9\006" +
+    "\uffe9\007\uffe9\011\uffe9\012\uffe9\016\uffe9\023\uffe9\024\uffe9" +
+    "\025\uffe9\026\uffe9\027\uffe9\030\uffe9\031\uffe9\032\uffe9\033" +
+    "\uffe9\037\uffe9\053\uffe9\056\uffe9\057\uffe9\063\uffe9\114\uffe9" +
+    "\001\002\000\054\005\uffe8\006\uffe8\007\uffe8\011\uffe8\012" +
+    "\uffe8\016\uffe8\023\uffe8\024\uffe8\025\uffe8\026\uffe8\027\uffe8" +
+    "\030\uffe8\031\uffe8\032\uffe8\033\uffe8\037\uffe8\053\uffe8\056" +
+    "\uffe8\057\uffe8\063\uffe8\114\uffe8\001\002\000\054\005\uffea" +
+    "\006\uffea\007\uffea\011\uffea\012\uffea\016\uffea\023\uffea\024" +
+    "\uffea\025\uffea\026\uffea\027\uffea\030\uffea\031\uffea\032\uffea" +
+    "\033\uffea\037\uffea\053\uffea\056\uffea\057\uffea\063\uffea\114" +
+    "\uffea\001\002\000\040\005\051\006\060\007\046\011\045" +
+    "\012\057\016\050\023\uffe7\024\062\025\056\026\052\027" +
+    "\061\030\053\031\047\032\054\033\055\001\002\000\054" +
+    "\005\uffd4\006\uffd4\007\uffd4\011\uffd4\012\uffd4\016\uffd4\023" +
+    "\uffd4\024\uffd4\025\uffd4\026\uffd4\027\uffd4\030\uffd4\031\uffd4" +
+    "\032\uffd4\033\uffd4\037\uffd4\053\uffd4\056\uffd4\057\uffd4\063" +
+    "\uffd4\114\uffd4\001\002\000\026\016\033\034\034\040\032" +
+    "\102\040\103\041\112\035\114\031\115\036\116\037\117" +
+    "\042\001\002\000\026\016\033\034\034\040\032\102\040" +
+    "\103\041\112\035\114\031\115\036\116\037\117\042\001" +
+    "\002\000\026\016\033\034\034\040\032\102\040\103\041" +
+    "\112\035\114\031\115\036\116\037\117\042\001\002\000" +
+    "\026\016\033\034\034\040\032\102\040\103\041\112\035" +
+    "\114\031\115\036\116\037\117\042\001\002\000\026\016" +
+    "\033\034\034\040\032\102\040\103\041\112\035\114\031" +
+    "\115\036\116\037\117\042\001\002\000\026\016\033\034" +
+    "\034\040\032\102\040\103\041\112\035\114\031\115\036" +
+    "\116\037\117\042\001\002\000\026\016\033\034\034\040" +
+    "\032\102\040\103\041\112\035\114\031\115\036\116\037" +
+    "\117\042\001\002\000\026\016\033\034\034\040\032\102" +
+    "\040\103\041\112\035\114\031\115\036\116\037\117\042" +
+    "\001\002\000\026\016\033\034\034\040\032\102\040\103" +
+    "\041\112\035\114\031\115\036\116\037\117\042\001\002" +
+    "\000\026\016\033\034\034\040\032\102\040\103\041\112" +
+    "\035\114\031\115\036\116\037\117\042\001\002\000\026" +
+    "\016\033\034\034\040\032\102\040\103\041\112\035\114" +
+    "\031\115\036\116\037\117\042\001\002\000\026\016\033" +
+    "\034\034\040\032\102\040\103\041\112\035\114\031\115" +
+    "\036\116\037\117\042\001\002\000\026\016\033\034\034" +
+    "\040\032\102\040\103\041\112\035\114\031\115\036\116" +
+    "\037\117\042\001\002\000\026\016\033\034\034\040\032" +
+    "\102\040\103\041\112\035\114\031\115\036\116\037\117" +
+    "\042\001\002\000\054\005\uffe0\006\uffe0\007\uffe0\011\045" +
+    "\012\uffe0\016\050\023\uffe0\024\uffe0\025\uffe0\026\uffe0\027" +
+    "\uffe0\030\uffe0\031\uffe0\032\uffe0\033\uffe0\037\uffe0\053\uffe0" +
+    "\056\uffe0\057\uffe0\063\uffe0\114\uffe0\001\002\000\054\005" +
+    "\uffdd\006\uffdd\007\uffdd\011\045\012\uffdd\016\050\023\uffdd" +
+    "\024\uffdd\025\uffdd\026\uffdd\027\uffdd\030\uffdd\031\uffdd\032" +
+    "\uffdd\033\uffdd\037\uffdd\053\uffdd\056\uffdd\057\uffdd\063\uffdd" +
+    "\114\uffdd\001\002\000\054\005\uffe4\006\uffe4\007\uffe4\011" +
+    "\045\012\uffe4\016\050\023\uffe4\024\062\025\056\026\052" +
+    "\027\061\030\053\031\047\032\054\033\055\037\uffe4\053" +
+    "\uffe4\056\uffe4\057\uffe4\063\uffe4\114\uffe4\001\002\000\054" +
+    "\005\uffe1\006\uffe1\007\uffe1\011\045\012\uffe1\016\050\023" +
+    "\uffe1\024\062\025\056\026\052\027\061\030\053\031\047" +
+    "\032\054\033\055\037\uffe1\053\uffe1\056\uffe1\057\uffe1\063" +
+    "\uffe1\114\uffe1\001\002\000\054\005\uffdf\006\uffdf\007\uffdf" +
+    "\011\045\012\uffdf\016\050\023\uffdf\024\uffdf\025\uffdf\026" +
+    "\uffdf\027\uffdf\030\uffdf\031\uffdf\032\uffdf\033\uffdf\037\uffdf" +
+    "\053\uffdf\056\uffdf\057\uffdf\063\uffdf\114\uffdf\001\002\000" +
+    "\054\005\uffd9\006\uffd9\007\uffd9\011\045\012\uffd9\016\050" +
+    "\023\uffd9\024\062\025\056\026\052\027\061\030\053\031" +
+    "\047\032\uffd9\033\uffd9\037\uffd9\053\uffd9\056\uffd9\057\uffd9" +
+    "\063\uffd9\114\uffd9\001\002\000\054\005\uffda\006\uffda\007" +
+    "\uffda\011\045\012\uffda\016\050\023\uffda\024\062\025\056" +
+    "\026\052\027\061\030\053\031\047\032\uffda\033\uffda\037" +
+    "\uffda\053\uffda\056\uffda\057\uffda\063\uffda\114\uffda\001\002" +
+    "\000\054\005\uffdb\006\uffdb\007\uffdb\011\045\012\uffdb\016" +
+    "\050\023\uffdb\024\uffdb\025\uffdb\026\uffdb\027\uffdb\030\uffdb" +
+    "\031\uffdb\032\uffdb\033\uffdb\037\uffdb\053\uffdb\056\uffdb\057" +
+    "\uffdb\063\uffdb\114\uffdb\001\002\000\054\005\uffde\006\uffde" +
+    "\007\uffde\011\045\012\uffde\016\050\023\uffde\024\uffde\025" +
+    "\uffde\026\uffde\027\uffde\030\uffde\031\uffde\032\uffde\033\uffde" +
+    "\037\uffde\053\uffde\056\uffde\057\uffde\063\uffde\114\uffde\001" +
+    "\002\000\054\005\uffe6\006\060\007\046\011\045\012\057" +
+    "\016\050\023\uffe6\024\062\025\056\026\052\027\061\030" +
+    "\053\031\047\032\054\033\055\037\uffe6\053\uffe6\056\uffe6" +
+    "\057\uffe6\063\uffe6\114\uffe6\001\002\000\054\005\uffe5\006" +
+    "\uffe5\007\uffe5\011\uffe5\012\uffe5\016\uffe5\023\uffe5\024\uffe5" +
+    "\025\uffe5\026\uffe5\027\uffe5\030\uffe5\031\uffe5\032\uffe5\033" +
+    "\uffe5\037\uffe5\053\uffe5\056\uffe5\057\uffe5\063\uffe5\114\uffe5" +
+    "\001\002\000\054\005\uffdc\006\uffdc\007\uffdc\011\045\012" +
+    "\uffdc\016\050\023\uffdc\024\uffdc\025\uffdc\026\uffdc\027\uffdc" +
+    "\030\uffdc\031\uffdc\032\uffdc\033\uffdc\037\uffdc\053\uffdc\056" +
+    "\uffdc\057\uffdc\063\uffdc\114\uffdc\001\002\000\054\005\uffe3" +
+    "\006\uffe3\007\uffe3\011\045\012\uffe3\016\050\023\uffe3\024" +
+    "\062\025\056\026\052\027\061\030\053\031\047\032\054" +
+    "\033\055\037\uffe3\053\uffe3\056\uffe3\057\uffe3\063\uffe3\114" +
+    "\uffe3\001\002\000\054\005\uffe2\006\uffe2\007\uffe2\011\uffe2" +
+    "\012\uffe2\016\uffe2\023\uffe2\024\uffe2\025\uffe2\026\uffe2\027" +
+    "\uffe2\030\uffe2\031\uffe2\032\uffe2\033\uffe2\037\uffe2\053\uffe2" +
+    "\056\uffe2\057\uffe2\063\uffe2\114\uffe2\001\002\000\054\005" +
+    "\uffd7\006\uffd7\007\uffd7\011\045\012\uffd7\016\050\023\uffd7" +
+    "\024\062\025\056\026\052\027\061\030\053\031\047\032" +
+    "\uffd7\033\uffd7\037\uffd7\053\uffd7\056\uffd7\057\uffd7\063\uffd7" +
+    "\114\uffd7\001\002\000\054\005\uffd8\006\uffd8\007\uffd8\011" +
+    "\uffd8\012\uffd8\016\uffd8\023\uffd8\024\uffd8\025\uffd8\026\uffd8" +
+    "\027\uffd8\030\uffd8\031\uffd8\032\uffd8\033\uffd8\037\uffd8\053" +
+    "\uffd8\056\uffd8\057\uffd8\063\uffd8\114\uffd8\001\002\000\040" +
+    "\005\051\006\060\007\046\011\045\012\057\016\050\024" +
+    "\062\025\056\026\052\027\061\030\053\031\047\032\054" +
+    "\033\055\037\104\001\002\000\054\005\uffd6\006\uffd6\007" +
+    "\uffd6\011\uffd6\012\uffd6\016\uffd6\023\uffd6\024\uffd6\025\uffd6" +
+    "\026\uffd6\027\uffd6\030\uffd6\031\uffd6\032\uffd6\033\uffd6\037" +
+    "\uffd6\053\uffd6\056\uffd6\057\uffd6\063\uffd6\114\uffd6\001\002" +
+    "\000\026\014\ufffa\052\ufffa\053\ufffa\056\ufffa\060\ufffa\061" +
+    "\ufffa\062\ufffa\063\ufffa\065\ufffa\114\ufffa\001\002\000\004" +
+    "\054\107\001\002\000\012\045\114\046\111\047\110\050" +
+    "\113\001\002\000\004\055\uffef\001\002\000\004\055\ufff1" +
+    "\001\002\000\004\055\115\001\002\000\004\055\uffee\001" +
+    "\002\000\004\055\ufff0\001\002\000\016\102\040\103\041" +
+    "\112\035\115\036\116\037\117\042\001\002\000\004\023" +
+    "\ufff7\001\002\000\004\064\120\001\002\000\006\014\121" +
+    "\060\122\001\002\000\004\114\132\001\002\000\012\053" +
+    "\016\056\013\063\015\114\010\001\002\000\010\014\121" +
+    "\060\125\065\uffcb\001\002\000\010\014\uffc8\060\uffc8\065" +
+    "\uffc8\001\002\000\012\053\016\056\013\063\015\114\010" +
+    "\001\002\000\010\014\uffc9\060\uffc9\065\uffc9\001\002\000" +
+    "\014\053\016\056\013\063\015\065\uffcc\114\010\001\002" +
+    "\000\026\014\ufffd\052\ufffd\053\ufffd\056\ufffd\060\ufffd\061" +
+    "\ufffd\062\ufffd\063\ufffd\065\ufffd\114\ufffd\001\002\000\014" +
+    "\053\016\056\013\063\015\065\uffca\114\010\001\002\000" +
+    "\004\015\133\001\002\000\004\057\134\001\002\000\012" +
+    "\053\016\056\013\063\015\114\010\001\002\000\020\014" +
+    "\uffc7\053\016\056\013\060\uffc7\063\015\065\uffc7\114\010" +
+    "\001\002\000\004\002\uffff\001\002\000\040\005\051\006" +
+    "\060\007\046\011\045\012\057\016\050\024\062\025\056" +
+    "\026\052\027\061\030\053\031\047\032\054\033\055\057" +
+    "\140\001\002\000\012\053\016\056\013\063\015\114\010" +
+    "\001\002\000\020\053\016\056\013\060\145\061\144\062" +
+    "\uffd3\063\015\114\010\001\002\000\010\060\uffce\061\uffce" +
+    "\062\uffce\001\002\000\010\060\151\061\144\062\uffd1\001" +
+    "\002\000\026\016\033\034\034\040\032\102\040\103\041" +
+    "\112\035\114\031\115\036\116\037\117\042\001\002\000" +
+    "\012\053\016\056\013\063\015\114\010\001\002\000\014" +
+    "\053\016\056\013\062\uffd2\063\015\114\010\001\002\000" +
+    "\046\005\051\006\060\007\046\011\045\012\057\016\050" +
+    "\024\062\025\056\026\052\027\061\030\053\031\047\032" +
+    "\054\033\055\053\016\056\013\063\015\114\010\001\002" +
+    "\000\020\053\016\056\013\060\uffcd\061\uffcd\062\uffcd\063" +
+    "\015\114\010\001\002\000\012\053\016\056\013\063\015" +
+    "\114\010\001\002\000\010\060\uffcf\061\uffcf\062\uffcf\001" +
+    "\002\000\014\053\016\056\013\062\uffd0\063\015\114\010" +
+    "\001\002\000\026\014\ufffc\052\ufffc\053\ufffc\056\ufffc\060" +
+    "\ufffc\061\ufffc\062\ufffc\063\ufffc\065\ufffc\114\ufffc\001\002" +
+    "\000\026\014\ufffb\052\ufffb\053\ufffb\056\ufffb\060\ufffb\061" +
+    "\ufffb\062\ufffb\063\ufffb\065\ufffb\114\ufffb\001\002\000\004" +
+    "\114\026\001\002\000\006\023\ufff6\114\026\001\002\000" +
+    "\026\014\ufff9\052\ufff9\053\ufff9\056\ufff9\060\ufff9\061\ufff9" +
+    "\062\ufff9\063\ufff9\065\ufff9\114\ufff9\001\002\000\004\002" +
+    "\001\001\002" });
 
   /** Access to parse-action table. */
   public short[][] action_table() {return _action_table;}
@@ -77,20 +257,70 @@ public class parser extends java_cup.runtime.lr_parser {
   /** <code>reduce_goto</code> table. */
   protected static final short[][] _reduce_table = 
     unpackFromStrings(new String[] {
-    "\000\044\000\006\002\004\003\003\001\001\000\002\001" +
-    "\001\000\002\001\001\000\012\004\013\005\007\010\010" +
-    "\011\006\001\001\000\002\001\001\000\002\001\001\000" +
-    "\002\001\001\000\002\001\001\000\002\001\001\000\010" +
-    "\005\007\010\014\011\006\001\001\000\002\001\001\000" +
-    "\002\001\001\000\002\001\001\000\004\006\022\001\001" +
+    "\000\157\000\006\002\004\004\003\001\001\000\002\001" +
+    "\001\000\002\001\001\000\024\003\013\005\011\010\017" +
+    "\011\010\012\021\013\020\014\016\016\006\022\022\001" +
+    "\001\000\002\001\001\000\002\001\001\000\002\001\001" +
+    "\000\002\001\001\000\006\007\043\015\136\001\001\000" +
+    "\022\005\011\010\127\011\010\012\021\013\020\014\016" +
+    "\016\006\022\022\001\001\000\002\001\001\000\002\001" +
+    "\001\000\002\001\001\000\002\001\001\000\002\001\001" +
+    "\000\004\013\026\001\001\000\002\001\001\000\002\001" +
+    "\001\000\006\007\043\015\042\001\001\000\002\001\001" +
     "\000\002\001\001\000\002\001\001\000\002\001\001\000" +
-    "\002\001\001\000\002\001\001\000\004\007\032\001\001" +
+    "\006\007\043\015\102\001\001\000\006\007\043\015\101" +
+    "\001\001\000\006\007\043\015\100\001\001\000\002\001" +
+    "\001\000\002\001\001\000\002\001\001\000\002\001\001" +
+    "\000\002\001\001\000\002\001\001\000\002\001\001\000" +
+    "\002\001\001\000\006\007\043\015\077\001\001\000\006" +
+    "\007\043\015\076\001\001\000\006\007\043\015\075\001" +
+    "\001\000\006\007\043\015\074\001\001\000\006\007\043" +
+    "\015\073\001\001\000\006\007\043\015\072\001\001\000" +
+    "\006\007\043\015\071\001\001\000\006\007\043\015\070" +
+    "\001\001\000\006\007\043\015\067\001\001\000\006\007" +
+    "\043\015\066\001\001\000\006\007\043\015\065\001\001" +
+    "\000\006\007\043\015\064\001\001\000\006\007\043\015" +
+    "\063\001\001\000\006\007\043\015\062\001\001\000\002" +
+    "\001\001\000\002\001\001\000\002\001\001\000\002\001" +
+    "\001\000\002\001\001\000\002\001\001\000\002\001\001" +
     "\000\002\001\001\000\002\001\001\000\002\001\001\000" +
     "\002\001\001\000\002\001\001\000\002\001\001\000\002" +
-    "\001\001\000\006\012\036\013\040\001\001\000\004\013" +
-    "\042\001\001\000\002\001\001\000\002\001\001\000\002" +
     "\001\001\000\002\001\001\000\002\001\001\000\002\001" +
-    "\001\000\002\001\001" });
+    "\001\000\002\001\001\000\002\001\001\000\002\001\001" +
+    "\000\004\006\111\001\001\000\002\001\001\000\002\001" +
+    "\001\000\002\001\001\000\002\001\001\000\002\001\001" +
+    "\000\004\007\115\001\001\000\002\001\001\000\002\001" +
+    "\001\000\006\023\123\024\122\001\001\000\002\001\001" +
+    "\000\024\003\130\005\011\010\017\011\010\012\021\013" +
+    "\020\014\016\016\006\022\022\001\001\000\004\023\125" +
+    "\001\001\000\002\001\001\000\024\003\126\005\011\010" +
+    "\017\011\010\012\021\013\020\014\016\016\006\022\022" +
+    "\001\001\000\002\001\001\000\022\005\011\010\127\011" +
+    "\010\012\021\013\020\014\016\016\006\022\022\001\001" +
+    "\000\002\001\001\000\022\005\011\010\127\011\010\012" +
+    "\021\013\020\014\016\016\006\022\022\001\001\000\002" +
+    "\001\001\000\002\001\001\000\024\003\134\005\011\010" +
+    "\017\011\010\012\021\013\020\014\016\016\006\022\022" +
+    "\001\001\000\022\005\011\010\127\011\010\012\021\013" +
+    "\020\014\016\016\006\022\022\001\001\000\002\001\001" +
+    "\000\002\001\001\000\024\003\140\005\011\010\017\011" +
+    "\010\012\021\013\020\014\016\016\006\022\022\001\001" +
+    "\000\026\005\011\010\127\011\010\012\021\013\020\014" +
+    "\016\016\006\017\142\021\141\022\022\001\001\000\002" +
+    "\001\001\000\004\021\151\001\001\000\006\007\043\015" +
+    "\146\001\001\000\024\003\145\005\011\010\017\011\010" +
+    "\012\021\013\020\014\016\016\006\022\022\001\001\000" +
+    "\022\005\011\010\127\011\010\012\021\013\020\014\016" +
+    "\016\006\022\022\001\001\000\024\003\147\005\011\010" +
+    "\017\011\010\012\021\013\020\014\016\016\006\022\022" +
+    "\001\001\000\022\005\011\010\127\011\010\012\021\013" +
+    "\020\014\016\016\006\022\022\001\001\000\024\003\152" +
+    "\005\011\010\017\011\010\012\021\013\020\014\016\016" +
+    "\006\022\022\001\001\000\002\001\001\000\022\005\011" +
+    "\010\127\011\010\012\021\013\020\014\016\016\006\022" +
+    "\022\001\001\000\002\001\001\000\002\001\001\000\006" +
+    "\012\156\013\020\001\001\000\004\013\026\001\001\000" +
+    "\002\001\001\000\002\001\001" });
 
   /** Access to <code>reduce_goto</code> table. */
   public short[][] reduce_table() {return _reduce_table;}
@@ -134,11 +364,15 @@ public class parser extends java_cup.runtime.lr_parser {
     public static NodoAST nodo_aux = new NodoAST();
     public static NodoAST nodo_aux_td = new NodoAST();
     public static NodoAST nodo_aux_val = new NodoAST();
-
+    public static boolean flag_exp1=false;
+    public static boolean flag_exp2=false;
     public static ArrayList<NodoAST> lista_auxNodo = new ArrayList<NodoAST>();
     public static ArrayList<NodoAST> lista_auxNodo2 = new ArrayList<NodoAST>();
     public static ArrayList<NodoAST> lista_auxNodo3 = new ArrayList<NodoAST>(); //arreglo de nombres
+    public static ArrayList<NodoAST> lista_auxNodo4 = new ArrayList<NodoAST>(); //expresiones1
+    public static ArrayList<NodoAST> lista_auxNodo5 = new ArrayList<NodoAST>(); //expresiones2
 
+    
     //public static Datos.ArbolAST Datos.arbol = new Datos.ArbolAST();
     //public static ArrayList<ErrorA> errores = new ArrayList<ErrorA>();
     
@@ -190,7 +424,7 @@ class CUP$parser$actions {
               Object RESULT =null;
 		int start_valleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).left;
 		int start_valright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).right;
-		Object start_val = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-1)).value;
+		ArrayList<NodoAST> start_val = (ArrayList<NodoAST>)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-1)).value;
 		RESULT = start_val;
               CUP$parser$result = parser.getSymbolFactory().newSymbol("$START",0, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -201,10 +435,15 @@ class CUP$parser$actions {
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 1: // COMIENZO ::= CONTENIDO 
             {
-              Object RESULT =null;
+              ArrayList<NodoAST> RESULT =null;
 		
-                        
-                                                
+                        lista_auxNodo4 = new ArrayList<NodoAST>();
+                        lista_auxNodo3 = new ArrayList<NodoAST>();
+                        lista_auxNodo2 = new ArrayList<NodoAST>();
+                        lista_auxNodo = new ArrayList<NodoAST>();
+                        nodo_aux = new NodoAST();    
+                        nodo_aux_td = new NodoAST(); 
+                        nodo_aux_val = new NodoAST();                  
                         
               CUP$parser$result = parser.getSymbolFactory().newSymbol("COMIENZO",0, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -213,10 +452,13 @@ class CUP$parser$actions {
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 2: // CONTENIDO ::= inicio CODIGO fin 
             {
-              Object RESULT =null;
+              ArrayList<NodoAST> RESULT =null;
 		int varinleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).left;
 		int varinright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).right;
 		String varin = (String)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-2)).value;
+		int lista_codigoleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).left;
+		int lista_codigoright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).right;
+		ArrayList<NodoAST> lista_codigo = (ArrayList<NodoAST>)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-1)).value;
 		int varfinleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
 		int varfinright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
 		String varfin = (String)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
@@ -234,12 +476,11 @@ class CUP$parser$actions {
                                                 System.out.println(n_inicio.token);
 
                                                 NodoAST t_codigo = new NodoAST();
-                                                t_codigo.Nodos = new ArrayList<NodoAST>();
+                                                t_codigo.Nodos = lista_codigo;
                                                 t_codigo.setToken("<Instrucciones>");
                                                 t_codigo.setTipo("Instrucciones");
                                                 System.out.println(t_codigo.token);
 
-                                                t_codigo.Nodos.add(nodo_aux); //insertando nodos inferiores
                                                 System.out.println("se agrego token instruccion");
 
                                                 NodoAST n_fin = new NodoAST();
@@ -269,48 +510,75 @@ class CUP$parser$actions {
                                                 System.out.println(Datos.arbol.raiz.getToken() + " Nodo del Datos.arbol");
 
                                                 
-              CUP$parser$result = parser.getSymbolFactory().newSymbol("CONTENIDO",1, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
+              CUP$parser$result = parser.getSymbolFactory().newSymbol("CONTENIDO",2, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 3: // CODIGO ::= INSTRUCCIONES 
             {
-              Object RESULT =null;
+              ArrayList<NodoAST> RESULT =null;
+		int lista_instruccionesleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
+		int lista_instruccionesright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
+		ArrayList<NodoAST> lista_instrucciones = (ArrayList<NodoAST>)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		
                             NodoAST t_instrucciones = new NodoAST();
-                            t_instrucciones.Nodos = lista_auxNodo2; //acarreo de nodos inferiores
+                            t_instrucciones.Nodos = lista_instrucciones; //acarreo de nodos inferiores
                             System.out.println("Se agregaron nodos a <Instrucciones>");
                             t_instrucciones.setToken("<Instrucciones>");
                             t_instrucciones.setTipo("Instrucciones");
                             System.out.println(t_instrucciones.token + " 2");
 
                             nodo_aux = t_instrucciones;
-
+                            RESULT= new ArrayList<NodoAST>();
+                            RESULT.add(t_instrucciones);
                         
-              CUP$parser$result = parser.getSymbolFactory().newSymbol("CODIGO",2, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
+              CUP$parser$result = parser.getSymbolFactory().newSymbol("CODIGO",1, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 4: // CODIGO ::= CODIGO INSTRUCCIONES 
             {
-              Object RESULT =null;
-
-              CUP$parser$result = parser.getSymbolFactory().newSymbol("CODIGO",2, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
+              ArrayList<NodoAST> RESULT =null;
+		int lista_codigoleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).left;
+		int lista_codigoright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).right;
+		ArrayList<NodoAST> lista_codigo = (ArrayList<NodoAST>)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-1)).value;
+		int lista_instruccionesleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
+		int lista_instruccionesright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
+		ArrayList<NodoAST> lista_instrucciones = (ArrayList<NodoAST>)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
+		
+                        NodoAST t_Codigo = new NodoAST();
+                        t_Codigo.Nodos = new ArrayList<NodoAST>(); 
+                        t_Codigo.setToken("<Instrucciones>");
+                        t_Codigo.setTipo("Instrucciones");
+                        t_Codigo.Nodos = lista_codigo;
+                        NodoAST t_expresion2 = new NodoAST();
+                        t_expresion2.Nodos = new ArrayList<NodoAST>(); 
+                        t_expresion2.setToken("<Instruccion>");
+                        t_expresion2.setTipo("Instruccion");
+                        t_expresion2.Nodos = lista_instrucciones;
+                        RESULT = new ArrayList<NodoAST>(); 
+                        RESULT.add(t_Codigo);
+                        RESULT.add(t_expresion2);
+                        
+              CUP$parser$result = parser.getSymbolFactory().newSymbol("CODIGO",1, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 5: // INSTRUCCIONES ::= DECLARACION puntocoma 
             {
-              Object RESULT =null;
+              ArrayList<NodoAST> RESULT =null;
+		int lista_decleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).left;
+		int lista_decright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).right;
+		ArrayList<NodoAST> lista_dec = (ArrayList<NodoAST>)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-1)).value;
 		int var_pycleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
 		int var_pycright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
 		String var_pyc = (String)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		
                                             NodoAST t_declaracion = new NodoAST();
-                                            t_declaracion.Nodos = lista_auxNodo; //acarreo de nodos inferiores
+                                            t_declaracion.Nodos = lista_dec; //acarreo de nodos inferiores
                                             t_declaracion.setToken("<Declaracion>");
                                             t_declaracion.setTipo("Declaracion");
 
@@ -328,8 +596,8 @@ class CUP$parser$actions {
                                             System.out.println("se agrego token punto y coma");
                                             
                                             
-                                            lista_auxNodo = new ArrayList<NodoAST>();
-                                            lista_auxNodo2.add(t_declaracion);
+                                            RESULT = new ArrayList<NodoAST>();
+                                            RESULT.add(t_declaracion);
 
                                         
               CUP$parser$result = parser.getSymbolFactory().newSymbol("INSTRUCCIONES",6, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
@@ -339,14 +607,17 @@ class CUP$parser$actions {
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 6: // INSTRUCCIONES ::= LISTA_NOM puntocoma 
             {
-              Object RESULT =null;
+              ArrayList<NodoAST> RESULT =null;
+		int lista_nomleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).left;
+		int lista_nomright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).right;
+		ArrayList<NodoAST> lista_nom = (ArrayList<NodoAST>)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-1)).value;
 		int var_pycleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
 		int var_pycright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
 		String var_pyc = (String)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		
                         
                         NodoAST t_listaNom = new NodoAST();
-                        t_listaNom.Nodos = lista_auxNodo; //acarreo de nodos inferiores
+                        t_listaNom.Nodos = lista_nom; //acarreo de nodos inferiores
                         t_listaNom.setToken("<Lista Nombres>");
                         t_listaNom.setTipo("lista nombres");
                         
@@ -363,8 +634,8 @@ class CUP$parser$actions {
                         t_listaNom.Nodos.add(t_pyc);
                         System.out.println("se agrego token punto y coma");
                         
-                        lista_auxNodo = new ArrayList<NodoAST>();
-                        lista_auxNodo2.add(t_listaNom);
+                        RESULT = new ArrayList<NodoAST>();
+                        RESULT.add(t_listaNom);
                         System.out.println("se agregaron todos los nombres al nodo de la produccion de Instrucciones");
 
                     
@@ -374,9 +645,103 @@ class CUP$parser$actions {
           return CUP$parser$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 7: // DECLARACION ::= ingresar var_identificador como TIPODATO con_valor EXPRESIONNUM 
+          case 7: // INSTRUCCIONES ::= ASIGNACION puntocoma 
             {
-              Object RESULT =null;
+              ArrayList<NodoAST> RESULT =null;
+		int lista_asigleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).left;
+		int lista_asigright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).right;
+		ArrayList<NodoAST> lista_asig = (ArrayList<NodoAST>)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-1)).value;
+		int var_pycleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
+		int var_pycright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
+		String var_pyc = (String)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
+		
+                        NodoAST t_asignacion = new NodoAST();
+                        t_asignacion.Nodos = lista_asig; //acarreo de nodos inferiores
+                        t_asignacion.setToken("<Asingascion>");
+                        t_asignacion.setTipo("asignacion");
+                        
+                        NodoAST t_pyc = new NodoAST();
+                        t_pyc.Nodos = new ArrayList<NodoAST>(); 
+                        t_pyc.setToken("<T_pto_coma>");
+                        t_pyc.setTipo("t punto y coma");
+                                            
+                        NodoAST n_pyc = new NodoAST();
+                        n_pyc.setToken(var_pyc);
+                        n_pyc.setTipo("token");
+                    
+                        t_pyc.Nodos.add(n_pyc);
+                        t_asignacion.Nodos.add(t_pyc);
+                        System.out.println("se agrego token punto y coma");
+                        
+                        RESULT = new ArrayList<NodoAST>();
+                        RESULT.add(t_asignacion);
+                        System.out.println("se agregaron todos los nombres al nodo de la produccion de Instrucciones");
+
+                    
+                    
+                    
+                    
+                    
+              CUP$parser$result = parser.getSymbolFactory().newSymbol("INSTRUCCIONES",6, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
+            }
+          return CUP$parser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 8: // INSTRUCCIONES ::= INST_SI fin_si 
+            {
+              ArrayList<NodoAST> RESULT =null;
+		int lista_sileft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).left;
+		int lista_siright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).right;
+		ArrayList<NodoAST> lista_si = (ArrayList<NodoAST>)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-1)).value;
+		int varileft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
+		int variright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
+		String vari = (String)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
+		
+                        NodoAST t_si = new NodoAST();
+                        t_si.Nodos = lista_si; //acarreo de nodos inferiores
+                        t_si.setToken("<Si>");
+                        t_si.setTipo("SI");
+                        
+                        NodoAST t_fin_si = new NodoAST();
+                        t_fin_si.Nodos = new ArrayList<NodoAST>(); 
+                        t_fin_si.setToken("<T_fin_si>");
+                        t_fin_si.setTipo("t fin si");
+                                            
+                        NodoAST n_fin_si = new NodoAST();
+                        n_fin_si.setToken(vari);
+                        n_fin_si.setTipo("fin si");
+                    
+                        t_fin_si.Nodos.add(n_fin_si);
+                        t_si.Nodos.add(t_fin_si);
+                        System.out.println("se agrego token punto y coma");
+                        
+                        RESULT = new ArrayList<NodoAST>();
+                        RESULT.add(t_si);
+                        System.out.println("se agregaron Instrucciones SI");
+                    
+              CUP$parser$result = parser.getSymbolFactory().newSymbol("INSTRUCCIONES",6, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
+            }
+          return CUP$parser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 9: // INSTRUCCIONES ::= INST_SEGUN fin_segun 
+            {
+              ArrayList<NodoAST> RESULT =null;
+		int lista_segunleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).left;
+		int lista_segunright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).right;
+		ArrayList<NodoAST> lista_segun = (ArrayList<NodoAST>)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-1)).value;
+		int varileft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
+		int variright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
+		String vari = (String)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
+
+              CUP$parser$result = parser.getSymbolFactory().newSymbol("INSTRUCCIONES",6, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
+            }
+          return CUP$parser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 10: // DECLARACION ::= ingresar var_identificador como TIPODATO con_valor EXPRESIONVAL 
+            {
+              ArrayList<NodoAST> RESULT =null;
 		int var_ingleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-5)).left;
 		int var_ingright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-5)).right;
 		String var_ing = (String)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-5)).value;
@@ -437,13 +802,14 @@ class CUP$parser$actions {
                                             t_con_valor.Nodos.add(n_con_valor);
                                             t_tipodato.Nodos.add(nodo_aux_td); //acarreo de nodo
                                             t_expresion.Nodos.add(nodo_aux_val); //acarreo de nodo
-
-                                            lista_auxNodo.add(t_ingresar);  
-                                            lista_auxNodo.add(t_identificador);
-                                            lista_auxNodo.add(t_como);  
-                                            lista_auxNodo.add(t_tipodato);
-                                            lista_auxNodo.add(t_con_valor);  
-                                            lista_auxNodo.add(t_expresion);
+                                            
+                                            RESULT = new ArrayList<NodoAST>();
+                                            RESULT.add(t_ingresar);  
+                                            RESULT.add(t_identificador);
+                                            RESULT.add(t_como);  
+                                            RESULT.add(t_tipodato);
+                                            RESULT.add(t_con_valor);  
+                                            RESULT.add(t_expresion);
 
                                             System.out.println("Se agregaron con exito los nodos de la produccion Declaracion");
 
@@ -457,9 +823,9 @@ class CUP$parser$actions {
           return CUP$parser$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 8: // LISTA_NOM ::= var_identificador igual NOMBRES 
+          case 11: // LISTA_NOM ::= var_identificador igual NOMBRES 
             {
-              Object RESULT =null;
+              ArrayList<NodoAST> RESULT =null;
 		int var_idleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).left;
 		int var_idright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).right;
 		String var_id = (String)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-2)).value;
@@ -488,15 +854,16 @@ class CUP$parser$actions {
                         t_identificador.Nodos.add(n_identificador);
                         t_igual.Nodos.add(n_igual);
 
-                        lista_auxNodo.add(t_identificador);
-                        lista_auxNodo.add(t_igual);
+                        RESULT = new ArrayList<NodoAST>(); 
+                        RESULT.add(t_identificador);
+                        RESULT.add(t_igual);
 
                         for(int i=1; i<lista_auxNodo3.size(); i++){
-                            lista_auxNodo.add(lista_auxNodo3.get(i));
+                            RESULT.add(lista_auxNodo3.get(i));
                             System.out.println("Se agregaron con exito los nodos de la produccion listaNom");
 
                         }
-                        lista_auxNodo.add(lista_auxNodo3.get(0));
+                        RESULT.add(lista_auxNodo3.get(0));
 
                         lista_auxNodo3 = new ArrayList<NodoAST>();
 
@@ -506,18 +873,18 @@ class CUP$parser$actions {
           return CUP$parser$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 9: // NOMBRES ::= NOMBRE 
+          case 12: // NOMBRES ::= NOMBRE 
             {
-              Object RESULT =null;
+              ArrayList<NodoAST> RESULT =null;
 		lista_auxNodo3.add(nodo_aux_td);
               CUP$parser$result = parser.getSymbolFactory().newSymbol("NOMBRES",8, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 10: // NOMBRES ::= NOMBRES NOMBRE 
+          case 13: // NOMBRES ::= NOMBRES NOMBRE 
             {
-              Object RESULT =null;
+              ArrayList<NodoAST> RESULT =null;
 		
                         lista_auxNodo3.add(nodo_aux_td);
                         lista_auxNodo3.add(nodo_aux_val);
@@ -527,9 +894,9 @@ class CUP$parser$actions {
           return CUP$parser$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 11: // NOMBRE ::= var_identificador coma 
+          case 14: // NOMBRE ::= var_identificador coma 
             {
-              Object RESULT =null;
+              ArrayList<NodoAST> RESULT =null;
 		int var_idleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).left;
 		int var_idright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).right;
 		String var_id = (String)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-1)).value;
@@ -566,9 +933,9 @@ class CUP$parser$actions {
           return CUP$parser$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 12: // NOMBRE ::= var_identificador 
+          case 15: // NOMBRE ::= var_identificador 
             {
-              Object RESULT =null;
+              ArrayList<NodoAST> RESULT =null;
 		int var_idleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
 		int var_idright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
 		String var_id = (String)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
@@ -592,9 +959,9 @@ class CUP$parser$actions {
           return CUP$parser$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 13: // TIPODATO ::= tcadena 
+          case 16: // TIPODATO ::= tcadena 
             {
-              Object RESULT =null;
+              ArrayList<NodoAST> RESULT =null;
 		int var_tipodleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
 		int var_tipodright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
 		String var_tipod = (String)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
@@ -609,9 +976,9 @@ class CUP$parser$actions {
           return CUP$parser$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 14: // TIPODATO ::= tnumero 
+          case 17: // TIPODATO ::= tnumero 
             {
-              Object RESULT =null;
+              ArrayList<NodoAST> RESULT =null;
 		int var_tipodleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
 		int var_tipodright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
 		String var_tipod = (String)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
@@ -626,9 +993,9 @@ class CUP$parser$actions {
           return CUP$parser$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 15: // TIPODATO ::= tbooleano 
+          case 18: // TIPODATO ::= tbooleano 
             {
-              Object RESULT =null;
+              ArrayList<NodoAST> RESULT =null;
 		int var_tipodleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
 		int var_tipodright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
 		String var_tipod = (String)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
@@ -643,9 +1010,9 @@ class CUP$parser$actions {
           return CUP$parser$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 16: // TIPODATO ::= tcaracter 
+          case 19: // TIPODATO ::= tcaracter 
             {
-              Object RESULT =null;
+              ArrayList<NodoAST> RESULT =null;
 		int var_tipodleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
 		int var_tipodright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
 		String var_tipod = (String)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
@@ -660,9 +1027,9 @@ class CUP$parser$actions {
           return CUP$parser$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 17: // EXPRESIONNUM ::= digito 
+          case 20: // EXPRESIONVAL ::= digito 
             {
-              Object RESULT =null;
+              ArrayList<NodoAST> RESULT =null;
 		int var_valleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
 		int var_valright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
 		String var_val = (String)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
@@ -672,14 +1039,14 @@ class CUP$parser$actions {
                         n_expresion.setTipo("token");
                         nodo_aux_val = n_expresion;
                     
-              CUP$parser$result = parser.getSymbolFactory().newSymbol("EXPRESIONNUM",5, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
+              CUP$parser$result = parser.getSymbolFactory().newSymbol("EXPRESIONVAL",5, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 18: // EXPRESIONNUM ::= decimal 
+          case 21: // EXPRESIONVAL ::= decimal 
             {
-              Object RESULT =null;
+              ArrayList<NodoAST> RESULT =null;
 		int var_valleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
 		int var_valright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
 		String var_val = (String)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
@@ -689,14 +1056,14 @@ class CUP$parser$actions {
                         n_expresion.setTipo("token");
                         nodo_aux_val = n_expresion;
                     
-              CUP$parser$result = parser.getSymbolFactory().newSymbol("EXPRESIONNUM",5, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
+              CUP$parser$result = parser.getSymbolFactory().newSymbol("EXPRESIONVAL",5, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 19: // EXPRESIONNUM ::= cadena 
+          case 22: // EXPRESIONVAL ::= cadena 
             {
-              Object RESULT =null;
+              ArrayList<NodoAST> RESULT =null;
 		int var_valleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
 		int var_valright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
 		String var_val = (String)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
@@ -706,14 +1073,14 @@ class CUP$parser$actions {
                         n_expresion.setTipo("token");
                         nodo_aux_val = n_expresion;
                     
-              CUP$parser$result = parser.getSymbolFactory().newSymbol("EXPRESIONNUM",5, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
+              CUP$parser$result = parser.getSymbolFactory().newSymbol("EXPRESIONVAL",5, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 20: // EXPRESIONNUM ::= caracter 
+          case 23: // EXPRESIONVAL ::= caracter 
             {
-              Object RESULT =null;
+              ArrayList<NodoAST> RESULT =null;
 		int var_valleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
 		int var_valright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
 		String var_val = (String)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
@@ -723,14 +1090,14 @@ class CUP$parser$actions {
                         n_expresion.setTipo("token");
                         nodo_aux_val = n_expresion;
                     
-              CUP$parser$result = parser.getSymbolFactory().newSymbol("EXPRESIONNUM",5, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
+              CUP$parser$result = parser.getSymbolFactory().newSymbol("EXPRESIONVAL",5, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 21: // EXPRESIONNUM ::= verdadero 
+          case 24: // EXPRESIONVAL ::= verdadero 
             {
-              Object RESULT =null;
+              ArrayList<NodoAST> RESULT =null;
 		int var_valleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
 		int var_valright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
 		String var_val = (String)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
@@ -740,14 +1107,14 @@ class CUP$parser$actions {
                         n_expresion.setTipo("token");
                         nodo_aux_val = n_expresion;
                     
-              CUP$parser$result = parser.getSymbolFactory().newSymbol("EXPRESIONNUM",5, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
+              CUP$parser$result = parser.getSymbolFactory().newSymbol("EXPRESIONVAL",5, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 22: // EXPRESIONNUM ::= falso 
+          case 25: // EXPRESIONVAL ::= falso 
             {
-              Object RESULT =null;
+              ArrayList<NodoAST> RESULT =null;
 		int var_valleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
 		int var_valright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
 		String var_val = (String)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
@@ -757,7 +1124,1350 @@ class CUP$parser$actions {
                         n_expresion.setTipo("token");
                         nodo_aux_val = n_expresion;
                     
-              CUP$parser$result = parser.getSymbolFactory().newSymbol("EXPRESIONNUM",5, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
+              CUP$parser$result = parser.getSymbolFactory().newSymbol("EXPRESIONVAL",5, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
+            }
+          return CUP$parser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 26: // ASIGNACION ::= NOMBRES flecha EXPRESION 
+            {
+              ArrayList<NodoAST> RESULT =null;
+		int var_fechaleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).left;
+		int var_fecharight = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).right;
+		String var_fecha = (String)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-1)).value;
+		int lista_expresionesleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
+		int lista_expresionesright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
+		ArrayList<NodoAST> lista_expresiones = (ArrayList<NodoAST>)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
+		
+                        NodoAST t_expresion = new NodoAST();
+                        t_expresion.Nodos = lista_expresiones; 
+                        t_expresion.setToken("<T_expresion>");
+                        t_expresion.setTipo("t expresion");
+                        
+
+                        NodoAST t_flecha = new NodoAST();
+                        t_flecha.Nodos = new ArrayList<NodoAST>(); 
+                        t_flecha.setToken("<T_flecha>");
+                        t_flecha.setTipo("t flecha");
+                        
+                        NodoAST n_flecha = new NodoAST();
+                        n_flecha.setToken(var_fecha);
+                        n_flecha.setTipo("token");
+
+                        t_flecha.Nodos.add(n_flecha);
+
+                        for(int i=1; i<lista_auxNodo3.size(); i++){
+                            lista_auxNodo.add(lista_auxNodo3.get(i));
+                            System.out.println("Se agregaron con exito los nodos de la produccion listaNom");
+
+                        }
+                        RESULT = new ArrayList<NodoAST>();
+                        RESULT.add(lista_auxNodo3.get(0));
+                        RESULT.add(t_flecha);
+                        RESULT.add(t_expresion);
+                        lista_auxNodo3 = new ArrayList<NodoAST>();
+
+
+              CUP$parser$result = parser.getSymbolFactory().newSymbol("ASIGNACION",10, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
+            }
+          return CUP$parser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 27: // EXPRESION ::= EXPRESION suma EXPRESION 
+            {
+              ArrayList<NodoAST> RESULT =null;
+		int lista_expresionesIleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).left;
+		int lista_expresionesIright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).right;
+		ArrayList<NodoAST> lista_expresionesI = (ArrayList<NodoAST>)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-2)).value;
+		int varileft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).left;
+		int variright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).right;
+		String vari = (String)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-1)).value;
+		int lista_expresionesDleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
+		int lista_expresionesDright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
+		ArrayList<NodoAST> lista_expresionesD = (ArrayList<NodoAST>)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
+		
+                        NodoAST t_expresionI = new NodoAST();
+                        t_expresionI.Nodos = new ArrayList<NodoAST>(); 
+                        t_expresionI.setToken("<T_expresion>");
+                        t_expresionI.setTipo("t expresion");
+                        t_expresionI.Nodos = lista_expresionesI;
+                        
+                        NodoAST tnodo = new NodoAST();
+                        tnodo.Nodos = new ArrayList<NodoAST>(); 
+                        tnodo.setToken("<T_"+vari+">");
+                        tnodo.setTipo("<t "+vari+">");     
+                        
+                        NodoAST token = new NodoAST();
+                        token.setToken(vari);
+                        token.setTipo("token");
+
+                        NodoAST t_expresionD = new NodoAST();
+                        t_expresionD.Nodos = new ArrayList<NodoAST>(); 
+                        t_expresionD.setToken("<T_expresion>");
+                        t_expresionD.setTipo("t expresion");
+                        t_expresionD.Nodos = lista_expresionesD;
+
+                        tnodo.Nodos.add(token);
+
+                        RESULT = new ArrayList<NodoAST>();
+                        RESULT.add(t_expresionI);
+                        RESULT.add(tnodo);
+                        RESULT.add(t_expresionD);
+                        
+              CUP$parser$result = parser.getSymbolFactory().newSymbol("EXPRESION",11, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
+            }
+          return CUP$parser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 28: // EXPRESION ::= EXPRESION resta EXPRESION 
+            {
+              ArrayList<NodoAST> RESULT =null;
+		int lista_expresionesIleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).left;
+		int lista_expresionesIright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).right;
+		ArrayList<NodoAST> lista_expresionesI = (ArrayList<NodoAST>)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-2)).value;
+		int varileft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).left;
+		int variright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).right;
+		String vari = (String)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-1)).value;
+		int lista_expresionesDleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
+		int lista_expresionesDright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
+		ArrayList<NodoAST> lista_expresionesD = (ArrayList<NodoAST>)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
+		
+                        NodoAST t_expresionI = new NodoAST();
+                        t_expresionI.Nodos = new ArrayList<NodoAST>(); 
+                        t_expresionI.setToken("<T_expresion>");
+                        t_expresionI.setTipo("t expresion");
+                        t_expresionI.Nodos = lista_expresionesI;
+                        
+                        NodoAST tnodo = new NodoAST();
+                        tnodo.Nodos = new ArrayList<NodoAST>(); 
+                        tnodo.setToken("<T_"+vari+">");
+                        tnodo.setTipo("<t "+vari+">");     
+                        
+                        NodoAST token = new NodoAST();
+                        token.setToken(vari);
+                        token.setTipo("token");
+
+                        NodoAST t_expresionD = new NodoAST();
+                        t_expresionD.Nodos = new ArrayList<NodoAST>(); 
+                        t_expresionD.setToken("<T_expresion>");
+                        t_expresionD.setTipo("t expresion");
+                        t_expresionD.Nodos = lista_expresionesD;
+
+                        tnodo.Nodos.add(token);
+                        
+                        RESULT = new ArrayList<NodoAST>();
+                        RESULT.add(t_expresionI);
+                        RESULT.add(tnodo);
+                        RESULT.add(t_expresionD);
+                        
+              CUP$parser$result = parser.getSymbolFactory().newSymbol("EXPRESION",11, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
+            }
+          return CUP$parser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 29: // EXPRESION ::= EXPRESION por EXPRESION 
+            {
+              ArrayList<NodoAST> RESULT =null;
+		int lista_expresionesIleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).left;
+		int lista_expresionesIright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).right;
+		ArrayList<NodoAST> lista_expresionesI = (ArrayList<NodoAST>)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-2)).value;
+		int varileft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).left;
+		int variright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).right;
+		String vari = (String)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-1)).value;
+		int lista_expresionesDleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
+		int lista_expresionesDright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
+		ArrayList<NodoAST> lista_expresionesD = (ArrayList<NodoAST>)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
+		
+                        NodoAST t_expresionI = new NodoAST();
+                        t_expresionI.Nodos = new ArrayList<NodoAST>(); 
+                        t_expresionI.setToken("<T_expresion>");
+                        t_expresionI.setTipo("t expresion");
+                        t_expresionI.Nodos = lista_expresionesI;
+                        
+                        NodoAST tnodo = new NodoAST();
+                        tnodo.Nodos = new ArrayList<NodoAST>(); 
+                        tnodo.setToken("<T_"+vari+">");
+                        tnodo.setTipo("<t "+vari+">");     
+                        
+                        NodoAST token = new NodoAST();
+                        token.setToken(vari);
+                        token.setTipo("token");
+
+                        NodoAST t_expresionD = new NodoAST();
+                        t_expresionD.Nodos = new ArrayList<NodoAST>(); 
+                        t_expresionD.setToken("<T_expresion>");
+                        t_expresionD.setTipo("t expresion");
+                        t_expresionD.Nodos = lista_expresionesD;
+
+                        tnodo.Nodos.add(token);
+                        
+                        RESULT = new ArrayList<NodoAST>();
+                        RESULT.add(t_expresionI);
+                        RESULT.add(tnodo);
+                        RESULT.add(t_expresionD);
+                        
+              CUP$parser$result = parser.getSymbolFactory().newSymbol("EXPRESION",11, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
+            }
+          return CUP$parser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 30: // EXPRESION ::= EXPRESION div EXPRESION 
+            {
+              ArrayList<NodoAST> RESULT =null;
+		int lista_expresionesIleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).left;
+		int lista_expresionesIright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).right;
+		ArrayList<NodoAST> lista_expresionesI = (ArrayList<NodoAST>)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-2)).value;
+		int varileft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).left;
+		int variright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).right;
+		String vari = (String)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-1)).value;
+		int lista_expresionesDleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
+		int lista_expresionesDright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
+		ArrayList<NodoAST> lista_expresionesD = (ArrayList<NodoAST>)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
+		
+                        NodoAST t_expresionI = new NodoAST();
+                        t_expresionI.Nodos = new ArrayList<NodoAST>(); 
+                        t_expresionI.setToken("<T_expresion>");
+                        t_expresionI.setTipo("t expresion");
+                        t_expresionI.Nodos = lista_expresionesI;
+                        
+                        NodoAST tnodo = new NodoAST();
+                        tnodo.Nodos = new ArrayList<NodoAST>(); 
+                        tnodo.setToken("<T_"+vari+">");
+                        tnodo.setTipo("<t "+vari+">");     
+                        
+                        NodoAST token = new NodoAST();
+                        token.setToken(vari);
+                        token.setTipo("token");
+
+                        NodoAST t_expresionD = new NodoAST();
+                        t_expresionD.Nodos = new ArrayList<NodoAST>(); 
+                        t_expresionD.setToken("<T_expresion>");
+                        t_expresionD.setTipo("t expresion");
+                        t_expresionD.Nodos = lista_expresionesD;
+
+                        tnodo.Nodos.add(token);
+                        
+                        RESULT = new ArrayList<NodoAST>();
+                        RESULT.add(t_expresionI);
+                        RESULT.add(tnodo);
+                        RESULT.add(t_expresionD);
+                        
+              CUP$parser$result = parser.getSymbolFactory().newSymbol("EXPRESION",11, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
+            }
+          return CUP$parser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 31: // EXPRESION ::= EXPRESION potencia EXPRESION 
+            {
+              ArrayList<NodoAST> RESULT =null;
+		int lista_expresionesIleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).left;
+		int lista_expresionesIright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).right;
+		ArrayList<NodoAST> lista_expresionesI = (ArrayList<NodoAST>)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-2)).value;
+		int varileft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).left;
+		int variright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).right;
+		String vari = (String)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-1)).value;
+		int lista_expresionesDleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
+		int lista_expresionesDright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
+		ArrayList<NodoAST> lista_expresionesD = (ArrayList<NodoAST>)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
+		
+                        NodoAST t_expresionI = new NodoAST();
+                        t_expresionI.Nodos = new ArrayList<NodoAST>(); 
+                        t_expresionI.setToken("<T_expresion>");
+                        t_expresionI.setTipo("t expresion");
+                        t_expresionI.Nodos = lista_expresionesI;
+                        
+                        NodoAST tnodo = new NodoAST();
+                        tnodo.Nodos = new ArrayList<NodoAST>(); 
+                        tnodo.setToken("<T_"+vari+">");
+                        tnodo.setTipo("<t "+vari+">");     
+                        
+                        NodoAST token = new NodoAST();
+                        token.setToken(vari);
+                        token.setTipo("token");
+
+                        NodoAST t_expresionD = new NodoAST();
+                        t_expresionD.Nodos = new ArrayList<NodoAST>(); 
+                        t_expresionD.setToken("<T_expresion>");
+                        t_expresionD.setTipo("t expresion");
+                        t_expresionD.Nodos = lista_expresionesD;
+
+                        tnodo.Nodos.add(token);
+                        
+                        RESULT = new ArrayList<NodoAST>();
+                        RESULT.add(t_expresionI);
+                        RESULT.add(tnodo);
+                        RESULT.add(t_expresionD);
+                        
+              CUP$parser$result = parser.getSymbolFactory().newSymbol("EXPRESION",11, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
+            }
+          return CUP$parser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 32: // EXPRESION ::= EXPRESION modulo EXPRESION 
+            {
+              ArrayList<NodoAST> RESULT =null;
+		int lista_expresionesIleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).left;
+		int lista_expresionesIright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).right;
+		ArrayList<NodoAST> lista_expresionesI = (ArrayList<NodoAST>)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-2)).value;
+		int varileft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).left;
+		int variright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).right;
+		String vari = (String)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-1)).value;
+		int lista_expresionesDleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
+		int lista_expresionesDright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
+		ArrayList<NodoAST> lista_expresionesD = (ArrayList<NodoAST>)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
+		
+                        NodoAST t_expresionI = new NodoAST();
+                        t_expresionI.Nodos = new ArrayList<NodoAST>(); 
+                        t_expresionI.setToken("<T_expresion>");
+                        t_expresionI.setTipo("t expresion");
+                        t_expresionI.Nodos = lista_expresionesI;
+                        
+                        NodoAST tnodo = new NodoAST();
+                        tnodo.Nodos = new ArrayList<NodoAST>(); 
+                        tnodo.setToken("<T_"+vari+">");
+                        tnodo.setTipo("<t "+vari+">");     
+                        
+                        NodoAST token = new NodoAST();
+                        token.setToken(vari);
+                        token.setTipo("token");
+
+                        NodoAST t_expresionD = new NodoAST();
+                        t_expresionD.Nodos = new ArrayList<NodoAST>(); 
+                        t_expresionD.setToken("<T_expresion>");
+                        t_expresionD.setTipo("t expresion");
+                        t_expresionD.Nodos = lista_expresionesD;
+
+                        tnodo.Nodos.add(token);
+                        
+                        RESULT = new ArrayList<NodoAST>();
+                        RESULT.add(t_expresionI);
+                        RESULT.add(tnodo);
+                        RESULT.add(t_expresionD);
+                        
+              CUP$parser$result = parser.getSymbolFactory().newSymbol("EXPRESION",11, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
+            }
+          return CUP$parser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 33: // EXPRESION ::= EXPRESION mayor EXPRESION 
+            {
+              ArrayList<NodoAST> RESULT =null;
+		int lista_expresionesIleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).left;
+		int lista_expresionesIright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).right;
+		ArrayList<NodoAST> lista_expresionesI = (ArrayList<NodoAST>)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-2)).value;
+		int varileft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).left;
+		int variright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).right;
+		String vari = (String)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-1)).value;
+		int lista_expresionesDleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
+		int lista_expresionesDright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
+		ArrayList<NodoAST> lista_expresionesD = (ArrayList<NodoAST>)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
+		
+                        NodoAST t_expresionI = new NodoAST();
+                        t_expresionI.Nodos = new ArrayList<NodoAST>(); 
+                        t_expresionI.setToken("<T_expresion>");
+                        t_expresionI.setTipo("t expresion");
+                        t_expresionI.Nodos = lista_expresionesI;
+                        
+                        NodoAST tnodo = new NodoAST();
+                        tnodo.Nodos = new ArrayList<NodoAST>(); 
+                        tnodo.setToken("<T_"+vari+">");
+                        tnodo.setTipo("<t "+vari+">");     
+                        
+                        NodoAST token = new NodoAST();
+                        token.setToken(vari);
+                        token.setTipo("token");
+
+                        NodoAST t_expresionD = new NodoAST();
+                        t_expresionD.Nodos = new ArrayList<NodoAST>(); 
+                        t_expresionD.setToken("<T_expresion>");
+                        t_expresionD.setTipo("t expresion");
+                        t_expresionD.Nodos = lista_expresionesD;
+
+                        tnodo.Nodos.add(token);
+                        
+                        RESULT = new ArrayList<NodoAST>();
+                        RESULT.add(t_expresionI);
+                        RESULT.add(tnodo);
+                        RESULT.add(t_expresionD);
+                        
+              CUP$parser$result = parser.getSymbolFactory().newSymbol("EXPRESION",11, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
+            }
+          return CUP$parser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 34: // EXPRESION ::= EXPRESION menor EXPRESION 
+            {
+              ArrayList<NodoAST> RESULT =null;
+		int lista_expresionesIleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).left;
+		int lista_expresionesIright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).right;
+		ArrayList<NodoAST> lista_expresionesI = (ArrayList<NodoAST>)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-2)).value;
+		int varileft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).left;
+		int variright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).right;
+		String vari = (String)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-1)).value;
+		int lista_expresionesDleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
+		int lista_expresionesDright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
+		ArrayList<NodoAST> lista_expresionesD = (ArrayList<NodoAST>)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
+		
+                        NodoAST t_expresionI = new NodoAST();
+                        t_expresionI.Nodos = new ArrayList<NodoAST>(); 
+                        t_expresionI.setToken("<T_expresion>");
+                        t_expresionI.setTipo("t expresion");
+                        t_expresionI.Nodos = lista_expresionesI;
+                        
+                        NodoAST tnodo = new NodoAST();
+                        tnodo.Nodos = new ArrayList<NodoAST>(); 
+                        tnodo.setToken("<T_"+vari+">");
+                        tnodo.setTipo("<t "+vari+">");     
+                        
+                        NodoAST token = new NodoAST();
+                        token.setToken(vari);
+                        token.setTipo("token");
+
+                        NodoAST t_expresionD = new NodoAST();
+                        t_expresionD.Nodos = new ArrayList<NodoAST>(); 
+                        t_expresionD.setToken("<T_expresion>");
+                        t_expresionD.setTipo("t expresion");
+                        t_expresionD.Nodos = lista_expresionesD;
+
+                        tnodo.Nodos.add(token);
+                        
+                        RESULT = new ArrayList<NodoAST>();
+                        RESULT.add(t_expresionI);
+                        RESULT.add(tnodo);
+                        RESULT.add(t_expresionD);
+                        
+              CUP$parser$result = parser.getSymbolFactory().newSymbol("EXPRESION",11, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
+            }
+          return CUP$parser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 35: // EXPRESION ::= EXPRESION mayorigual EXPRESION 
+            {
+              ArrayList<NodoAST> RESULT =null;
+		int lista_expresionesIleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).left;
+		int lista_expresionesIright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).right;
+		ArrayList<NodoAST> lista_expresionesI = (ArrayList<NodoAST>)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-2)).value;
+		int varileft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).left;
+		int variright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).right;
+		String vari = (String)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-1)).value;
+		int lista_expresionesDleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
+		int lista_expresionesDright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
+		ArrayList<NodoAST> lista_expresionesD = (ArrayList<NodoAST>)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
+		
+                        NodoAST t_expresionI = new NodoAST();
+                        t_expresionI.Nodos = new ArrayList<NodoAST>(); 
+                        t_expresionI.setToken("<T_expresion>");
+                        t_expresionI.setTipo("t expresion");
+                        t_expresionI.Nodos = lista_expresionesI;
+                        
+                        NodoAST tnodo = new NodoAST();
+                        tnodo.Nodos = new ArrayList<NodoAST>(); 
+                        tnodo.setToken("<T_"+vari+">");
+                        tnodo.setTipo("<t "+vari+">");     
+                        
+                        NodoAST token = new NodoAST();
+                        token.setToken(vari);
+                        token.setTipo("token");
+
+                        NodoAST t_expresionD = new NodoAST();
+                        t_expresionD.Nodos = new ArrayList<NodoAST>(); 
+                        t_expresionD.setToken("<T_expresion>");
+                        t_expresionD.setTipo("t expresion");
+                        t_expresionD.Nodos = lista_expresionesD;
+
+                        tnodo.Nodos.add(token);
+                        
+                        RESULT = new ArrayList<NodoAST>();
+                        RESULT.add(t_expresionI);
+                        RESULT.add(tnodo);
+                        RESULT.add(t_expresionD);
+                        
+              CUP$parser$result = parser.getSymbolFactory().newSymbol("EXPRESION",11, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
+            }
+          return CUP$parser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 36: // EXPRESION ::= EXPRESION menorigual EXPRESION 
+            {
+              ArrayList<NodoAST> RESULT =null;
+		int lista_expresionesIleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).left;
+		int lista_expresionesIright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).right;
+		ArrayList<NodoAST> lista_expresionesI = (ArrayList<NodoAST>)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-2)).value;
+		int varileft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).left;
+		int variright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).right;
+		String vari = (String)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-1)).value;
+		int lista_expresionesDleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
+		int lista_expresionesDright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
+		ArrayList<NodoAST> lista_expresionesD = (ArrayList<NodoAST>)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
+		
+                        NodoAST t_expresionI = new NodoAST();
+                        t_expresionI.Nodos = new ArrayList<NodoAST>(); 
+                        t_expresionI.setToken("<T_expresion>");
+                        t_expresionI.setTipo("t expresion");
+                        t_expresionI.Nodos = lista_expresionesI;
+                        
+                        NodoAST tnodo = new NodoAST();
+                        tnodo.Nodos = new ArrayList<NodoAST>(); 
+                        tnodo.setToken("<T_"+vari+">");
+                        tnodo.setTipo("<t "+vari+">");     
+                        
+                        NodoAST token = new NodoAST();
+                        token.setToken(vari);
+                        token.setTipo("token");
+
+                        NodoAST t_expresionD = new NodoAST();
+                        t_expresionD.Nodos = new ArrayList<NodoAST>(); 
+                        t_expresionD.setToken("<T_expresion>");
+                        t_expresionD.setTipo("t expresion");
+                        t_expresionD.Nodos = lista_expresionesD;
+
+                        tnodo.Nodos.add(token);
+                        
+                        RESULT = new ArrayList<NodoAST>();
+                        RESULT.add(t_expresionI);
+                        RESULT.add(tnodo);
+                        RESULT.add(t_expresionD);
+                        
+              CUP$parser$result = parser.getSymbolFactory().newSymbol("EXPRESION",11, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
+            }
+          return CUP$parser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 37: // EXPRESION ::= EXPRESION esigual EXPRESION 
+            {
+              ArrayList<NodoAST> RESULT =null;
+		int lista_expresionesIleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).left;
+		int lista_expresionesIright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).right;
+		ArrayList<NodoAST> lista_expresionesI = (ArrayList<NodoAST>)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-2)).value;
+		int varileft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).left;
+		int variright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).right;
+		String vari = (String)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-1)).value;
+		int lista_expresionesDleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
+		int lista_expresionesDright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
+		ArrayList<NodoAST> lista_expresionesD = (ArrayList<NodoAST>)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
+		
+                        NodoAST t_expresionI = new NodoAST();
+                        t_expresionI.Nodos = new ArrayList<NodoAST>(); 
+                        t_expresionI.setToken("<T_expresion>");
+                        t_expresionI.setTipo("t expresion");
+                        t_expresionI.Nodos = lista_expresionesI;
+                        
+                        NodoAST tnodo = new NodoAST();
+                        tnodo.Nodos = new ArrayList<NodoAST>(); 
+                        tnodo.setToken("<T_"+vari+">");
+                        tnodo.setTipo("<t "+vari+">");     
+                        
+                        NodoAST token = new NodoAST();
+                        token.setToken(vari);
+                        token.setTipo("token");
+
+                        NodoAST t_expresionD = new NodoAST();
+                        t_expresionD.Nodos = new ArrayList<NodoAST>(); 
+                        t_expresionD.setToken("<T_expresion>");
+                        t_expresionD.setTipo("t expresion");
+                        t_expresionD.Nodos = lista_expresionesD;
+
+                        tnodo.Nodos.add(token);
+                        
+                        RESULT = new ArrayList<NodoAST>();
+                        RESULT.add(t_expresionI);
+                        RESULT.add(tnodo);
+                        RESULT.add(t_expresionD);
+                        
+              CUP$parser$result = parser.getSymbolFactory().newSymbol("EXPRESION",11, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
+            }
+          return CUP$parser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 38: // EXPRESION ::= EXPRESION esdiferente EXPRESION 
+            {
+              ArrayList<NodoAST> RESULT =null;
+		int lista_expresionesIleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).left;
+		int lista_expresionesIright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).right;
+		ArrayList<NodoAST> lista_expresionesI = (ArrayList<NodoAST>)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-2)).value;
+		int varileft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).left;
+		int variright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).right;
+		String vari = (String)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-1)).value;
+		int lista_expresionesDleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
+		int lista_expresionesDright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
+		ArrayList<NodoAST> lista_expresionesD = (ArrayList<NodoAST>)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
+		
+                        NodoAST t_expresionI = new NodoAST();
+                        t_expresionI.Nodos = new ArrayList<NodoAST>(); 
+                        t_expresionI.setToken("<T_expresion>");
+                        t_expresionI.setTipo("t expresion");
+                        t_expresionI.Nodos = lista_expresionesI;
+                        
+                        NodoAST tnodo = new NodoAST();
+                        tnodo.Nodos = new ArrayList<NodoAST>(); 
+                        tnodo.setToken("<T_"+vari+">");
+                        tnodo.setTipo("<t "+vari+">");     
+                        
+                        NodoAST token = new NodoAST();
+                        token.setToken(vari);
+                        token.setTipo("token");
+
+                        NodoAST t_expresionD = new NodoAST();
+                        t_expresionD.Nodos = new ArrayList<NodoAST>(); 
+                        t_expresionD.setToken("<T_expresion>");
+                        t_expresionD.setTipo("t expresion");
+                        t_expresionD.Nodos = lista_expresionesD;
+
+                        tnodo.Nodos.add(token);
+                        
+                        RESULT = new ArrayList<NodoAST>();
+                        RESULT.add(t_expresionI);
+                        RESULT.add(tnodo);
+                        RESULT.add(t_expresionD);
+                        
+              CUP$parser$result = parser.getSymbolFactory().newSymbol("EXPRESION",11, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
+            }
+          return CUP$parser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 39: // EXPRESION ::= EXPRESION or EXPRESION 
+            {
+              ArrayList<NodoAST> RESULT =null;
+		int lista_expresionesIleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).left;
+		int lista_expresionesIright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).right;
+		ArrayList<NodoAST> lista_expresionesI = (ArrayList<NodoAST>)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-2)).value;
+		int varileft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).left;
+		int variright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).right;
+		String vari = (String)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-1)).value;
+		int lista_expresionesDleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
+		int lista_expresionesDright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
+		ArrayList<NodoAST> lista_expresionesD = (ArrayList<NodoAST>)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
+		
+                        NodoAST t_expresionI = new NodoAST();
+                        t_expresionI.Nodos = new ArrayList<NodoAST>(); 
+                        t_expresionI.setToken("<T_expresion>");
+                        t_expresionI.setTipo("t expresion");
+                        t_expresionI.Nodos = lista_expresionesI;
+                        
+                        NodoAST tnodo = new NodoAST();
+                        tnodo.Nodos = new ArrayList<NodoAST>(); 
+                        tnodo.setToken("<T_"+vari+">");
+                        tnodo.setTipo("<t "+vari+">");     
+                        
+                        NodoAST token = new NodoAST();
+                        token.setToken(vari);
+                        token.setTipo("token");
+
+                        NodoAST t_expresionD = new NodoAST();
+                        t_expresionD.Nodos = new ArrayList<NodoAST>(); 
+                        t_expresionD.setToken("<T_expresion>");
+                        t_expresionD.setTipo("t expresion");
+                        t_expresionD.Nodos = lista_expresionesD;
+
+                        tnodo.Nodos.add(token);
+                        
+                        RESULT = new ArrayList<NodoAST>();
+                        RESULT.add(t_expresionI);
+                        RESULT.add(tnodo);
+                        RESULT.add(t_expresionD);
+                        
+                
+              CUP$parser$result = parser.getSymbolFactory().newSymbol("EXPRESION",11, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
+            }
+          return CUP$parser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 40: // EXPRESION ::= EXPRESION and EXPRESION 
+            {
+              ArrayList<NodoAST> RESULT =null;
+		int lista_expresionesIleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).left;
+		int lista_expresionesIright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).right;
+		ArrayList<NodoAST> lista_expresionesI = (ArrayList<NodoAST>)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-2)).value;
+		int var_andleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).left;
+		int var_andright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).right;
+		String var_and = (String)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-1)).value;
+		int lista_expresionesDleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
+		int lista_expresionesDright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
+		ArrayList<NodoAST> lista_expresionesD = (ArrayList<NodoAST>)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
+		
+                        NodoAST t_expresionI = new NodoAST();
+                        t_expresionI.Nodos = new ArrayList<NodoAST>(); 
+                        t_expresionI.setToken("<T_expresion>");
+                        t_expresionI.setTipo("t expresion");
+                        t_expresionI.Nodos = lista_expresionesI;
+                        
+                        NodoAST t_and = new NodoAST();
+                        t_and.Nodos = new ArrayList<NodoAST>(); 
+                        t_and.setToken("<T_and>");
+                        t_and.setTipo("t and");     
+                        
+                        NodoAST n_and = new NodoAST();
+                        n_and.setToken(var_and);
+                        n_and.setTipo("token");
+
+                        NodoAST t_expresionD = new NodoAST();
+                        t_expresionD.Nodos = new ArrayList<NodoAST>(); 
+                        t_expresionD.setToken("<T_expresion>");
+                        t_expresionD.setTipo("t expresion");
+                        t_expresionD.Nodos = lista_expresionesD;
+
+                        t_and.Nodos.add(n_and);
+                        
+                        RESULT = new ArrayList<NodoAST>();
+                        RESULT.add(t_expresionI);
+                        RESULT.add(t_and);
+                        RESULT.add(t_expresionD);
+                        
+                
+              CUP$parser$result = parser.getSymbolFactory().newSymbol("EXPRESION",11, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
+            }
+          return CUP$parser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 41: // EXPRESION ::= resta EXPRESION 
+            {
+              ArrayList<NodoAST> RESULT =null;
+		int var_restaleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).left;
+		int var_restaright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).right;
+		String var_resta = (String)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-1)).value;
+		int lista_expresionesleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
+		int lista_expresionesright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
+		ArrayList<NodoAST> lista_expresiones = (ArrayList<NodoAST>)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
+		
+                        NodoAST t_resta = new NodoAST();
+                        t_resta.Nodos = new ArrayList<NodoAST>(); 
+                        t_resta.setToken("<T_abre_parentesis>");
+                        t_resta.setTipo("t abre parentesis");     
+                        
+                        NodoAST n_resta = new NodoAST();
+                        n_resta.setToken(var_resta);
+                        n_resta.setTipo("token");
+
+                        NodoAST t_expresion = new NodoAST();
+                        t_expresion.Nodos = new ArrayList<NodoAST>(); 
+                        t_expresion.setToken("<T_expresion>");
+                        t_expresion.setTipo("t expresion");
+                        t_expresion.Nodos = lista_expresiones;
+
+                        t_resta.Nodos.add(n_resta);
+                        
+                        RESULT = new ArrayList<NodoAST>();
+                        RESULT.add(t_resta);
+                        RESULT.add(t_expresion);
+                        
+                
+              CUP$parser$result = parser.getSymbolFactory().newSymbol("EXPRESION",11, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
+            }
+          return CUP$parser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 42: // EXPRESION ::= not EXPRESION 
+            {
+              ArrayList<NodoAST> RESULT =null;
+		int var_notleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).left;
+		int var_notright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).right;
+		String var_not = (String)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-1)).value;
+		int lista_expresionesleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
+		int lista_expresionesright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
+		ArrayList<NodoAST> lista_expresiones = (ArrayList<NodoAST>)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
+		
+                        NodoAST t_not = new NodoAST();
+                        t_not.Nodos = new ArrayList<NodoAST>(); 
+                        t_not.setToken("<T_abre_parentesis>");
+                        t_not.setTipo("t abre parentesis");     
+                        
+                        NodoAST n_not = new NodoAST();
+                        n_not.setToken(var_not);
+                        n_not.setTipo("token");
+
+                        NodoAST t_expresion = new NodoAST();
+                        t_expresion.Nodos = new ArrayList<NodoAST>(); 
+                        t_expresion.setToken("<T_expresion>");
+                        t_expresion.setTipo("t expresion");
+                        t_expresion.Nodos = lista_expresiones;
+
+                        t_not.Nodos.add(n_not);
+                        
+                        RESULT = new ArrayList<NodoAST>();
+                        RESULT.add(t_not);
+                        RESULT.add(t_expresion);
+                        
+
+                
+              CUP$parser$result = parser.getSymbolFactory().newSymbol("EXPRESION",11, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
+            }
+          return CUP$parser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 43: // EXPRESION ::= aparentecis EXPRESION cparentecis 
+            {
+              ArrayList<NodoAST> RESULT =null;
+		int aparleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).left;
+		int aparright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).right;
+		String apar = (String)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-2)).value;
+		int lista_expresionesleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).left;
+		int lista_expresionesright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).right;
+		ArrayList<NodoAST> lista_expresiones = (ArrayList<NodoAST>)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-1)).value;
+		int cparleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
+		int cparright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
+		String cpar = (String)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
+		
+                        NodoAST t_apar = new NodoAST();
+                        t_apar.Nodos = new ArrayList<NodoAST>(); 
+                        t_apar.setToken("<T_abre_parentesis>");
+                        t_apar.setTipo("t abre parentesis");     
+                        
+                        NodoAST n_apar = new NodoAST();
+                        n_apar.setToken(apar);
+                        n_apar.setTipo("token");
+
+                        NodoAST t_expresion = new NodoAST();
+                        t_expresion.Nodos = lista_expresiones; 
+                        t_expresion.setToken("<T_expresion>");
+                        t_expresion.setTipo("t expresion");
+
+                        NodoAST t_cpar = new NodoAST();
+                        t_cpar.Nodos = new ArrayList<NodoAST>(); 
+                        t_cpar.setToken("<T_cierra_parentesis>");
+                        t_cpar.setTipo("t cierra parentesis");     
+                        
+                        NodoAST n_cpar = new NodoAST();
+                        n_cpar.setToken(cpar);
+                        n_cpar.setTipo("token");
+
+                        t_apar.Nodos.add(n_apar);
+                        t_cpar.Nodos.add(n_cpar);
+                        
+                        RESULT = new ArrayList<NodoAST>();
+                        RESULT.add(t_apar);
+                        RESULT.add(t_expresion);
+                        RESULT.add(t_cpar);
+                        
+
+
+
+                
+              CUP$parser$result = parser.getSymbolFactory().newSymbol("EXPRESION",11, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
+            }
+          return CUP$parser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 44: // EXPRESION ::= var_identificador 
+            {
+              ArrayList<NodoAST> RESULT =null;
+		int var_idleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
+		int var_idright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
+		String var_id = (String)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
+		
+                        NodoAST t_identificador = new NodoAST();
+                        t_identificador.Nodos = new ArrayList<NodoAST>(); 
+                        t_identificador.setToken("<T_identificador>");
+                        t_identificador.setTipo("t identificador");     
+                        
+                        NodoAST n_identificador = new NodoAST();
+                        n_identificador.setToken(var_id);
+                        n_identificador.setTipo("token");
+                        
+                        t_identificador.Nodos.add(n_identificador);
+                        NodoAST t_expresion = new NodoAST();
+                        t_expresion.Nodos = new ArrayList<NodoAST>(); 
+                        t_expresion.setToken("<T_expresion>");
+                        t_expresion.setTipo("t expresion");
+                        t_expresion.Nodos.add(t_identificador);
+                        
+                        RESULT = new ArrayList<NodoAST>(); 
+                        RESULT.add(t_expresion);
+                        
+
+                        
+
+                
+              CUP$parser$result = parser.getSymbolFactory().newSymbol("EXPRESION",11, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
+            }
+          return CUP$parser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 45: // EXPRESION ::= EXPRESIONVAL 
+            {
+              ArrayList<NodoAST> RESULT =null;
+		
+                        NodoAST t_expresion = new NodoAST();
+                        t_expresion.Nodos = new ArrayList<NodoAST>(); 
+                        t_expresion.setToken("<T_expresion>");
+                        t_expresion.setTipo("t expresion");
+                        t_expresion.Nodos.add(nodo_aux_val);
+                        
+                        RESULT = new ArrayList<NodoAST>(); 
+                        RESULT.add(t_expresion);
+                        
+
+                
+              CUP$parser$result = parser.getSymbolFactory().newSymbol("EXPRESION",11, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
+            }
+          return CUP$parser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 46: // INST_SI ::= si EXPRESION enton CODIGO 
+            {
+              ArrayList<NodoAST> RESULT =null;
+		int vari1left = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-3)).left;
+		int vari1right = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-3)).right;
+		String vari1 = (String)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-3)).value;
+		int lista_expresionesleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).left;
+		int lista_expresionesright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).right;
+		ArrayList<NodoAST> lista_expresiones = (ArrayList<NodoAST>)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-2)).value;
+		int vari2left = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).left;
+		int vari2right = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).right;
+		String vari2 = (String)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-1)).value;
+		int lista_codigoleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
+		int lista_codigoright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
+		ArrayList<NodoAST> lista_codigo = (ArrayList<NodoAST>)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
+		
+                        NodoAST t_expresionI = new NodoAST();
+                        t_expresionI.Nodos = lista_expresiones; 
+                        t_expresionI.setToken("<T_expresion>");
+                        t_expresionI.setTipo("t expresion");
+                        
+                        NodoAST tnodo = new NodoAST();
+                        tnodo.Nodos = new ArrayList<NodoAST>(); 
+                        tnodo.setToken("<T_"+vari1+">");
+                        tnodo.setTipo("<t "+vari1+">");     
+                        
+                        NodoAST token = new NodoAST();
+                        token.setToken(vari1);
+                        token.setTipo("token");
+
+                        NodoAST tnodo2 = new NodoAST();
+                        tnodo2.Nodos = new ArrayList<NodoAST>(); 
+                        tnodo2.setToken("<T_"+vari2+">");
+                        tnodo2.setTipo("<t "+vari2+">");     
+                        
+                        NodoAST token2 = new NodoAST();
+                        token2.setToken(vari2);
+                        token2.setTipo("token");                        
+
+                        NodoAST t_codigoI = new NodoAST();
+                        t_codigoI.Nodos = new ArrayList<NodoAST>(); 
+                        t_codigoI.setToken("<T_Instrucciones>");
+                        t_codigoI.setTipo("t T_Instrucciones");
+                        t_codigoI.Nodos = lista_codigo;
+
+                        
+                        
+                        tnodo.Nodos.add(token);
+                        tnodo2.Nodos.add(token2);
+
+                        
+                        RESULT = new ArrayList<NodoAST>();
+                        RESULT.add(tnodo);
+                        RESULT.add(t_expresionI);
+                        RESULT.add(tnodo2);
+                        RESULT.add(t_codigoI);
+
+            
+            
+            
+              CUP$parser$result = parser.getSymbolFactory().newSymbol("INST_SI",12, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-3)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
+            }
+          return CUP$parser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 47: // INST_SI ::= si EXPRESION enton CODIGO de_lo_contrario CODIGO 
+            {
+              ArrayList<NodoAST> RESULT =null;
+		int vari1left = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-5)).left;
+		int vari1right = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-5)).right;
+		String vari1 = (String)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-5)).value;
+		int lista_expresionesleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-4)).left;
+		int lista_expresionesright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-4)).right;
+		ArrayList<NodoAST> lista_expresiones = (ArrayList<NodoAST>)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-4)).value;
+		int vari2left = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-3)).left;
+		int vari2right = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-3)).right;
+		String vari2 = (String)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-3)).value;
+		int lista_codigoleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).left;
+		int lista_codigoright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).right;
+		ArrayList<NodoAST> lista_codigo = (ArrayList<NodoAST>)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-2)).value;
+		int vari3left = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).left;
+		int vari3right = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).right;
+		String vari3 = (String)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-1)).value;
+		int lista_codigo2left = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
+		int lista_codigo2right = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
+		ArrayList<NodoAST> lista_codigo2 = (ArrayList<NodoAST>)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
+		
+                        NodoAST t_expresionI = new NodoAST();
+                        t_expresionI.Nodos = new ArrayList<NodoAST>(); 
+                        t_expresionI.setToken("<T_expresion>");
+                        t_expresionI.setTipo("t expresion");
+                        t_expresionI.Nodos = lista_expresiones;
+                        
+                        NodoAST tnodo = new NodoAST();
+                        tnodo.Nodos = new ArrayList<NodoAST>(); 
+                        tnodo.setToken("<T_"+vari1+">");
+                        tnodo.setTipo("<t "+vari1+">");     
+                        
+                        NodoAST token = new NodoAST();
+                        token.setToken(vari1);
+                        token.setTipo("token");
+
+                        NodoAST tnodo2 = new NodoAST();
+                        tnodo2.Nodos = new ArrayList<NodoAST>(); 
+                        tnodo2.setToken("<T_"+vari2+">");
+                        tnodo2.setTipo("<t "+vari2+">");     
+                        
+                        NodoAST token2 = new NodoAST();
+                        token2.setToken(vari2);
+                        token2.setTipo("token");
+
+                        NodoAST tnodo3 = new NodoAST();
+                        tnodo3.Nodos = new ArrayList<NodoAST>(); 
+                        tnodo3.setToken("<T_"+vari3+">");
+                        tnodo3.setTipo("<t "+vari3+">");     
+                        
+                        NodoAST token3 = new NodoAST();
+                        token3.setToken(vari3);
+                        token3.setTipo("token");
+
+                        NodoAST t_codigoI = new NodoAST();
+                        t_codigoI.Nodos = new ArrayList<NodoAST>(); 
+                        t_codigoI.setToken("<T_Instrucciones>");
+                        t_codigoI.setTipo("t T_Instrucciones");
+                        t_codigoI.Nodos = lista_codigo;
+
+                        NodoAST t_codigoD = new NodoAST();
+                        t_codigoD.Nodos = new ArrayList<NodoAST>(); 
+                        t_codigoD.setToken("<T_Instrucciones>");
+                        t_codigoD.setTipo("t T_Instrucciones");
+                        t_codigoD.Nodos = lista_codigo2;
+
+                        
+                        
+                        tnodo.Nodos.add(token);
+                        tnodo2.Nodos.add(token2);
+                        tnodo3.Nodos.add(token3);
+
+                        
+                        RESULT = new ArrayList<NodoAST>();
+                        RESULT.add(tnodo);
+                        RESULT.add(t_expresionI);
+                        RESULT.add(tnodo2);
+                        RESULT.add(t_codigoI);
+                        RESULT.add(tnodo3);
+                        RESULT.add(t_codigoD);
+
+            
+            
+            
+              CUP$parser$result = parser.getSymbolFactory().newSymbol("INST_SI",12, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-5)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
+            }
+          return CUP$parser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 48: // INST_SI ::= si EXPRESION enton CODIGO OSI 
+            {
+              ArrayList<NodoAST> RESULT =null;
+		int vari1left = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-4)).left;
+		int vari1right = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-4)).right;
+		String vari1 = (String)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-4)).value;
+		int lista_expresionesleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-3)).left;
+		int lista_expresionesright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-3)).right;
+		ArrayList<NodoAST> lista_expresiones = (ArrayList<NodoAST>)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-3)).value;
+		int vari2left = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).left;
+		int vari2right = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).right;
+		String vari2 = (String)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-2)).value;
+		int lista_codigoleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).left;
+		int lista_codigoright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).right;
+		ArrayList<NodoAST> lista_codigo = (ArrayList<NodoAST>)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-1)).value;
+		int lista_osileft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
+		int lista_osiright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
+		ArrayList<NodoAST> lista_osi = (ArrayList<NodoAST>)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
+		
+                        NodoAST t_expresionI = new NodoAST();
+                        t_expresionI.Nodos = new ArrayList<NodoAST>(); 
+                        t_expresionI.setToken("<T_expresion>");
+                        t_expresionI.setTipo("t expresion");
+                        t_expresionI.Nodos = lista_expresiones;
+                        
+                        NodoAST tnodo = new NodoAST();
+                        tnodo.Nodos = new ArrayList<NodoAST>(); 
+                        tnodo.setToken("<T_"+vari1+">");
+                        tnodo.setTipo("<t "+vari1+">");     
+                        
+                        NodoAST token = new NodoAST();
+                        token.setToken(vari1);
+                        token.setTipo("token");
+
+                        NodoAST tnodo2 = new NodoAST();
+                        tnodo2.Nodos = new ArrayList<NodoAST>(); 
+                        tnodo2.setToken("<T_"+vari2+">");
+                        tnodo2.setTipo("<t "+vari2+">");     
+                        
+                        NodoAST token2 = new NodoAST();
+                        token2.setToken(vari2);
+                        token2.setTipo("token");                        
+
+                        NodoAST t_codigoI = new NodoAST();
+                        t_codigoI.Nodos = new ArrayList<NodoAST>(); 
+                        t_codigoI.setToken("<T_Instrucciones>");
+                        t_codigoI.setTipo("t T_Instrucciones");
+                        t_codigoI.Nodos = lista_codigo;
+
+                        NodoAST t_expresionO = new NodoAST();
+                        t_expresionO.Nodos = new ArrayList<NodoAST>(); 
+                        t_expresionO.setToken("<T_OSI>");
+                        t_expresionO.setTipo("t expresion");
+                        t_expresionO.Nodos = lista_osi;
+                        
+                        tnodo.Nodos.add(token);
+                        tnodo2.Nodos.add(token2);
+
+                        
+                        RESULT = new ArrayList<NodoAST>();
+                        RESULT.add(tnodo);
+                        RESULT.add(t_expresionI);
+                        RESULT.add(tnodo2);
+                        RESULT.add(t_codigoI);
+                        RESULT.add(t_expresionO);
+
+            
+            
+            
+              CUP$parser$result = parser.getSymbolFactory().newSymbol("INST_SI",12, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-4)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
+            }
+          return CUP$parser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 49: // INST_SI ::= si EXPRESION enton CODIGO OSI de_lo_contrario CODIGO 
+            {
+              ArrayList<NodoAST> RESULT =null;
+		int vari1left = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-6)).left;
+		int vari1right = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-6)).right;
+		String vari1 = (String)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-6)).value;
+		int lista_expresionesleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-5)).left;
+		int lista_expresionesright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-5)).right;
+		ArrayList<NodoAST> lista_expresiones = (ArrayList<NodoAST>)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-5)).value;
+		int vari2left = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-4)).left;
+		int vari2right = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-4)).right;
+		String vari2 = (String)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-4)).value;
+		int lista_codigoleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-3)).left;
+		int lista_codigoright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-3)).right;
+		ArrayList<NodoAST> lista_codigo = (ArrayList<NodoAST>)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-3)).value;
+		int lista_osileft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).left;
+		int lista_osiright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).right;
+		ArrayList<NodoAST> lista_osi = (ArrayList<NodoAST>)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-2)).value;
+		int vari3left = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).left;
+		int vari3right = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).right;
+		String vari3 = (String)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-1)).value;
+		int lista_codigo2left = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
+		int lista_codigo2right = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
+		ArrayList<NodoAST> lista_codigo2 = (ArrayList<NodoAST>)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
+		
+                        NodoAST t_expresionI = new NodoAST();
+                        t_expresionI.Nodos = new ArrayList<NodoAST>(); 
+                        t_expresionI.setToken("<T_expresion>");
+                        t_expresionI.setTipo("t expresion");
+                        t_expresionI.Nodos = lista_expresiones;
+                        
+                        NodoAST tnodo = new NodoAST();
+                        tnodo.Nodos = new ArrayList<NodoAST>(); 
+                        tnodo.setToken("<T_"+vari1+">");
+                        tnodo.setTipo("<t "+vari1+">");     
+                        
+                        NodoAST token = new NodoAST();
+                        token.setToken(vari1);
+                        token.setTipo("token");
+
+                        NodoAST tnodo2 = new NodoAST();
+                        tnodo2.Nodos = new ArrayList<NodoAST>(); 
+                        tnodo2.setToken("<T_"+vari2+">");
+                        tnodo2.setTipo("<t "+vari2+">");     
+                        
+                        NodoAST token2 = new NodoAST();
+                        token2.setToken(vari2);
+                        token2.setTipo("token");
+
+                        NodoAST tnodo3 = new NodoAST();
+                        tnodo3.Nodos = new ArrayList<NodoAST>(); 
+                        tnodo3.setToken("<T_"+vari3+">");
+                        tnodo3.setTipo("<t "+vari3+">");     
+                        
+                        NodoAST token3 = new NodoAST();
+                        token3.setToken(vari3);
+                        token3.setTipo("token");
+
+                        NodoAST t_codigoI = new NodoAST();
+                        t_codigoI.Nodos = new ArrayList<NodoAST>(); 
+                        t_codigoI.setToken("<T_Instrucciones>");
+                        t_codigoI.setTipo("t T_Instrucciones");
+                        t_codigoI.Nodos = lista_codigo;
+
+                        NodoAST t_codigoD = new NodoAST();
+                        t_codigoD.Nodos = new ArrayList<NodoAST>(); 
+                        t_codigoD.setToken("<T_Instrucciones>");
+                        t_codigoD.setTipo("t T_Instrucciones");
+                        t_codigoD.Nodos = lista_codigo2;
+
+                        NodoAST t_expresionO = new NodoAST();
+                        t_expresionO.Nodos = new ArrayList<NodoAST>(); 
+                        t_expresionO.setToken("<T_OSI>");
+                        t_expresionO.setTipo("t expresion");
+                        t_expresionO.Nodos = lista_osi;
+                        
+                        tnodo.Nodos.add(token);
+                        tnodo2.Nodos.add(token2);
+                        tnodo3.Nodos.add(token3);
+
+                        
+                        RESULT = new ArrayList<NodoAST>();
+                        RESULT.add(tnodo);
+                        RESULT.add(t_expresionI);
+                        RESULT.add(tnodo2);
+                        RESULT.add(t_codigoI);
+                        RESULT.add(t_expresionO);
+                        RESULT.add(tnodo3);
+                        RESULT.add(t_codigoD);
+
+
+
+            
+              CUP$parser$result = parser.getSymbolFactory().newSymbol("INST_SI",12, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-6)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
+            }
+          return CUP$parser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 50: // OSI ::= OSI CONDELOSI 
+            {
+              ArrayList<NodoAST> RESULT =null;
+		int lista_osileft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).left;
+		int lista_osiright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).right;
+		ArrayList<NodoAST> lista_osi = (ArrayList<NodoAST>)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-1)).value;
+		int lista_conosileft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
+		int lista_conosiright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
+		ArrayList<NodoAST> lista_conosi = (ArrayList<NodoAST>)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
+		
+                        NodoAST t_expresion = new NodoAST();
+                        t_expresion.Nodos = new ArrayList<NodoAST>(); 
+                        t_expresion.setToken("<T_expresion>");
+                        t_expresion.setTipo("t expresion");
+                        t_expresion.Nodos = lista_osi;
+                        NodoAST t_expresion2 = new NodoAST();
+                        t_expresion2.Nodos = new ArrayList<NodoAST>(); 
+                        t_expresion2.setToken("<T_expresion>");
+                        t_expresion2.setTipo("t expresion");
+                        t_expresion2.Nodos = lista_osi;
+                        RESULT = new ArrayList<NodoAST>(); 
+                        RESULT.add(t_expresion);
+                        RESULT.add(t_expresion2);
+                        
+              CUP$parser$result = parser.getSymbolFactory().newSymbol("OSI",13, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
+            }
+          return CUP$parser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 51: // OSI ::= CONDELOSI 
+            {
+              ArrayList<NodoAST> RESULT =null;
+		int lista_conosileft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
+		int lista_conosiright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
+		ArrayList<NodoAST> lista_conosi = (ArrayList<NodoAST>)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
+		
+                        NodoAST t_expresion = new NodoAST();
+                        t_expresion.Nodos = new ArrayList<NodoAST>(); 
+                        t_expresion.setToken("<T_expresion>");
+                        t_expresion.setTipo("t expresion");
+                        t_expresion.Nodos = lista_conosi;
+                        RESULT = new ArrayList<NodoAST>(); 
+                        RESULT.add(t_expresion);
+        
+              CUP$parser$result = parser.getSymbolFactory().newSymbol("OSI",13, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
+            }
+          return CUP$parser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 52: // CONDELOSI ::= o_si EXPRESION CODIGO 
+            {
+              ArrayList<NodoAST> RESULT =null;
+		int varileft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).left;
+		int variright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).right;
+		String vari = (String)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-2)).value;
+		int lista_expresionesIleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).left;
+		int lista_expresionesIright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).right;
+		ArrayList<NodoAST> lista_expresionesI = (ArrayList<NodoAST>)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-1)).value;
+		
+                        NodoAST t_expresion = new NodoAST();
+                        t_expresion.Nodos = new ArrayList<NodoAST>(); 
+                        t_expresion.setToken("<T_expresion>");
+                        t_expresion.setTipo("t expresion");
+                        t_expresion.Nodos = lista_expresionesI;
+                        
+                        NodoAST tnodo = new NodoAST();
+                        tnodo.Nodos = new ArrayList<NodoAST>(); 
+                        tnodo.setToken("<T_"+vari+">");
+                        tnodo.setTipo("<t "+vari+">");     
+                        
+                        NodoAST token = new NodoAST();
+                        token.setToken(vari);
+                        token.setTipo("token");
+
+                        
+
+                        tnodo.Nodos.add(token);
+                        
+                        RESULT = new ArrayList<NodoAST>();
+                        RESULT.add(tnodo);
+                        RESULT.add(t_expresion);
+                        RESULT.add(nodo_aux);
+                        
+
+              CUP$parser$result = parser.getSymbolFactory().newSymbol("CONDELOSI",15, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
+            }
+          return CUP$parser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 53: // INST_SEGUN ::= segun var_identificador hacer CASOS de_lo_contrario CODIGO 
+            {
+              ArrayList<NodoAST> RESULT =null;
+
+              CUP$parser$result = parser.getSymbolFactory().newSymbol("INST_SEGUN",16, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-5)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
+            }
+          return CUP$parser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 54: // INST_SEGUN ::= segun var_identificador hacer CASOS 
+            {
+              ArrayList<NodoAST> RESULT =null;
+
+              CUP$parser$result = parser.getSymbolFactory().newSymbol("INST_SEGUN",16, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-3)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
+            }
+          return CUP$parser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 55: // INST_SEGUN ::= segun var_identificador hacer de_lo_contrario CODIGO 
+            {
+              ArrayList<NodoAST> RESULT =null;
+
+              CUP$parser$result = parser.getSymbolFactory().newSymbol("INST_SEGUN",16, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-4)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
+            }
+          return CUP$parser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 56: // CASOS ::= CASOS CASO 
+            {
+              ArrayList<NodoAST> RESULT =null;
+
+              CUP$parser$result = parser.getSymbolFactory().newSymbol("CASOS",18, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
+            }
+          return CUP$parser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 57: // CASOS ::= CASO 
+            {
+              ArrayList<NodoAST> RESULT =null;
+
+              CUP$parser$result = parser.getSymbolFactory().newSymbol("CASOS",18, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
+            }
+          return CUP$parser$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 58: // CASO ::= interrogacionA var_identificador interrogacionC enton CODIGO 
+            {
+              ArrayList<NodoAST> RESULT =null;
+
+              CUP$parser$result = parser.getSymbolFactory().newSymbol("CASO",17, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-4)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
 
