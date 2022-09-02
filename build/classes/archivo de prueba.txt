@@ -1,8 +1,6 @@
 inicio 
-	ingresar _indice_ como cadena con_valor "esta mierda";
-	_indice_ = _nombredeesta_, _otro_, _aver_;
+	ingresar nombredeesta_, _otro_, _aver_ como cadena con_valor "esta mierda";
 	ingresar _indice2_ como cadena con_valor "esta mierda";
-	_indice2_ = _nombredeesta2_, _otro2_, _aver2_;
 	ingresar _esta_ como cadena con_valor "esta mierda";
 	_nombreesta_ -> 1+1;
 	_esta_ -> -_nombredeesta_+_esta_;
@@ -20,10 +18,8 @@ fin
 
 
 inicio 
-	ingresar _indice_ como cadena con_valor "esta mierda";
-	_indice_ = _nombredeesta_, _otro_, _aver_;
+	ingresar nombredeesta_, _otro_, _aver_ como cadena con_valor "esta mierda";
 	ingresar _indice2_ como cadena con_valor "esta mierda";
-	_indice2_ = _nombredeesta2_, _otro2_, _aver2_;
 	ingresar _esta_ como cadena con_valor "esta mierda";
 	_nombreesta_ -> 1+1;
 	_esta_ -> -_nombredeesta_+_esta_;
@@ -68,3 +64,14 @@ inicio
 	hasta_que _x_ mayor 5
 		
 fin
+
+inicio
+	ejecutar _ESTA_();
+		
+fin
+
+metodo _esteMetodo_
+		imprimir "holamundo";
+		imprimir "holamundo2";
+		imprimir "holamundo3";
+fin_metodo

@@ -51,7 +51,7 @@ terminal String funcion, fin_funcion, con_parametros, ejecutar, imprimir, imprim
 non terminal ArrayList<NodoAST>  COMIENZO, CODIGO,CONTENIDO,  DECLARACION, TIPODATO, EXPRESIONVAL;
 non terminal ArrayList<NodoAST> INSTRUCCIONES, LISTA_NOM, NOMBRES, NOMBRE, ASIGNACION, EXPRESION;
 non terminal ArrayList<NodoAST> INST_SI, OSI, DELOCONTRARIO, CONDELOSI, INST_SEGUN, CASO, CASOS;
-non terminal ArrayList<NodoAST> PRINT, PRINTLN, CICLOPARA, CICLOMIENTRAS, CICLOREPETIR, METODO, FUNCION, LLAMADA, PARAMETROS, VALORES;
+non terminal ArrayList<NodoAST> PRINT, PRINTLN, CICLOPARA, CICLOMIENTRAS, CICLOREPETIR, METODO, FUNCION, LLAMADA, LPARAMETROS, PARAMETROS, LVALORES;
 
 
 precedence left suma, resta;
@@ -76,7 +76,8 @@ COMIENZO ::= CONTENIDO{:
                         nodo_aux = new NodoAST();    
                         nodo_aux_td = new NodoAST(); 
                         nodo_aux_val = new NodoAST();                  
-                        :};
+                        :}
+                |COMIENZO CONTENIDO;
 CONTENIDO ::= inicio:varin CODIGO:lista_codigo fin:varfin {: 
                                                 
                                                 NodoAST t_inicio = new NodoAST();
@@ -124,7 +125,9 @@ CONTENIDO ::= inicio:varin CODIGO:lista_codigo fin:varfin {:
                                                 System.out.println("se agrego token Al arbol");
                                                 System.out.println(Datos.arbol.raiz.getToken() + " Nodo del Datos.arbol");
 
-                                                :};
+                                                :}
+                |METODO
+                |FUNCION;
 
 CODIGO ::= INSTRUCCIONES:lista_instrucciones {:
                             NodoAST t_instrucciones = new NodoAST();
@@ -177,32 +180,6 @@ INSTRUCCIONES ::= DECLARACION:lista_dec puntocoma:var_pyc{:
                                             RESULT.add(t_declaracion);
 
                                         :}
-                    |LISTA_NOM:lista_nom puntocoma:var_pyc{:
-                        
-                        NodoAST t_listaNom = new NodoAST();
-                        t_listaNom.Nodos = lista_nom; //acarreo de nodos inferiores
-                        t_listaNom.setToken("<Lista Nombres>");
-                        t_listaNom.setTipo("lista nombres");
-                        
-                        NodoAST t_pyc = new NodoAST();
-                        t_pyc.Nodos = new ArrayList<NodoAST>(); 
-                        t_pyc.setToken("<T_pto_coma>");
-                        t_pyc.setTipo("t punto y coma");
-                                            
-                        NodoAST n_pyc = new NodoAST();
-                        n_pyc.setToken(var_pyc);
-                        n_pyc.setTipo("token");
-                    
-                        t_pyc.Nodos.add(n_pyc);
-                        t_listaNom.Nodos.add(t_pyc);
-                        System.out.println("se agrego token punto y coma");
-                        
-                        RESULT = new ArrayList<NodoAST>();
-                        RESULT.add(t_listaNom);
-                        System.out.println("se agregaron todos los nombres al nodo de la produccion de Instrucciones");
-
-                    
-                    :}
                     |ASIGNACION:lista_asig puntocoma:var_pyc{:
                         NodoAST t_asignacion = new NodoAST();
                         t_asignacion.Nodos = lista_asig; //acarreo de nodos inferiores
@@ -304,6 +281,7 @@ INSTRUCCIONES ::= DECLARACION:lista_dec puntocoma:var_pyc{:
                     |CICLOPARA
                     |CICLOMIENTRAS
                     |CICLOREPETIR
+                    |LLAMADA
                     ;
 
 PRINT::= imprimir:vari1 EXPRESION:lista_expresiones puntocoma:vari2{:
@@ -374,16 +352,14 @@ PRINTLN::= imprimir_nl:vari1 EXPRESION:lista_expresiones puntocoma:vari2{:
                         RESULT.add(tnodo2);           
                         :};
 
-DECLARACION ::= ingresar:var_ing var_identificador:var_id como:var_como TIPODATO con_valor:var_con_valor EXPRESIONVAL{: //corregir lista de nombres
+DECLARACION ::= ingresar:var_ing NOMBRES como:var_como TIPODATO con_valor:var_con_valor EXPRESIONVAL{: //corregir lista de nombres
                                             NodoAST t_ingresar = new NodoAST();
                                             t_ingresar.Nodos = new ArrayList<NodoAST>(); 
                                             t_ingresar.setToken("<T_ingresar>");
                                             t_ingresar.setTipo("t ingresar");
 
-                                            NodoAST t_identificador = new NodoAST();
-                                            t_identificador.Nodos = new ArrayList<NodoAST>(); 
-                                            t_identificador.setToken("<T_identificador>");
-                                            t_identificador.setTipo("t identificador");
+                                            
+                                            
                                             
                                             NodoAST t_como = new NodoAST();
                                             t_como.Nodos = new ArrayList<NodoAST>(); 
@@ -398,9 +374,8 @@ DECLARACION ::= ingresar:var_ing var_identificador:var_id como:var_como TIPODATO
                                             NodoAST n_ingresar = new NodoAST();
                                             n_ingresar.setToken(var_ing);
                                             n_ingresar.setTipo("token");                                           
-                                            NodoAST n_identificador = new NodoAST();
-                                            n_identificador.setToken(var_id);
-                                            n_identificador.setTipo("token");
+                                            
+                                            
                                             NodoAST n_como = new NodoAST();
                                             n_como.setToken(var_como);
                                             n_como.setTipo("token");
@@ -417,7 +392,6 @@ DECLARACION ::= ingresar:var_ing var_identificador:var_id como:var_como TIPODATO
                                             t_expresion.setTipo("expresion");
 
                                             t_ingresar.Nodos.add(n_ingresar);
-                                            t_identificador.Nodos.add(n_identificador);
                                             t_como.Nodos.add(n_como);
                                             t_con_valor.Nodos.add(n_con_valor);
                                             t_tipodato.Nodos.add(nodo_aux_td); //acarreo de nodo
@@ -425,56 +399,27 @@ DECLARACION ::= ingresar:var_ing var_identificador:var_id como:var_como TIPODATO
                                             
                                             RESULT = new ArrayList<NodoAST>();
                                             RESULT.add(t_ingresar);  
-                                            RESULT.add(t_identificador);
+                                            for(int i=1; i<lista_auxNodo3.size(); i++){
+                                                RESULT.add(lista_auxNodo3.get(i));
+                                                System.out.println("Se agregaron con exito los nodos de la produccion listaNom");
+
+                                            }
+                                            RESULT.add(lista_auxNodo3.get(0));
+
                                             RESULT.add(t_como);  
                                             RESULT.add(t_tipodato);
                                             RESULT.add(t_con_valor);  
                                             RESULT.add(t_expresion);
 
                                             System.out.println("Se agregaron con exito los nodos de la produccion Declaracion");
-
+                                            lista_auxNodo3 = new ArrayList<NodoAST>();  
                                         
                                         
                                         
                                         
                                         :};
 
-LISTA_NOM ::= var_identificador:var_id igual:var_igu NOMBRES{:
-                        NodoAST t_identificador = new NodoAST();
-                        t_identificador.Nodos = new ArrayList<NodoAST>(); 
-                        t_identificador.setToken("<T_identificador>");
-                        t_identificador.setTipo("t identificador");
-                        
-                        NodoAST n_identificador = new NodoAST();
-                        n_identificador.setToken(var_id);
-                        n_identificador.setTipo("token");
 
-                        NodoAST t_igual = new NodoAST();
-                        t_igual.Nodos = new ArrayList<NodoAST>(); 
-                        t_igual.setToken("<T_igual>");
-                        t_igual.setTipo("t igual");
-                        
-                        NodoAST n_igual = new NodoAST();
-                        n_igual.setToken(var_igu);
-                        n_igual.setTipo("token");
-
-                        t_identificador.Nodos.add(n_identificador);
-                        t_igual.Nodos.add(n_igual);
-
-                        RESULT = new ArrayList<NodoAST>(); 
-                        RESULT.add(t_identificador);
-                        RESULT.add(t_igual);
-
-                        for(int i=1; i<lista_auxNodo3.size(); i++){
-                            RESULT.add(lista_auxNodo3.get(i));
-                            System.out.println("Se agregaron con exito los nodos de la produccion listaNom");
-
-                        }
-                        RESULT.add(lista_auxNodo3.get(0));
-
-                        lista_auxNodo3 = new ArrayList<NodoAST>();
-
-            :};
 NOMBRES ::= NOMBRE{:lista_auxNodo3.add(nodo_aux_td);:}
             |NOMBRES NOMBRE {:
                         lista_auxNodo3.add(nodo_aux_td);
@@ -1711,16 +1656,22 @@ CICLOREPETIR::= repetir CODIGO hasta_que EXPRESION
                 |repetir hasta_que EXPRESION;
 
 METODO::= metodo var_identificador CODIGO fin_metodo
-        |metodo var_identificador aparentecis PARAMETROS cparentecis; 
+        |metodo var_identificador aparentecis LPARAMETROS cparentecis; 
 FUNCION::= funcion var_identificador TIPODATO CODIGO fin_funcion
-        |funcion var_identificador TIPODATO con_parametros aparentecis PARAMETROS cparentecis CODIGO fin_funcion;
+        |funcion var_identificador TIPODATO con_parametros aparentecis LPARAMETROS cparentecis CODIGO fin_funcion;
 
 LLAMADA::= ejecutar var_identificador aparentecis cparentecis puntocoma
-        |ejecutar var_identificador aparentecis VALORES cparentecis puntocoma;
+        |ejecutar var_identificador aparentecis LVALORES cparentecis puntocoma;
 
-PARAMETROS::= resta;
 
-VALORES::= resta;
+LPARAMETROS::= LPARAMETROS coma PARAMETROS
+                |PARAMETROS;
+
+PARAMETROS::= TIPODATO var_identificador;
+
+LVALORES::= LVALORES coma EXPRESION
+                |EXPRESION;
+
 
 /* para los puntos colocar en parser
 
