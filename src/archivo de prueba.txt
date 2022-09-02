@@ -1,0 +1,77 @@
+inicio 
+	ingresar nombredeesta_, _otro_, _aver_ como cadena con_valor "esta mierda";
+	ingresar _indice2_ como cadena con_valor "esta mierda";
+	ingresar _esta_ como cadena con_valor "esta mierda";
+	_nombreesta_ -> 1+1;
+	_esta_ -> -_nombredeesta_+_esta_;
+fin
+
+inicio 
+	ingresar _esta_ como cadena con_valor "esta mierda";
+	ingresar _esta_ como cadena con_valor "esta mierda";
+fin
+
+inicio 
+	imprimir "hola mundo";
+	_esta_ -> 1+1;
+fin
+
+
+inicio 
+	ingresar nombredeesta_, _otro_, _aver_ como cadena con_valor "esta mierda";
+	ingresar _indice2_ como cadena con_valor "esta mierda";
+	ingresar _esta_ como cadena con_valor "esta mierda";
+	_nombreesta_ -> 1+1;
+	_esta_ -> -_nombredeesta_+_esta_;
+	
+
+	si _x_ mayor 1 entonces
+		_nombreesta_ -> 1+1;
+	o_si _x_ menor 1
+		_nombreesta_ -> 1+2;
+	de_lo_contrario
+		_nombreesta_ -> 1+3;
+	fin_si
+
+	segun _A_ hacer
+		¿ "<valor 1>" ? entonces
+			_B_->"valoor 1111";
+		¿ "<valor 2>" ? entonces
+			_B_->"valoooor 2";
+		¿ "<valor 3>" ? entonces
+			_B_->"valor   3";
+		de_lo_contrario entonces	
+			_B_->"holamundo";
+	fin_segun
+fin
+
+
+inicio
+	para _A_ -> 0 hasta 10 hacer
+		imprimir "holamundo";
+	fin_para
+fin
+
+inicio
+	mientras _x_ mayor 5 hacer
+		imprimir "holamundo";
+	fin_mientras
+fin
+
+inicio
+	repetir 
+		imprimir "holamundo";
+	hasta_que _x_ mayor 5
+		
+fin
+
+inicio
+	ejecutar _ESTA_();
+		
+fin
+
+metodo _esteMetodo_
+		imprimir "holamundo";
+		imprimir "holamundo2";
+		imprimir "holamundo3";
+fin_metodo
