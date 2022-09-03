@@ -1,5 +1,5 @@
 inicio 
-	ingresar nombredeesta_, _otro_, _aver_ como cadena con_valor "esta mierda";
+	ingresar _nombredeesta_, _otro_, _aver_ como cadena con_valor "esta mierda";
 	ingresar _indice2_ como cadena con_valor "esta mierda";
 	ingresar _esta_ como cadena con_valor "esta mierda";
 	_nombreesta_ -> 1+1;
@@ -18,7 +18,7 @@ fin
 
 
 inicio 
-	ingresar nombredeesta_, _otro_, _aver_ como cadena con_valor "esta mierda";
+	ingresar _nombredeesta_, _otro_, _aver_ como cadena con_valor "esta mierda";
 	ingresar _indice2_ como cadena con_valor "esta mierda";
 	ingresar _esta_ como cadena con_valor "esta mierda";
 	_nombreesta_ -> 1+1;
@@ -71,7 +71,58 @@ inicio
 fin
 
 metodo _esteMetodo_
+		para _A_ -> 0 hasta 10 hacer
 		imprimir "holamundo";
 		imprimir "holamundo2";
 		imprimir "holamundo3";
+
+		fin_para
 fin_metodo
+
+
+inicio
+	ejecutar _ESTA_(1, 2, "holamundo", verdadero);
+	ejecutar _ESTA_();
+
+fin
+
+metodo _esteMetodo_ con_parametros (_A_ cadena, _numero_ numero, _otro_ boolean)
+		para _A_ -> 0 hasta 10 hacer
+		imprimir "holamundo";
+		imprimir "holamundo2";
+		imprimir "holamundo3";
+
+		fin_para
+		retornar 1;
+fin_metodo
+
+metodo _esteMetodo_ con_parametros (_A_ cadena, _numero_ numero, _otro_ boolean)
+		para _A_ -> 0 hasta 10 hacer
+		imprimir "holamundo";
+		imprimir "holamundo2";
+		imprimir "holamundo3";
+
+		fin_para
+		retornar 1;
+fin_metodo
+
+funcion _esteMetodo_ numero 
+		para _A_ -> 0 hasta 10 hacer
+		imprimir "holamundo";
+		imprimir "holamundo2";
+		imprimir "holamundo3";
+
+		fin_para
+		retornar 1;
+fin_funcion
+
+
+funcion _esteMetodo_ numero con_parametros (_A_ cadena, _numero_ numero, _otro_ boolean)
+		para _A_ -> 0 hasta 10 hacer
+		imprimir "holamundo";
+		imprimir "holamundo2";
+		imprimir "holamundo3";
+
+		fin_para
+		retornar 1;
+fin_funcion
