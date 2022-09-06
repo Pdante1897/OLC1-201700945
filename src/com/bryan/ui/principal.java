@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import proyecto.analizadores.*;
 import proyecto.estructuras.ArbolAST;
 import proyecto.estructuras.NodoAST;
+import proyecto.estructuras.Traduccion;
 import proyecto.main.*;
 
 /**
@@ -121,11 +122,11 @@ public class principal extends javax.swing.JFrame {
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 359, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 312, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 229, Short.MAX_VALUE)
+                    .addComponent(jScrollPane3))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -225,7 +226,13 @@ public class principal extends javax.swing.JFrame {
         System.out.println("--------------------------------------");
         
         System.out.println(Datos.arbol.imprimir_nodo(Datos.arbol.raiz));
-
+        Traduccion traduccion = new Traduccion();
+        ArrayList<NodoAST> lista= new ArrayList<NodoAST>();
+        Datos.arbol.getNodos(Datos.arbol.raiz, lista);
+        for (int i = 0; i < lista.size(); i++) {
+            System.out.println(lista.get(i).getToken());
+        }
+        jTextArea2.setText(traduccion.Golang(lista));
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**

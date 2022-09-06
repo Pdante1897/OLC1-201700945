@@ -1,6 +1,8 @@
 
 package proyecto.estructuras;
 
+import java.util.ArrayList;
+
 public class ArbolAST {
     public NodoAST raiz;
 
@@ -37,6 +39,19 @@ public class ArbolAST {
         }
         
         return cadena;
+    }
+    
+    public void getNodos(NodoAST nodo, ArrayList<NodoAST> lista){
+        int indice=0;
+        if (nodo.Nodos==null) {
+            lista.add(nodo);
+        }else{
+            while(nodo.Nodos.size()>indice){
+                getNodos(nodo.Nodos.get(indice), lista);
+                indice++;
+            }
+        }
+        
     }
     
 }
