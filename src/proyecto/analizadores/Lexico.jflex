@@ -70,6 +70,8 @@ cmultilinea = ("/""*"[^\!]*"*""/")
 
 "}" {return new Symbol(sym.cllave,yycolumn,yyline,yytext());}
 "{" {return new Symbol(sym.allave,yycolumn,yyline,yytext());}
+"[" {return new Symbol(sym.acorchete,yycolumn,yyline,yytext());}
+"]" {return new Symbol(sym.ccorchete,yycolumn,yyline,yytext());}
 //ESPECIALES
 "\\n" {return new Symbol(sym.salto,yycolumn,yyline,yytext());}
 "\\'" {return new Symbol(sym.comillasimple,yycolumn,yyline,yytext());}
