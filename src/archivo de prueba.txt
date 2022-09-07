@@ -6,6 +6,73 @@ inicio
 	_esta_ -> -_nombredeesta_+_esta_;
 fin
 
+
+inicio 
+	ingresar _nombredeesta_, _otro_, _aver_ como cadena con_valor "esta mierda";
+	ingresar _indice2_ como cadena con_valor "esta mierda";
+	ingresar _esta_ como cadena con_valor "esta mierda";
+	_nombreesta_ -> 1+1;
+	_esta_ -> -_nombredeesta_+_esta_;
+	
+	imprimir "holamundo";
+	imprimir_nl "holamundo"+"aveeer";
+	si _x_ mayor 1 entonces
+		_nombreesta_ -> 1+1;
+		_nombreesta_ -> 1+2;
+		_nombreesta_ -> 1+23;
+		_nombreesta_ -> 1+24;
+		si (_x_ mayor 1) and (_y_ menor 2) entonces
+			_nombreesta_ -> 1+1;
+			_nombreesta_ -> 1+2;
+			_nombreesta_ -> 1+23;
+			_nombreesta_ -> 1+24;
+
+		fin_si
+	o_si _z_ es_igual 0 entonces
+		si (_x_ mayor 1) and (_y_ menor 2) entonces
+			_nombreesta_ -> 1+1;
+			_nombreesta_ -> 1+2;
+			_nombreesta_ -> 1+23;
+			_nombreesta_ -> 1+24;
+
+		fin_si
+	de_lo_contrario
+		si (_x_ mayor 1) and (_y_ menor 2) entonces
+			_nombreesta_ -> 1+1;
+			_nombreesta_ -> 1+2;
+			_nombreesta_ -> 1+23;
+			_nombreesta_ -> 1+24;
+
+		fin_si
+	fin_si
+fin
+
+
+inicio 
+	ingresar _nombredeesta_, _otro_, _aver_ como cadena con_valor "esta mierda";
+	ingresar _indice2_ como cadena con_valor "esta mierda";
+	ingresar _esta_ como cadena con_valor "esta mierda";
+	_nombreesta_ -> 1+1;
+	_esta_ -> -_nombredeesta_+_esta_;
+	
+
+	si _x_ mayor 1 entonces
+		_nombreesta_ -> 1+1;
+		_nombreesta_ -> 1+2;
+		_nombreesta_ -> 1+23;
+		_nombreesta_ -> 1+24;
+		si (_x_ mayor 1) and (_y_ menor 2) entonces
+			_nombreesta_ -> 1+1;
+			_nombreesta_ -> 1+2;
+			_nombreesta_ -> 1+23;
+			_nombreesta_ -> 1+24;
+
+		fin_si
+
+	fin_si
+fin
+
+
 inicio 
 	ingresar _esta_ como cadena con_valor "esta mierda";
 	ingresar _esta_ como cadena con_valor "esta mierda";
@@ -43,7 +110,7 @@ inicio
 
 	si _x_ mayor 1 entonces
 		_nombreesta_ -> 1+1;
-	o_si _x_ menor 1
+	o_si _x_ menor 1 entonces
 		_nombreesta_ -> 1+2;
 	de_lo_contrario
 		_nombreesta_ -> 1+3;

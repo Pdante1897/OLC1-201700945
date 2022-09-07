@@ -9,10 +9,16 @@ import java.util.ArrayList;
 public class Traduccion {
     
     public boolean lenguaje; //verdadero golang, falso python 
-    public String cadena;
+    public static int ntabulaciones=0;
     public static int nombres = 0;
     public static boolean flagIngresar=false;
     public static boolean flagBool=false;
+    public static boolean flagFor=false;  
+    public static boolean flagIf=false;
+    public static boolean flagElIf=false;
+    public static boolean flagPrint = false;
+    public static boolean flagPrintln = false;
+
     public static ArrayList<String> listaAsign= new ArrayList<String>();
 
     public Traduccion() {
@@ -20,14 +26,17 @@ public class Traduccion {
 
     public Traduccion(boolean lenguaje, String cadena) {
         this.lenguaje = lenguaje;
-        this.cadena = cadena;
     }
     
     public String Golang(ArrayList<NodoAST> nodo){
         String cadena="";
         boolean metodo = false;
         int indice=0;
+        String tabulacion="";
         for (int i = 0; i < nodo.size(); i++) {
+            if (ntabulaciones!=0) {
+                
+            }
             cadena+=enumGolang(nodo.get(i), nodo, i, metodo);
         }
         
@@ -35,6 +44,7 @@ public class Traduccion {
     }
     
     public String enumGolang(NodoAST nodo, ArrayList<NodoAST> padre, int index, boolean metodo){
+        String tabulaciones="";
         String token = nodo.getToken();
         NodoAST nodito;
         String expresion="";
@@ -47,6 +57,48 @@ public class Traduccion {
             case "ingresar":
                 flagIngresar=true;
                 return "\tvar ";
+            case "si":    
+                flagIf = true;
+                ntabulaciones++;
+                return "\tif (";
+            case "o_si":    
+                flagElIf = true;
+                return "\n"+tabulacion()+"}else if (";
+            case "de_lo_contrario":    
+                return "\n"+tabulacion()+"}else {\n\t";
+            case "fin_si":
+                ntabulaciones--;
+                return "\n\t"+tabulacion()+"}";
+            case "entonces":    
+                if (flagIf) {
+                     int j=0;
+                    while(!padre.get(index-j).getToken().equals("si")){
+                        j++;
+                        System.out.println("j="+j);
+                    }
+                    for (int i = index-j+1; i < index; i++) {
+                        expresion+=conector(padre.get(i));
+                    } 
+                }
+                if (flagElIf) {
+                    int j=0;
+                    while(!padre.get(index-j).getToken().equals("o_si")){
+                        j++;
+                        System.out.println("j="+j);
+                    }
+                    for (int i = index-j+1; i < index; i++) {
+                        expresion+=conector(padre.get(i));
+                    } 
+                }
+                flagIf=false;
+                flagElIf=false;
+                return expresion+"){ \n"+tabulacion();
+            case "imprimir":
+                flagPrint=true;
+                return "\tfmt.Print(";
+            case "imprimir_nl":   
+                flagPrintln=true;
+                return "\tfmt.Println(";
             case "cadena":
                 return "string ";
             case "caracter":
@@ -68,7 +120,7 @@ public class Traduccion {
                 return "= "+expresion;
             //case "->":
             //    return "= "+expresion;
-            case "verdadero":
+            /*case "verdadero":
                 flagBool=true;
                 expresion = "true";
                 for (int i = 1; i < nombres; i++) {
@@ -82,26 +134,69 @@ public class Traduccion {
                     expresion += ", false";
                 }
                 return expresion;
-            case ",":
+            */case ",":
                 if (!flagIngresar) {
                     return "";
                 }
                 return ", ";
             case ";":
                 System.out.println("nombres "+nombres);
-                if (flagIngresar && !flagBool) {
+                
+                if (flagPrint) {
+                     int j=0;
+                    while(!padre.get(index-j).getToken().equals("imprimir")){
+                        j++;
+                        System.out.println("j="+j);
+                    }
+                    for (int i = index-j+1; i < index; i++) {
+                        expresion+=conector(padre.get(i));
+                    } 
+                    flagPrint=false;
+                    return expresion+")\n"+tabulacion();
+                }
+                
+                if (flagPrintln) {
+                     int j=0;
+                    while(!padre.get(index-j).getToken().equals("imprimir_nl")){
+                        j++;
+                        System.out.println("j="+j);
+                    }
+                    for (int i = index-j+1; i < index; i++) {
+                        expresion+=conector(padre.get(i));
+                    } 
+                    flagPrintln=false;
+                    return expresion+")\n"+tabulacion();
+                }
+                
+                if (flagIf) {
+                    return ""+tabulacion();
+                }
+                if (flagElIf) {
+                    return ""+tabulacion();
+                }
+                if (flagIngresar) {
                     int j=0;
+                    String cadena="";
                     while(!padre.get(index-j).getToken().equals("con_valor")){
                         j++;
                     }
                     for (int i = index-j+1; i < index; i++) {
-                        expresion+=padre.get(i).getToken();
+                        cadena+=conector(padre.get(i));
                     }
-                    for (int i = 1; i < nombres; i++) {
-                    expresion += ", "+expresion;
-                    }                   
-                    asignacion=expresion;
+                    for (int i = 0; i < nombres; i++) {
+                        if (nombres-1==i) {
+                            expresion+= cadena;
+                            break;
+                        }
+                        expresion += cadena+", ";
+
+                    }
                     
+                    flagIngresar=false;
+                    flagBool=false;
+                    nombres=0;
+                    listaAsign=new ArrayList<String>();
+                    return expresion+"\n"+tabulacion();
                 }
                 if (!listaAsign.isEmpty()) {
                     int j=0;
@@ -122,7 +217,7 @@ public class Traduccion {
                 flagBool=false;
                 nombres=0;
                 listaAsign=new ArrayList<String>();
-                return asignacion+"\n";
+                return asignacion+"\n"+tabulacion();
             
             default:
                 if (token.startsWith("_")&& token.endsWith("_")) {
@@ -134,43 +229,75 @@ public class Traduccion {
                         }
                     }
                     
-                    if (!flagIngresar) {
+                    if (!flagIngresar&&!flagIf&&!flagElIf) {
                         listaAsign.add(token);
-                    }else{
+                    }else if (flagIf) {
+                        return "";
+                    }else if (flagElIf) {
+                        return "";
+                    } else{
                         return " "+token+" ";
                     }
                     
                     return "";
-                }/*
-                if (token.startsWith("\"")&& token.endsWith("\"")) {
-                    expresion = padre.get(index).getToken();
-                    for (int i = 1; i < nombres; i++) {
-                    expresion += ", "+padre.get(index).getToken();
-                    }                   
-                    nombres= 0;
-                    return expresion;
                 }
-                if (token.startsWith("\'")&& token.endsWith("\'")) {
-                    expresion = padre.get(index).getToken();
-                    for (int i = 1; i < nombres; i++) {
-                    expresion += ", "+padre.get(index).getToken();
-                    }
-                    nombres= 0;
-
-                    return expresion;
-                }
-                if (token.matches("[0-9]+")||token.matches("[0-9]+.[0-9]+")) {
-                    expresion = padre.get(index).getToken();
-                    for (int i = 1; i < nombres; i++) {
-                    expresion += ", "+padre.get(index).getToken();
-                    }
-                    nombres= 0;
-                    return expresion;                
-                }*/
                 return "";//" "+token+" ";
         }
     }
     
+    public String tabulacion(){
+        String tabulaciones="";
+        for (int i = 0; i < ntabulaciones; i++) {
+                    tabulaciones+="\t";
+                }
+        return tabulaciones;
+    }
+    
+    public String conector(NodoAST padre){
+        String expresion="";
+        switch (padre.getToken().toLowerCase()){
+                            case "mod":
+                                expresion+="%";
+                                break;
+                            case "mayor":
+                                expresion+=">";
+                                break;
+                            case "menor":
+                                expresion+="<";
+                                break;
+                            case "mayor_o_igual":
+                                expresion+=">=";
+                                break;  
+                            case "menoro_igual":
+                                expresion+="<=";
+                                break;
+                            case "es_igual":
+                                expresion+="==";
+                                break;
+                            case "es_diferente":
+                                expresion+="!=";
+                                break;
+                            case "or":
+                                expresion+="||";
+                                break;
+                            case "and":
+                                expresion+="&&";
+                                break;
+                            case "not":
+                                expresion+="!";
+                                break;
+                            case "verdadero":
+                                expresion+="true";
+                                break;
+                            case "falso":
+                                expresion+="false";
+                                break;
+                            default:
+                                expresion+=padre.getToken();
+                                break;
+                        }
+        return expresion;
+    }
     
     public String instrucciones(NodoAST nodo){
         switch (nodo.getToken()){

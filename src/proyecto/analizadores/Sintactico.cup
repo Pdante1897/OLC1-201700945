@@ -1565,7 +1565,7 @@ OSI ::= OSI:lista_osi CONDELOSI:lista_conosi{:
                         RESULT.add(t_expresion);
         :};
 
-CONDELOSI ::= o_si:vari EXPRESION:lista_expresionesI CODIGO{:
+CONDELOSI ::= o_si:vari EXPRESION:lista_expresionesI enton:vari2 CODIGO:lista_codigo{:
                         NodoAST t_expresion = new NodoAST();
                         t_expresion.Nodos = new ArrayList<NodoAST>(); 
                         t_expresion.setToken("<T_expresion>");
@@ -1581,14 +1581,30 @@ CONDELOSI ::= o_si:vari EXPRESION:lista_expresionesI CODIGO{:
                         token.setToken(vari);
                         token.setTipo("token");
 
+                        NodoAST tnodo2 = new NodoAST();
+                        tnodo2.Nodos = new ArrayList<NodoAST>(); 
+                        tnodo2.setToken("<T_"+vari2+">");
+                        tnodo2.setTipo("<t "+vari2+">");     
+                        
+                        NodoAST token2 = new NodoAST();
+                        token2.setToken(vari2);
+                        token2.setTipo("token");
                         
 
                         tnodo.Nodos.add(token);
+                        tnodo2.Nodos.add(token2);
                         
+                        NodoAST t_codigo = new NodoAST();
+                        t_codigo.Nodos = new ArrayList<NodoAST>(); 
+                        t_codigo.setToken("<T_expresion>");
+                        t_codigo.setTipo("t expresion");
+                        t_codigo.Nodos = lista_codigo;
+
                         RESULT = new ArrayList<NodoAST>();
                         RESULT.add(tnodo);
                         RESULT.add(t_expresion);
-                        RESULT.add(nodo_aux);
+                        RESULT.add(tnodo2);
+                        RESULT.add(t_codigo);
                         
 :};
 
