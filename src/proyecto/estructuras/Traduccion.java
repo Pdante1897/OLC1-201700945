@@ -18,9 +18,10 @@ public class Traduccion {
     public static boolean flagElIf=false;
     public static boolean flagPrint = false;
     public static boolean flagPrintln = false;
+    public static boolean flagPotencia= false;
 
     public static ArrayList<String> listaAsign= new ArrayList<String>();
-
+    public static ArrayList<String> importaciones=new ArrayList<String>();
     public Traduccion() {
     }
 
@@ -48,6 +49,7 @@ public class Traduccion {
         String token = nodo.getToken();
         NodoAST nodito;
         String expresion="";
+        String expresionAux="";
         String asignacion="";
         switch(token.toLowerCase()){
             case "inicio":
@@ -95,9 +97,15 @@ public class Traduccion {
                 return expresion+"){ \n"+tabulacion();
             case "imprimir":
                 flagPrint=true;
+                if (!importaciones.contains("\"fmt\"")) {
+                   importaciones.add("\"fmt\"");
+                }
                 return "\tfmt.Print(";
             case "imprimir_nl":   
                 flagPrintln=true;
+                if (!importaciones.contains("\"fmt\"")) {
+                   importaciones.add("\"fmt\"");
+                }
                 return "\tfmt.Println(";
             case "cadena":
                 return "string ";
@@ -118,23 +126,7 @@ public class Traduccion {
                 return expresion;
             case "con_valor":
                 return "= "+expresion;
-            //case "->":
-            //    return "= "+expresion;
-            /*case "verdadero":
-                flagBool=true;
-                expresion = "true";
-                for (int i = 1; i < nombres; i++) {
-                    expresion += ", true";
-                }
-                return expresion;
-            case "falso":
-                flagBool=true;
-                expresion = "false";
-                for (int i = 1; i < nombres; i++) {
-                    expresion += ", false";
-                }
-                return expresion;
-            */case ",":
+           case ",":
                 if (!flagIngresar) {
                     return "";
                 }
@@ -156,13 +148,49 @@ public class Traduccion {
                 }
                 
                 if (flagPrintln) {
-                     int j=0;
+                    int j=0;
+                    int[] indicepot=new int[3];
+                    ArrayList<int[]> indices = new ArrayList<int[]>();
                     while(!padre.get(index-j).getToken().equals("imprimir_nl")){
+                        if (padre.get(index-j).getToken().equals("potencia")) {
+                            indicepot=indicePotencia(padre,index-j);
+                            indices.add(indicepot);
+                            flagPotencia=true;
+                        }
+                        
                         j++;
                         System.out.println("j="+j);
                     }
+                    boolean estaEnPot=false;
                     for (int i = index-j+1; i < index; i++) {
-                        expresion+=conector(padre.get(i));
+                        if (!indices.isEmpty()) {
+                            for (int k = 0; k < indices.size(); k++) {
+                                if (indices.get(k)[0]==i) {
+                                    indicepot=indices.get(k);
+                                    flagPotencia=true;
+                                    estaEnPot=true;
+                                }
+                            }
+                        }
+                        
+                        if (flagPotencia&&estaEnPot) {
+                            if (i>=indicepot[0]&&i<indicepot[2]) {
+                                expresionAux+=conector(padre.get(i));
+                            }else if (i==indicepot[2]) {
+                                expresion+=conector(padre.get(i))+expresionAux+"),float64(";
+                                expresionAux="";
+                            }else if (i>indicepot[2]&&i<=indicepot[1]) {
+                                expresionAux+=conector(padre.get(i));
+                            }
+                            if (!flagPotencia) {
+                                expresion+=expresionAux;
+                                estaEnPot=false;
+                                expresionAux="";
+                            }
+ 
+                        }else{
+                            expresion+=conector(padre.get(i));
+                        }
                     } 
                     flagPrintln=false;
                     return expresion+")\n"+tabulacion();
@@ -204,7 +232,7 @@ public class Traduccion {
                         j++;
                     }
                     for (int i = index-j+1; i < index; i++) {
-                        expresion+=padre.get(i).getToken();
+                        expresion+=conector(padre.get(i));
                     }
                     for (int i = 0; i < listaAsign.size(); i++) {
                         asignacion+= "\t"+listaAsign.get(i)+" = "+expresion+"\n";
@@ -292,11 +320,47 @@ public class Traduccion {
                             case "falso":
                                 expresion+="false";
                                 break;
+                            case "potencia":
+                                expresion+="math.Pow(float64(";
+                                if (!importaciones.contains("\"math\"")) {
+                                    importaciones.add("\"math\"");
+                                }
+                                break;
+                            case "[":
+                                break;
+                            case"]":
+                                expresion+="))";
+                                flagPotencia = false;
+                                break;
                             default:
-                                expresion+=padre.getToken();
+                                expresion+=padre.getToken()+" ";
                                 break;
                         }
         return expresion;
+    }
+    
+    public int[] indicePotencia(ArrayList<NodoAST> padre, int indice){
+        int[] posiciones = new int[3];
+        int i=indice-1;
+        boolean ciclo=true;
+        if (padre.get(i).getToken().equals(")")) {
+            while(ciclo){
+                if (padre.get(i).getToken().equals("(")) {
+                    posiciones[0]=i;
+                    break;
+                }
+                i--;
+            }
+        }else{
+            posiciones[0]=i;
+        }
+        i=indice+1;
+        while(!padre.get(i).getToken().equals("]")){
+            i++;
+        }
+        posiciones[1]=i;
+        posiciones[2]=indice;
+        return posiciones;
     }
     
     public String instrucciones(NodoAST nodo){

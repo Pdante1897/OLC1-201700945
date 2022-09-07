@@ -233,6 +233,10 @@ public class principal extends javax.swing.JFrame {
             System.out.println(lista.get(i).getToken());
         }
         jTextArea2.setText(traduccion.Golang(lista));
+        for (int i = 0; i < traduccion.importaciones.size(); i++) {
+            System.out.println(traduccion.importaciones.get(i));
+        }
+        
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
