@@ -12,6 +12,7 @@ public class Traduccion {
     public static int ntabulaciones=0;
     public static int nombres = 0;
     public static boolean flagIngresar=false;
+    public static boolean flagAsignacion=false;
     public static boolean flagBool=false;
     public static boolean flagFor=false;  
     public static boolean flagIf=false;
@@ -40,8 +41,9 @@ public class Traduccion {
             }
             cadena+=enumGolang(nodo.get(i), nodo, i, metodo);
         }
-        
-        return cadena;
+        String encabezado=agregarImportaciones();
+
+        return encabezado+cadena;
     }
     
     public String enumGolang(NodoAST nodo, ArrayList<NodoAST> padre, int index, boolean metodo){
@@ -51,6 +53,9 @@ public class Traduccion {
         String expresion="";
         String expresionAux="";
         String asignacion="";
+        int[] indicepot=new int[3];
+        boolean estaEnPot=false;
+        ArrayList<int[]> indices = new ArrayList<int[]>();
         switch(token.toLowerCase()){
             case "inicio":
                 return "func main (){\n";
@@ -116,7 +121,7 @@ public class Traduccion {
             case "numero":
                 nodito= new NodoAST();
                 for (int i = index; i < padre.size(); i++) {
-                    if (padre.get(i+1).getToken().equals(";")&&padre.get(i).getToken().contains(".")) {
+                    if ((padre.get(i+1).getToken().equals(";")&&padre.get(i).getToken().contains("."))||(padre.get(i).getToken().equals("potencia"))) {
                         return "float64 ";
                     }
                     if (padre.get(i).getToken().equals(";"))break;
@@ -126,6 +131,9 @@ public class Traduccion {
                 return expresion;
             case "con_valor":
                 return "= "+expresion;
+            case "->":
+                
+                return"";
            case ",":
                 if (!flagIngresar) {
                     return "";
@@ -137,11 +145,43 @@ public class Traduccion {
                 if (flagPrint) {
                      int j=0;
                     while(!padre.get(index-j).getToken().equals("imprimir")){
+                        if (padre.get(index-j).getToken().equals("potencia")) {
+                            indicepot=indicePotencia(padre,index-j);
+                            indices.add(indicepot);
+                            flagPotencia=true;
+                        }
                         j++;
                         System.out.println("j="+j);
                     }
                     for (int i = index-j+1; i < index; i++) {
-                        expresion+=conector(padre.get(i));
+                        if (!indices.isEmpty()) {
+                            for (int k = 0; k < indices.size(); k++) {
+                                if (indices.get(k)[0]==i) {
+                                    indicepot=indices.get(k);
+                                    flagPotencia=true;
+                                    estaEnPot=true;
+                                }
+                            }
+                        }
+                        
+                        if (flagPotencia&&estaEnPot) {
+                            if (i>=indicepot[0]&&i<indicepot[2]) {
+                                expresionAux+=conector(padre.get(i));
+                            }else if (i==indicepot[2]) {
+                                expresion+=conector(padre.get(i))+expresionAux+"),float64(";
+                                expresionAux="";
+                            }else if (i>indicepot[2]&&i<=indicepot[1]) {
+                                expresionAux+=conector(padre.get(i));
+                            }
+                            if (!flagPotencia) {
+                                expresion+=expresionAux;
+                                estaEnPot=false;
+                                expresionAux="";
+                            }
+ 
+                        }else{
+                            expresion+=conector(padre.get(i));
+                        }
                     } 
                     flagPrint=false;
                     return expresion+")\n"+tabulacion();
@@ -149,8 +189,7 @@ public class Traduccion {
                 
                 if (flagPrintln) {
                     int j=0;
-                    int[] indicepot=new int[3];
-                    ArrayList<int[]> indices = new ArrayList<int[]>();
+                    
                     while(!padre.get(index-j).getToken().equals("imprimir_nl")){
                         if (padre.get(index-j).getToken().equals("potencia")) {
                             indicepot=indicePotencia(padre,index-j);
@@ -161,7 +200,6 @@ public class Traduccion {
                         j++;
                         System.out.println("j="+j);
                     }
-                    boolean estaEnPot=false;
                     for (int i = index-j+1; i < index; i++) {
                         if (!indices.isEmpty()) {
                             for (int k = 0; k < indices.size(); k++) {
@@ -206,11 +244,44 @@ public class Traduccion {
                     int j=0;
                     String cadena="";
                     while(!padre.get(index-j).getToken().equals("con_valor")){
+                        if (padre.get(index-j).getToken().equals("potencia")) {
+                            indicepot=indicePotencia(padre,index-j);
+                            indices.add(indicepot);
+                            flagPotencia=true;
+                        }
                         j++;
                     }
                     for (int i = index-j+1; i < index; i++) {
-                        cadena+=conector(padre.get(i));
-                    }
+                        if (!indices.isEmpty()) {
+                            for (int k = 0; k < indices.size(); k++) {
+                                if (indices.get(k)[0]==i) {
+                                    indicepot=indices.get(k);
+                                    flagPotencia=true;
+                                    estaEnPot=true;
+                                }
+                            }
+                        }
+                        
+                        if (flagPotencia&&estaEnPot) {
+                            if (i>=indicepot[0]&&i<indicepot[2]) {
+                                expresionAux+=conector(padre.get(i));
+                            }else if (i==indicepot[2]) {
+                                cadena+=conector(padre.get(i))+expresionAux+"),float64(";
+                                expresionAux="";
+                            }else if (i>indicepot[2]&&i<=indicepot[1]) {
+                                expresionAux+=conector(padre.get(i));
+                            }
+                            if (!flagPotencia) {
+                                cadena+=expresionAux;
+                                estaEnPot=false;
+                                expresionAux="";
+                            }
+ 
+                        }else{
+                            cadena+=conector(padre.get(i));
+                        }
+                    } 
+                    
                     for (int i = 0; i < nombres; i++) {
                         if (nombres-1==i) {
                             expresion+= cadena;
@@ -229,10 +300,42 @@ public class Traduccion {
                 if (!listaAsign.isEmpty()) {
                     int j=0;
                     while(!padre.get(index-j).getToken().equals("->")){
+                        if (padre.get(index-j).getToken().equals("potencia")) {
+                            indicepot=indicePotencia(padre,index-j);
+                            indices.add(indicepot);
+                            flagPotencia=true;
+                        }
                         j++;
                     }
                     for (int i = index-j+1; i < index; i++) {
-                        expresion+=conector(padre.get(i));
+                        if (!indices.isEmpty()) {
+                            for (int k = 0; k < indices.size(); k++) {
+                                if (indices.get(k)[0]==i) {
+                                    indicepot=indices.get(k);
+                                    flagPotencia=true;
+                                    estaEnPot=true;
+                                }
+                            }
+                        }
+                        
+                        if (flagPotencia&&estaEnPot) {
+                            if (i>=indicepot[0]&&i<indicepot[2]) {
+                                expresionAux+=conector(padre.get(i));
+                            }else if (i==indicepot[2]) {
+                                expresion+=conector(padre.get(i))+expresionAux+"),float64(";
+                                expresionAux="";
+                            }else if (i>indicepot[2]&&i<=indicepot[1]) {
+                                expresionAux+=conector(padre.get(i));
+                            }
+                            if (!flagPotencia) {
+                                expresion+=expresionAux;
+                                estaEnPot=false;
+                                expresionAux="";
+                            }
+ 
+                        }else{
+                            expresion+=conector(padre.get(i));
+                        }
                     }
                     for (int i = 0; i < listaAsign.size(); i++) {
                         asignacion+= "\t"+listaAsign.get(i)+" = "+expresion+"\n";
@@ -242,6 +345,7 @@ public class Traduccion {
                 }
                 
                 flagIngresar=false;
+                flagAsignacion=false;
                 flagBool=false;
                 nombres=0;
                 listaAsign=new ArrayList<String>();
@@ -249,21 +353,35 @@ public class Traduccion {
             
             default:
                 if (token.startsWith("_")&& token.endsWith("_")) {
+                    if(padre.get(index-1).getToken().equals(";")){
+                        flagAsignacion=true;
+                    }else{
+                        if (flagIngresar) {
+                            flagAsignacion=false;
+                            //return"";
+                        }else if(padre.get(index-1).getToken().equals(",")){
+                            flagAsignacion=true;
+                        }else{
+                            flagAsignacion=false;
+                            //return"";
+                        }
+                    }
                     if (nombres==0) {
                         for (int i = index; i < padre.size(); i++) {
                             if (padre.get(i).getToken().startsWith("_")&&padre.get(i).getToken().endsWith("_")) {
                                 nombres++;
-                            }else if(padre.get(i).getToken().equals("como")||padre.get(i).getToken().equals("->"))break;
+                            }else if(padre.get(i).getToken().equals("como"))break;
+                            else if(padre.get(i).getToken().equals("->"))break;
                         }
                     }
                     
-                    if (!flagIngresar&&!flagIf&&!flagElIf) {
+                    if (flagAsignacion) {
                         listaAsign.add(token);
                     }else if (flagIf) {
                         return "";
                     }else if (flagElIf) {
                         return "";
-                    } else{
+                    } else if(flagIngresar){
                         return " "+token+" ";
                     }
                     
@@ -361,6 +479,15 @@ public class Traduccion {
         posiciones[1]=i;
         posiciones[2]=indice;
         return posiciones;
+    }
+    
+    public String agregarImportaciones(){
+        String cadena = "package main\n\nimport {\n";
+        for (int i = 0; i < importaciones.size(); i++) {
+            cadena+="\t"+importaciones.get(i)+"\n";
+        }
+        cadena+="}\n\n";
+        return cadena;
     }
     
     public String instrucciones(NodoAST nodo){
