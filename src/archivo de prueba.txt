@@ -1,21 +1,21 @@
 inicio 
-	ingresar _nombredeesta_, _otro_, _aver_ como cadena con_valor "esta mierda";
-	ingresar _indice2_ como cadena con_valor "esta mierda";
-	ingresar _esta_ como cadena con_valor "esta mierda";
+	ingresar _nombredeesta_, _otro_, _aver_ como cadena con_valor "esta cosa";
+	ingresar _indice2_ como cadena con_valor "esta cosa";
+	ingresar _esta_ como cadena con_valor "esta cosa";
 	_nombreesta_ -> 1+1;
 	_esta_ -> -_nombredeesta_+_esta_;
 fin
 
 
 inicio 
-	ingresar _nombredeesta_, _otro_, _aver_ como cadena con_valor "esta mierda";
-	ingresar _indice2_ como cadena con_valor "esta mierda";
-	ingresar _esta_ como cadena con_valor "esta mierda";
+	ingresar _nombredeesta_, _otro_, _aver_ como cadena con_valor "esta cosa";
+	ingresar _indice2_ como cadena con_valor "esta cosa";
+	ingresar _esta_ como cadena con_valor "esta cosa";
 	_nombreesta_ -> 1+1;
 	_esta_ -> -_nombredeesta_+_esta_;
 	
 	imprimir "holamundo";
-	imprimir_nl "holamundo"+"aveeer";
+	imprimir_nl 2 potencia [5+5];
 	si _x_ mayor 1 entonces
 		_nombreesta_ -> 1+1;
 		_nombreesta_ -> 1+2;
@@ -49,9 +49,9 @@ fin
 
 
 inicio 
-	ingresar _nombredeesta_, _otro_, _aver_ como cadena con_valor "esta mierda";
-	ingresar _indice2_ como cadena con_valor "esta mierda";
-	ingresar _esta_ como cadena con_valor "esta mierda";
+	ingresar _nombredeesta_, _otro_, _aver_ como cadena con_valor "esta cosa";
+	ingresar _indice2_ como cadena con_valor "esta cosa";
+	ingresar _esta_ como cadena con_valor "esta cosa";
 	_nombreesta_ -> 1+1;
 	_esta_ -> -_nombredeesta_+_esta_;
 	
@@ -74,9 +74,9 @@ fin
 
 
 inicio 
-	ingresar _esta_ como cadena con_valor "esta mierda";
-	ingresar _esta_ como cadena con_valor "esta mierda";
-	ingresar _nombredeesta_, _otro_, _aver_ como cadena con_valor "esta mierda";
+	ingresar _esta_ como cadena con_valor "esta cosa";
+	ingresar _esta_ como cadena con_valor "esta cosa";
+	ingresar _nombredeesta_, _otro_, _aver_ como cadena con_valor "esta cosa";
 	ingresar _esta_ como numero con_valor 11.23;
 	ingresar _esta_ como numero con_valor 11523;
 	_esta_ -> 1+1;
@@ -86,8 +86,8 @@ inicio
 fin
 
 inicio 
-	ingresar _esta_ como cadena con_valor "esta mierda";
-	ingresar _esta_ como cadena con_valor "esta mierda";
+	ingresar _esta_ como cadena con_valor "esta cosa";
+	ingresar _esta_ como cadena con_valor "esta cosa";
 	ingresar _nombredeesta_, _otro_, _aver_ como boolean con_valor verdadero;
 	ingresar _esta_ como numero con_valor 11.23;
 	ingresar _esta_ como numero con_valor 11523;
@@ -101,9 +101,9 @@ fin
 
 
 inicio 
-	ingresar _nombredeesta_, _otro_, _aver_ como cadena con_valor "esta mierda";
-	ingresar _indice2_ como cadena con_valor "esta mierda";
-	ingresar _esta_ como cadena con_valor "esta mierda";
+	ingresar _nombredeesta_, _otro_, _aver_ como cadena con_valor "esta cosa";
+	ingresar _indice2_ como cadena con_valor "esta cosa";
+	ingresar _esta_ como cadena con_valor "esta cosa";
 	_nombreesta_ -> 1+1;
 	_esta_ -> -_nombredeesta_+_esta_;
 	
@@ -209,3 +209,72 @@ funcion _esteMetodo_ numero con_parametros (_A_ cadena, _numero_ numero, _otro_ 
 		fin_para
 		retornar 1;
 fin_funcion
+
+
+inicio 
+	ingresar _nombredeesta_, _otro_, _aver_ como cadena con_valor "esta cosa";
+	ingresar _indice2_ como cadena con_valor "esta cosa";
+	ingresar _esta_ como cadena con_valor "esta cosa";
+	ingresar _flotante_ como numero con_valor 3 potencia[55];
+	_nombreesta1_,_variable2_,_variable3_ -> 1+1;
+	_esta1_ -> _nombredeesta2_+_esta3_;
+	_otra_-> 56;
+	_flotante_ -> 3 potencia[55];
+	_flotante2_ -> (1+3) + (2+5+10+22 )potencia [_X_] * 13 + (2+3*5*7) potencia[13/5+6*2];
+	imprimir "holamundo";
+	imprimir (1+3) + (2+5+10+22 )potencia [_X_] * 13 + (2+3*5*7) potencia[13/5+6*2];
+	
+	segun _A_ hacer
+		¿ "<valor 1>" ? entonces
+			_B_->"valoor 1111";
+		¿ "<valor 2>" ? entonces
+			_B_->"valoooor 2";
+		¿ "<valor 3>" ? entonces
+			_B_->"valor   3";
+		de_lo_contrario entonces	
+			_B_->"holamundo";
+	fin_segun
+
+	si _x_ mayor 1 entonces
+		_nombreesta_ -> 1+1;
+		_nombreesta_ -> 1+2;
+		_nombreesta_ -> 1+23;
+		_nombreesta_ -> 1+24;
+		si (_x_ mayor 1) and (_y_ menor 2) entonces
+			_nombreesta_ -> 1+1;
+			_nombreesta_ -> 1+2;
+			_nombreesta_ -> 1+23;
+			_nombreesta_ -> 1+24;
+
+		fin_si
+	o_si _z_ es_igual 0 entonces
+		si (_x_ mayor 1) and (_y_ menor 2) entonces
+			_nombreesta_ -> 1+1;
+			_nombreesta_ -> 1+2;
+			_nombreesta_ -> 1+23;
+			_nombreesta_ -> 1+24;
+			_flotante2_ -> (1+3) + (2+5+10+22 )potencia [_X_] * 13 + (2+3*5*7) potencia[13/5+6*2];
+
+		fin_si
+	de_lo_contrario
+		si (_x_ mayor 1) and (_y_ menor 2) entonces
+			_nombreesta_ -> 1+1;
+			_nombreesta_ -> 1+2;
+			_nombreesta_ -> 1+23;
+			_nombreesta_ -> 1+24;
+			segun _A_ hacer
+				¿ "<valor 1>" ? entonces
+					_B_->"valoor 1111";
+				¿ "<valor 2>" ? entonces
+					_B_->"valoooor 2";
+				¿ "<valor 3>" ? entonces
+					_B_->"valor   3";
+				de_lo_contrario entonces	
+					_B_->"holamundo";
+					_flotante2_ -> (1+3) + (2+5+10+22 )potencia [_X_] * 13 + (2+3*5*7) potencia[13/5+6*2];
+			fin_segun
+
+		fin_si
+	fin_si
+fin
+

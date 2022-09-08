@@ -3600,7 +3600,7 @@ class CUP$parser$actions {
                         token.setTipo("token");
 
                         NodoAST tnodo2 = new NodoAST();
-                        tnodo2.Nodos = vari2;
+                        tnodo2.Nodos = new ArrayList<NodoAST>();
                         tnodo2.setToken("<T_valor>");
                         tnodo2.setTipo("<t valor");     
                         
@@ -3624,6 +3624,7 @@ class CUP$parser$actions {
                         tnodo4.setTipo("<t "+vari4+">");   
 
                         tnodo.Nodos.add(token);
+                        tnodo.Nodos.add(nodo_aux_val);
                         tnodo3.Nodos.add(token3);
                         tnodo4.Nodos.add(token4);
 

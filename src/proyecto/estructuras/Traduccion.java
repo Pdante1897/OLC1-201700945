@@ -19,7 +19,9 @@ public class Traduccion {
     public static boolean flagElIf=false;
     public static boolean flagPrint = false;
     public static boolean flagPrintln = false;
-    public static boolean flagPotencia= false;
+    public static boolean flagPotencia = false;
+    public static boolean flagSwitch = false;
+    public static boolean flagHacer = false;
 
     public static ArrayList<String> listaAsign= new ArrayList<String>();
     public static ArrayList<String> importaciones=new ArrayList<String>();
@@ -72,34 +74,175 @@ public class Traduccion {
                 flagElIf = true;
                 return "\n"+tabulacion()+"}else if (";
             case "de_lo_contrario":    
+                if (flagHacer) {
+                    return "\n"+tabulacion()+"default: \n\t";
+                }
                 return "\n"+tabulacion()+"}else {\n\t";
             case "fin_si":
                 ntabulaciones--;
-                return "\n\t"+tabulacion()+"}";
+                return "\n\t"+tabulacion()+"}\n";
             case "entonces":    
                 if (flagIf) {
                      int j=0;
                     while(!padre.get(index-j).getToken().equals("si")){
+                        if (padre.get(index-j).getToken().equals("potencia")) {
+                            indicepot=indicePotencia(padre,index-j);
+                            indices.add(indicepot);
+                            flagPotencia=true;
+                        }
                         j++;
                         System.out.println("j="+j);
                     }
                     for (int i = index-j+1; i < index; i++) {
-                        expresion+=conector(padre.get(i));
+                        if (!indices.isEmpty()) {
+                            for (int k = 0; k < indices.size(); k++) {
+                                if (indices.get(k)[0]==i) {
+                                    indicepot=indices.get(k);
+                                    flagPotencia=true;
+                                    estaEnPot=true;
+                                }
+                            }
+                        }
+                        
+                        if (flagPotencia&&estaEnPot) {
+                            if (i>=indicepot[0]&&i<indicepot[2]) {
+                                expresionAux+=conector(padre.get(i));
+                            }else if (i==indicepot[2]) {
+                                expresion+=conector(padre.get(i))+expresionAux+"),float64(";
+                                expresionAux="";
+                            }else if (i>indicepot[2]&&i<=indicepot[1]) {
+                                expresionAux+=conector(padre.get(i));
+                            }
+                            if (!flagPotencia) {
+                                expresion+=expresionAux;
+                                estaEnPot=false;
+                                expresionAux="";
+                            }
+ 
+                        }else{
+                            expresion+=conector(padre.get(i));
+                        }
                     } 
                 }
                 if (flagElIf) {
                     int j=0;
                     while(!padre.get(index-j).getToken().equals("o_si")){
+                        if (padre.get(index-j).getToken().equals("potencia")) {
+                            indicepot=indicePotencia(padre,index-j);
+                            indices.add(indicepot);
+                            flagPotencia=true;
+                        }
                         j++;
                         System.out.println("j="+j);
                     }
                     for (int i = index-j+1; i < index; i++) {
-                        expresion+=conector(padre.get(i));
+                        if (!indices.isEmpty()) {
+                            for (int k = 0; k < indices.size(); k++) {
+                                if (indices.get(k)[0]==i) {
+                                    indicepot=indices.get(k);
+                                    flagPotencia=true;
+                                    estaEnPot=true;
+                                }
+                            }
+                        }
+                        
+                        if (flagPotencia&&estaEnPot) {
+                            if (i>=indicepot[0]&&i<indicepot[2]) {
+                                expresionAux+=conector(padre.get(i));
+                            }else if (i==indicepot[2]) {
+                                expresion+=conector(padre.get(i))+expresionAux+"),float64(";
+                                expresionAux="";
+                            }else if (i>indicepot[2]&&i<=indicepot[1]) {
+                                expresionAux+=conector(padre.get(i));
+                            }
+                            if (!flagPotencia) {
+                                expresion+=expresionAux;
+                                estaEnPot=false;
+                                expresionAux="";
+                            }
+ 
+                        }else{
+                            expresion+=conector(padre.get(i));
+                        }
                     } 
+                }
+                String retorno = expresion+"){ \n"+tabulacion();
+                
+                if (flagSwitch||flagHacer) {
+                    int j=0;
+                    while(!padre.get(index-j).getToken().equals("¿")){
+                        if (padre.get(index-j).getToken().equals("potencia")) {
+                            indicepot=indicePotencia(padre,index-j);
+                            indices.add(indicepot);
+                            flagPotencia=true;
+                        }
+                        j++;
+                        System.out.println("j="+j);
+                    }
+                    for (int i = index-j+1; i < index; i++) {
+                        if (!indices.isEmpty()) {
+                            for (int k = 0; k < indices.size(); k++) {
+                                if (indices.get(k)[0]==i) {
+                                    indicepot=indices.get(k);
+                                    flagPotencia=true;
+                                    estaEnPot=true;
+                                }
+                            }
+                        }
+                        
+                        if (flagPotencia&&estaEnPot) {
+                            if (i>=indicepot[0]&&i<indicepot[2]) {
+                                expresionAux+=conector(padre.get(i));
+                            }else if (i==indicepot[2]) {
+                                expresion+=conector(padre.get(i))+expresionAux+"),float64(";
+                                expresionAux="";
+                            }else if (i>indicepot[2]&&i<=indicepot[1]) {
+                                expresionAux+=conector(padre.get(i));
+                            }
+                            if (!flagPotencia) {
+                                expresion+=expresionAux;
+                                estaEnPot=false;
+                                expresionAux="";
+                            }
+ 
+                        }else{
+                            if (!padre.get(index-1).getToken().equals("de_lo_contrario")) {
+                                expresion+=conector(padre.get(i));
+                            }else{
+                                expresion= "";
+                                flagHacer=false;
+                            }
+                        }
+                    } 
+                    retorno = expresion+"\n"+tabulacion();
                 }
                 flagIf=false;
                 flagElIf=false;
-                return expresion+"){ \n"+tabulacion();
+                flagSwitch=false;
+                return retorno;
+            case "segun":
+                ntabulaciones++;
+                flagSwitch=true;
+                return "\tswitch ";    
+                
+            case "hacer":
+                flagHacer=true;
+                return "{ \n";
+            
+            case "fin_segun":
+                ntabulaciones--;
+                ntabulaciones--;
+                return "\n\t"+tabulacion()+"}\n";
+            case "¿":
+                
+                if (padre.get(index-1).getToken().equals("hacer")) {
+                    ntabulaciones++;
+                    return tabulacion()+"case ";
+                    
+                }
+                return "\n"+tabulacion()+"case ";
+            case "?":
+                return "";
             case "imprimir":
                 flagPrint=true;
                 if (!importaciones.contains("\"fmt\"")) {
@@ -131,10 +274,8 @@ public class Traduccion {
                 return expresion;
             case "con_valor":
                 return "= "+expresion;
-            case "->":
-                
-                return"";
-           case ",":
+            
+            case ",":
                 if (!flagIngresar) {
                     return "";
                 }
@@ -353,7 +494,9 @@ public class Traduccion {
             
             default:
                 if (token.startsWith("_")&& token.endsWith("_")) {
-                    if(padre.get(index-1).getToken().equals(";")){
+                    if(padre.get(index-1).getToken().equals(";")||
+                            padre.get(index-1).getToken().equals("entonces")||
+                            padre.get(index-1).getToken().equals("de_lo_contrario")){//ir agregando el resto de palabras reservadas
                         flagAsignacion=true;
                     }else{
                         if (flagIngresar) {
@@ -382,6 +525,8 @@ public class Traduccion {
                     }else if (flagElIf) {
                         return "";
                     } else if(flagIngresar){
+                        return " "+token+" ";
+                    }else if(flagSwitch){
                         return " "+token+" ";
                     }
                     
@@ -450,6 +595,9 @@ public class Traduccion {
                                 expresion+="))";
                                 flagPotencia = false;
                                 break;
+                            case "?":
+                                 expresion+=":";
+                                 break;
                             default:
                                 expresion+=padre.getToken()+" ";
                                 break;
