@@ -428,15 +428,24 @@ INSTRUCCIONES ::= DECLARACION:lista_dec puntocoma:var_pyc{:
                         RESULT = new ArrayList<NodoAST>();
                         RESULT.add(t_para);
                         System.out.println("se agregaron Instrucciones ciclo repetir");:}
-                    |LLAMADA:lista_para{:
+                    |LLAMADA:lista_para puntocoma:vari3{:
                         NodoAST t_para = new NodoAST();
                         t_para.Nodos = lista_para; //acarreo de nodos inferiores
                         t_para.setToken("<LLAMADA>");
                         t_para.setTipo("llamada");
                         
-                        
+                        NodoAST token3 = new NodoAST();
+                        token3.setToken(vari3);
+                        token3.setTipo("token");         
+
+                        NodoAST tnodo3 = new NodoAST();
+                        tnodo3.Nodos = new ArrayList<NodoAST>(); 
+                        tnodo3.setToken("<T_"+vari3+">");
+                        tnodo3.setTipo("<t "+vari3+">");   
+                        tnodo3.Nodos.add(token3);
                         RESULT = new ArrayList<NodoAST>();
                         RESULT.add(t_para);
+                        RESULT.add(tnodo3);
                         System.out.println("se agregaron Instrucciones llamada");:}
                     |retornar:vari1 EXPRESION:lista_expresiones puntocoma:vari3{:
                         NodoAST t_expresion = new NodoAST();
@@ -1302,6 +1311,18 @@ EXPRESION ::= EXPRESION:lista_expresionesI suma:vari EXPRESION:lista_expresiones
                         t_expresion.setToken("<T_expresion>");
                         t_expresion.setTipo("t expresion");
                         t_expresion.Nodos.add(nodo_aux_val);
+                        
+                        RESULT = new ArrayList<NodoAST>(); 
+                        RESULT.add(t_expresion);
+                        
+
+                :}
+                |LLAMADA:lista_llamada{:
+                        NodoAST t_expresion = new NodoAST();
+                        t_expresion.Nodos = new ArrayList<NodoAST>(); 
+                        t_expresion.setToken("<T_expresion>");
+                        t_expresion.setTipo("t expresion");
+                        t_expresion.Nodos=lista_llamada;
                         
                         RESULT = new ArrayList<NodoAST>(); 
                         RESULT.add(t_expresion);
@@ -2686,7 +2707,7 @@ FUNCION::= funcion:vari1 var_identificador:vari2 TIPODATO:lista_para CODIGO:list
 
                         :}; 
 
-LLAMADA::= ejecutar:vari1 var_identificador:vari2 aparentecis:vari3 cparentecis:vari4 puntocoma:vari5{:
+LLAMADA::= ejecutar:vari1 var_identificador:vari2 aparentecis:vari3 cparentecis:vari4 {:
                         
 
                         NodoAST tnodo = new NodoAST();
@@ -2725,21 +2746,13 @@ LLAMADA::= ejecutar:vari1 var_identificador:vari2 aparentecis:vari3 cparentecis:
                         tnodo4.setToken("<T_"+vari4+">");
                         tnodo4.setTipo("<t "+vari4+">");     
                         
-                        NodoAST token5 = new NodoAST();
-                        token5.setToken(vari5);
-                        token5.setTipo("token");
-
-                        NodoAST tnodo5 = new NodoAST();
-                        tnodo5.Nodos = new ArrayList<NodoAST>(); 
-                        tnodo5.setToken("<T_"+vari5+">");
-                        tnodo5.setTipo("<t "+vari5+">"); 
+                        
 
                          
                         tnodo.Nodos.add(token);
                         tnodo2.Nodos.add(token2);
                         tnodo3.Nodos.add(token3);
                         tnodo4.Nodos.add(token4);
-                        tnodo5.Nodos.add(token5);
 
                         
                         RESULT = new ArrayList<NodoAST>();
@@ -2747,10 +2760,9 @@ LLAMADA::= ejecutar:vari1 var_identificador:vari2 aparentecis:vari3 cparentecis:
                         RESULT.add(tnodo2);
                         RESULT.add(tnodo3);
                         RESULT.add(tnodo4);
-                        RESULT.add(tnodo5);
 
                         :}
-        |ejecutar:vari1 var_identificador:vari2 aparentecis:vari3 LVALORES:lista_val cparentecis:vari4 puntocoma:vari5{:
+        |ejecutar:vari1 var_identificador:vari2 aparentecis:vari3 LVALORES:lista_val cparentecis:vari4{:
                 
                         NodoAST tnodo = new NodoAST();
                         tnodo.Nodos = new ArrayList<NodoAST>(); 
@@ -2788,14 +2800,7 @@ LLAMADA::= ejecutar:vari1 var_identificador:vari2 aparentecis:vari3 cparentecis:
                         tnodo4.setToken("<T_"+vari4+">");
                         tnodo4.setTipo("<t "+vari4+">");     
                         
-                        NodoAST token5 = new NodoAST();
-                        token5.setToken(vari5);
-                        token5.setTipo("token");
-
-                        NodoAST tnodo5 = new NodoAST();
-                        tnodo5.Nodos = new ArrayList<NodoAST>(); 
-                        tnodo5.setToken("<T_"+vari5+">");
-                        tnodo5.setTipo("<t "+vari5+">"); 
+                        
                 
                         NodoAST t_parametros = new NodoAST();
                         t_parametros.Nodos = new ArrayList<NodoAST>(); 
@@ -2807,7 +2812,6 @@ LLAMADA::= ejecutar:vari1 var_identificador:vari2 aparentecis:vari3 cparentecis:
                         tnodo2.Nodos.add(token2);
                         tnodo3.Nodos.add(token3);
                         tnodo4.Nodos.add(token4);
-                        tnodo5.Nodos.add(token5);
 
                         
                         RESULT = new ArrayList<NodoAST>();
@@ -2816,7 +2820,6 @@ LLAMADA::= ejecutar:vari1 var_identificador:vari2 aparentecis:vari3 cparentecis:
                         RESULT.add(tnodo3);
                         RESULT.add(t_parametros);
                         RESULT.add(tnodo4);
-                        RESULT.add(tnodo5);
 
                         :};
 

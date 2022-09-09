@@ -31,6 +31,7 @@ public class Traduccion {
     public static boolean flagMain= false;
     public static boolean flagConParametros = false;
     public static boolean flagNomFunc = false;
+    public static boolean flagEjecutar = false;
     public static ArrayList<String> listaAsign= new ArrayList<String>();
     public static ArrayList<String> importaciones=new ArrayList<String>();
     public Traduccion() {
@@ -69,6 +70,7 @@ public class Traduccion {
         switch(token.toLowerCase()){
             case "inicio":
                 flagMain=true;
+                
                 return "func main (){\n";
             case "fin":
                 if (!flagMain) {
@@ -76,7 +78,11 @@ public class Traduccion {
                 }
                 flagMain=false;
                 return "\n}";
+            case "ejecutar":
+                flagEjecutar = true;
+                return"";
             case "ingresar":
+                flagEjecutar = false;
                 flagIngresar=true;
                 return "\tvar ";
             case "funcion":
@@ -105,6 +111,7 @@ public class Traduccion {
                 return "\n}\n";
             case "con_parametros":
                 flagConParametros = true;
+                flagEjecutar=false;
                 return "";
             case ")":
                 if (flagConParametros) {
@@ -115,10 +122,12 @@ public class Traduccion {
                 return "";    
             case "si":    
                 flagIf = true;
+                flagEjecutar=false;
                 ntabulaciones++;
                 return "\tif (";
             case "o_si":    
                 flagElIf = true;
+                flagEjecutar=false;
                 return "\n"+tabulacion()+"}else if (";
             case "de_lo_contrario":    
                 if (flagHacer) {
@@ -269,6 +278,7 @@ public class Traduccion {
                 nombres=0;
                 return retorno;
             case "segun":
+                flagEjecutar=false;
                 ntabulaciones++;
                 flagSwitch=true;
                 return "\tswitch ";    
@@ -292,20 +302,23 @@ public class Traduccion {
             case "?":
                 return "";
             case "para":
+                flagEjecutar=false;
                 return "for";
             case "fin_para":
                 flagHacer=false;
-                return"";
+                return"}";
             case "fin_mientras":
                 flagHacer=false;
-                return"";
+                return"}";
             case "imprimir":
+                flagEjecutar=false;
                 flagPrint=true;
                 if (!importaciones.contains("\"fmt\"")) {
                    importaciones.add("\"fmt\"");
                 }
                 return "\tfmt.Print(";
-            case "imprimir_nl":   
+            case "imprimir_nl":  
+                flagEjecutar=false;
                 flagPrintln=true;
                 if (!importaciones.contains("\"fmt\"")) {
                    importaciones.add("\"fmt\"");
@@ -461,6 +474,64 @@ public class Traduccion {
                 if (flagElIf) {
                     return ""+tabulacion();
                 }
+                if (flagEjecutar) {
+                    int num=0;
+                    
+                    
+                    int j=0;
+                    String cadena="";
+                    while(!padre.get(index-j).getToken().equals("ejecutar")){
+                        if (padre.get(index-j).getToken().equals("potencia")) {
+                            indicepot=indicePotencia(padre,index-j);
+                            indices.add(indicepot);
+                            flagPotencia=true;
+                        }
+                        System.out.println(j);
+                        System.out.println(index);
+                        j++;
+                    }
+                    for (int i = index-j+1; i < index; i++) {
+                        if (!indices.isEmpty()) {
+                            for (int k = 0; k < indices.size(); k++) {
+                                if (indices.get(k)[0]==i) {
+                                    indicepot=indices.get(k);
+                                    flagPotencia=true;
+                                    estaEnPot=true;
+                                }
+                            }
+                        }
+                        
+                        if (flagPotencia&&estaEnPot) {
+                            if (i>=indicepot[0]&&i<indicepot[2]) {
+                                expresionAux+=conector(padre.get(i));
+                            }else if (i==indicepot[2]) {
+                                cadena+=conector(padre.get(i))+expresionAux+"),float64(";
+                                expresionAux="";
+                            }else if (i>indicepot[2]&&i<=indicepot[1]) {
+                                expresionAux+=conector(padre.get(i));
+                            }
+                            if (!flagPotencia) {
+                                cadena+=expresionAux;
+                                estaEnPot=false;
+                                expresionAux="";
+                            }
+ 
+                        }else{
+                            cadena+=conector(padre.get(i));
+                        }
+                    } 
+                    
+                    
+                        expresion += "\t"+cadena;
+
+                    
+                    flagEjecutar =false;
+                    flagBool=false;
+                    nombres=0;
+                    listaAsign=new ArrayList<String>();
+                    return expresion+"\n"+tabulacion();
+                }
+                
                 if (flagIngresar) {
                     int num=0;
                     
@@ -567,7 +638,7 @@ public class Traduccion {
                     }
                     System.out.println(listaAsign.size());
                 }
-                
+                flagEjecutar=false;
                 flagIngresar=false;
                 flagAsignacion=false;
                 flagBool=false;
@@ -708,6 +779,13 @@ public class Traduccion {
                             case "?":
                                  expresion+=":";
                                  break;
+                            case ",":
+                                if (flagEjecutar) {
+                                    expresion+=", ";
+                                }
+                                break;
+                            case "ejecutar":
+                                break;
                             default:
                                 expresion+=padre.getToken()+" ";
                                 break;
