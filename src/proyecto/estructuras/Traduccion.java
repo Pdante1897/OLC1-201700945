@@ -32,6 +32,7 @@ public class Traduccion {
     public static boolean flagConParametros = false;
     public static boolean flagNomFunc = false;
     public static boolean flagEjecutar = false;
+    public static int ejecuciones =0;
     public static ArrayList<String> listaAsign= new ArrayList<String>();
     public static ArrayList<String> importaciones=new ArrayList<String>();
     public Traduccion() {
@@ -79,7 +80,13 @@ public class Traduccion {
                 flagMain=false;
                 return "\n}";
             case "ejecutar":
-                flagEjecutar = true;
+                if (flagEjecutar) {
+                }else{
+                    flagEjecutar = true;
+                    ejecuciones = index;
+                }
+                                
+
                 return"";
             case "ingresar":
                 flagEjecutar = false;
@@ -480,7 +487,8 @@ public class Traduccion {
                     
                     int j=0;
                     String cadena="";
-                    while(!padre.get(index-j).getToken().equals("ejecutar")){
+                    while(index-j!=ejecuciones){
+                        
                         if (padre.get(index-j).getToken().equals("potencia")) {
                             indicepot=indicePotencia(padre,index-j);
                             indices.add(indicepot);
