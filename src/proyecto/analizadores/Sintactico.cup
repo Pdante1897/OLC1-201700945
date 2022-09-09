@@ -1882,7 +1882,7 @@ CASO ::= interrogacionA:vari1 EXPRESIONVAL:vari2 interrogacionC:vari3 enton:vari
 :};
 
 
-CICLOPARA::= para:vari1 var_identificador:vari2 flecha:vari3 digito:vari4 hasta:vari5 digito:vari6 hacer:vari7 CODIGO:lista_codigo fin_para:vari8{:
+CICLOPARA::= para:vari1 var_identificador:vari2 flecha:vari3 digito:vari4 hasta:vari5 EXPRESION:vari6 hacer:vari7 CODIGO:lista_codigo fin_para:vari8{:
                                                 
                         NodoAST tnodo = new NodoAST();
                         tnodo.Nodos = new ArrayList<NodoAST>(); 
@@ -1929,14 +1929,12 @@ CICLOPARA::= para:vari1 var_identificador:vari2 flecha:vari3 digito:vari4 hasta:
                         tnodo5.setToken("<T_"+vari5+">");
                         tnodo5.setTipo("<t "+vari5+">"); 
 
-                        NodoAST token6 = new NodoAST();
-                        token6.setToken(vari6);
-                        token6.setTipo("token");
+                        
 
                         NodoAST tnodo6 = new NodoAST();
-                        tnodo6.Nodos = new ArrayList<NodoAST>(); 
-                        tnodo6.setToken("<T_"+vari6+">");
-                        tnodo6.setTipo("<t "+vari6+">"); 
+                        tnodo6.Nodos = vari6;
+                        tnodo6.setToken("<T_Expresion>");
+                        tnodo6.setTipo("<t expresion"); 
 
                         NodoAST token7 = new NodoAST();
                         token7.setToken(vari7);
@@ -1969,7 +1967,7 @@ CICLOPARA::= para:vari1 var_identificador:vari2 flecha:vari3 digito:vari4 hasta:
                         tnodo3.Nodos.add(token3);
                         tnodo4.Nodos.add(token4);
                         tnodo5.Nodos.add(token5);
-                        tnodo6.Nodos.add(token6);
+                        //tnodo6.Nodos.add(token6);
                         tnodo7.Nodos.add(token7);
                         tnodo8.Nodos.add(token8);
 
@@ -1986,7 +1984,7 @@ CICLOPARA::= para:vari1 var_identificador:vari2 flecha:vari3 digito:vari4 hasta:
                         RESULT.add(tnodo8);
 
                         :}
-                |para:vari1 var_identificador:vari2 flecha:vari3 digito:vari4 hasta:vari5 digito:vari6 con:vari7 incremental:vari8 digito:vari9 hacer:vari10 CODIGO:lista_codigo fin_para:vari11{:
+                |para:vari1 var_identificador:vari2 flecha:vari3 digito:vari4 hasta:vari5 EXPRESION:vari6 con:vari7 incremental:vari8 digito:vari9 hacer:vari10 CODIGO:lista_codigo fin_para:vari11{:
                                                 
                         NodoAST tnodo = new NodoAST();
                         tnodo.Nodos = new ArrayList<NodoAST>(); 
@@ -2033,14 +2031,12 @@ CICLOPARA::= para:vari1 var_identificador:vari2 flecha:vari3 digito:vari4 hasta:
                         tnodo5.setToken("<T_"+vari5+">");
                         tnodo5.setTipo("<t "+vari5+">"); 
 
-                        NodoAST token6 = new NodoAST();
-                        token6.setToken(vari6);
-                        token6.setTipo("token");
+                        
 
                         NodoAST tnodo6 = new NodoAST();
-                        tnodo6.Nodos = new ArrayList<NodoAST>(); 
-                        tnodo6.setToken("<T_"+vari6+">");
-                        tnodo6.setTipo("<t "+vari6+">"); 
+                        tnodo6.Nodos = vari6; 
+                        tnodo6.setToken("<T_expresion>");
+                        tnodo6.setTipo("<t expresion>"); 
 
                         NodoAST token7 = new NodoAST();
                         token7.setToken(vari7);
@@ -2100,7 +2096,7 @@ CICLOPARA::= para:vari1 var_identificador:vari2 flecha:vari3 digito:vari4 hasta:
                         tnodo3.Nodos.add(token3);
                         tnodo4.Nodos.add(token4);
                         tnodo5.Nodos.add(token5);
-                        tnodo6.Nodos.add(token6);
+                        //tnodo6.Nodos.add(token6);
                         tnodo7.Nodos.add(token7);
                         tnodo8.Nodos.add(token8);
                         tnodo8.Nodos.add(token9);
@@ -2122,7 +2118,7 @@ CICLOPARA::= para:vari1 var_identificador:vari2 flecha:vari3 digito:vari4 hasta:
                         RESULT.add(tnodo11);
 
                         :}
-                |para:vari1 var_identificador:vari2 flecha:vari3 digito:vari4 hasta:vari5 digito:vari6 hacer:vari7 fin_para:vari8{:
+                |para:vari1 var_identificador:vari2 flecha:vari3 digito:vari4 hasta:vari5 EXPRESION:vari6 hacer:vari7 fin_para:vari8{:
                                                 
                         NodoAST tnodo = new NodoAST();
                         tnodo.Nodos = new ArrayList<NodoAST>(); 
@@ -2169,14 +2165,11 @@ CICLOPARA::= para:vari1 var_identificador:vari2 flecha:vari3 digito:vari4 hasta:
                         tnodo5.setToken("<T_"+vari5+">");
                         tnodo5.setTipo("<t "+vari5+">"); 
 
-                        NodoAST token6 = new NodoAST();
-                        token6.setToken(vari6);
-                        token6.setTipo("token");
-
+                        
                         NodoAST tnodo6 = new NodoAST();
-                        tnodo6.Nodos = new ArrayList<NodoAST>(); 
-                        tnodo6.setToken("<T_"+vari6+">");
-                        tnodo6.setTipo("<t "+vari6+">"); 
+                        tnodo6.Nodos = vari6;
+                        tnodo6.setToken("<T_Expresion>");
+                        tnodo6.setTipo("<t expresion>"); 
 
                         NodoAST token7 = new NodoAST();
                         token7.setToken(vari7);
@@ -2203,7 +2196,7 @@ CICLOPARA::= para:vari1 var_identificador:vari2 flecha:vari3 digito:vari4 hasta:
                         tnodo3.Nodos.add(token3);
                         tnodo4.Nodos.add(token4);
                         tnodo5.Nodos.add(token5);
-                        tnodo6.Nodos.add(token6);
+                        //tnodo6.Nodos.add(token6);
                         tnodo7.Nodos.add(token7);
                         tnodo8.Nodos.add(token8);
 

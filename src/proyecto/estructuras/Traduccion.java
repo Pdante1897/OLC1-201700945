@@ -11,10 +11,10 @@ public class Traduccion {
     public boolean lenguaje; //verdadero golang, falso python 
     public static int ntabulaciones=0;
     public static int nombres = 0;
+    public static String tipoFunc = "";
     public static boolean flagIngresar=false;
     public static boolean flagAsignacion=false;
     public static boolean flagBool=false;
-    public static boolean flagFor=false;  
     public static boolean flagIf=false;
     public static boolean flagElIf=false;
     public static boolean flagPrint = false;
@@ -22,7 +22,15 @@ public class Traduccion {
     public static boolean flagPotencia = false;
     public static boolean flagSwitch = false;
     public static boolean flagHacer = false;
-
+    public static boolean flagFor = false;
+    public static boolean flagWhile = false;
+    public static boolean flagDoWhile = false;
+    public static boolean flagFuncion = false;
+    public static boolean flagMetodo =false;
+    public static boolean flagConValor = false;
+    public static boolean flagMain= false;
+    public static boolean flagConParametros = false;
+    public static boolean flagNomFunc = false;
     public static ArrayList<String> listaAsign= new ArrayList<String>();
     public static ArrayList<String> importaciones=new ArrayList<String>();
     public Traduccion() {
@@ -60,12 +68,51 @@ public class Traduccion {
         ArrayList<int[]> indices = new ArrayList<int[]>();
         switch(token.toLowerCase()){
             case "inicio":
+                flagMain=true;
                 return "func main (){\n";
             case "fin":
+                if (!flagMain) {
+                    return "";
+                }
+                flagMain=false;
                 return "\n}";
             case "ingresar":
                 flagIngresar=true;
                 return "\tvar ";
+            case "funcion":
+                nombres=0;
+                flagFuncion=true;
+                if (flagMain) {
+                    flagMain=false;
+                    return "\n}\nfunc ";    
+                }
+                return "func ";    
+            case "metodo":
+                nombres=0;
+                flagMetodo=true;
+                if (flagMain) {
+                    flagMain=false;
+                    return "\n}\nfunc ";    
+                }
+                return "func ";
+            case "fin_funcion":
+                flagFuncion=false;
+                flagNomFunc=false;
+                return "\n}\n";    
+            case "fin_metodo":
+                flagMetodo=false;
+                flagNomFunc=false;
+                return "\n}\n";
+            case "con_parametros":
+                flagConParametros = true;
+                return "";
+            case ")":
+                if (flagConParametros) {
+                    nombres = 0;
+                    flagConParametros = false;
+                    return ") "+tipoFunc+"{\n";
+                }
+                return "";    
             case "si":    
                 flagIf = true;
                 ntabulaciones++;
@@ -219,6 +266,7 @@ public class Traduccion {
                 flagIf=false;
                 flagElIf=false;
                 flagSwitch=false;
+                nombres=0;
                 return retorno;
             case "segun":
                 ntabulaciones++;
@@ -243,6 +291,14 @@ public class Traduccion {
                 return "\n"+tabulacion()+"case ";
             case "?":
                 return "";
+            case "para":
+                return "for";
+            case "fin_para":
+                flagHacer=false;
+                return"";
+            case "fin_mientras":
+                flagHacer=false;
+                return"";
             case "imprimir":
                 flagPrint=true;
                 if (!importaciones.contains("\"fmt\"")) {
@@ -256,14 +312,32 @@ public class Traduccion {
                 }
                 return "\tfmt.Println(";
             case "cadena":
+                if (padre.get(index-2).getToken().equals("funcion")) {
+                    tipoFunc="string";
+                    return "";
+                }
                 return "string ";
             case "caracter":
+                if (padre.get(index-2).getToken().equals("funcion")) {
+                    tipoFunc="byte";
+                    return "";
+                }
                 return "byte ";
             case "boolean":
+                if (padre.get(index-2).getToken().equals("funcion")) {
+                    tipoFunc="boolean";
+                    return "";
+                }
                 return "bool ";
             case "numero":
-                nodito= new NodoAST();
+                if (padre.get(index-2).getToken().equals("funcion")) {
+                    tipoFunc="int";
+                    return "";
+                }
                 for (int i = index; i < padre.size(); i++) {
+                    if (flagMetodo||flagFuncion) {
+                        break;
+                    }
                     if ((padre.get(i+1).getToken().equals(";")&&padre.get(i).getToken().contains("."))||(padre.get(i).getToken().equals("potencia"))) {
                         return "float64 ";
                     }
@@ -273,9 +347,15 @@ public class Traduccion {
             case "como":
                 return expresion;
             case "con_valor":
+                flagConValor=true;
                 return "= "+expresion;
             
+            
+                
             case ",":
+                if (flagConParametros) {
+                    return ", ";
+                }
                 if (!flagIngresar) {
                     return "";
                 }
@@ -382,6 +462,9 @@ public class Traduccion {
                     return ""+tabulacion();
                 }
                 if (flagIngresar) {
+                    int num=0;
+                    
+                    
                     int j=0;
                     String cadena="";
                     while(!padre.get(index-j).getToken().equals("con_valor")){
@@ -423,15 +506,15 @@ public class Traduccion {
                         }
                     } 
                     
-                    for (int i = 0; i < nombres; i++) {
-                        if (nombres-1==i) {
+                    for (int i = 0; i < nombres-num; i++) {
+                        if (nombres-num==i+1) {
                             expresion+= cadena;
                             break;
                         }
                         expresion += cadena+", ";
 
                     }
-                    
+                    flagConValor=false;
                     flagIngresar=false;
                     flagBool=false;
                     nombres=0;
@@ -499,6 +582,7 @@ public class Traduccion {
                             padre.get(index-1).getToken().equals("de_lo_contrario")){//ir agregando el resto de palabras reservadas
                         flagAsignacion=true;
                     }else{
+                        
                         if (flagIngresar) {
                             flagAsignacion=false;
                             //return"";
@@ -518,17 +602,43 @@ public class Traduccion {
                         }
                     }
                     
+                    if (flagFuncion&&!flagNomFunc||flagMetodo&&!flagNomFunc) {
+                        flagNomFunc=true;
+                        if (padre.get(index+1).getToken().equals("con_parametros")||padre.get(index+2).getToken().equals("con_parametros")) {
+                            return " "+token+"(";
+                        }
+                        if (flagMetodo) {
+                            return " "+token+"(){\n";
+
+                        }
+                        return " "+token+"()";
+                    }
+                    
+                    if (flagConParametros) {
+                            flagAsignacion=false;
+                        return " "+token+" ";
+                        }
+                    
                     if (flagAsignacion) {
+                        if (flagIngresar) {
+                            flagAsignacion=false;
+                            return"";
+                        }
+                        
                         listaAsign.add(token);
                     }else if (flagIf) {
                         return "";
                     }else if (flagElIf) {
                         return "";
                     } else if(flagIngresar){
+                        if (flagConValor) {
+                            
+                            return "";
+                        }
                         return " "+token+" ";
                     }else if(flagSwitch){
                         return " "+token+" ";
-                    }
+                    } 
                     
                     return "";
                 }
