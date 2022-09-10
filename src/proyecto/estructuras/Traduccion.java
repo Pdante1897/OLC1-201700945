@@ -32,7 +32,11 @@ public class Traduccion {
     public static boolean flagConParametros = false;
     public static boolean flagNomFunc = false;
     public static boolean flagEjecutar = false;
+    public static boolean flagReturn = false;
+    public static boolean flagHasta = false;
     public static int ejecuciones =0;
+    public static boolean incre = false;
+    public static String decFor="";
     public static ArrayList<String> listaAsign= new ArrayList<String>();
     public static ArrayList<String> importaciones=new ArrayList<String>();
     public Traduccion() {
@@ -44,6 +48,7 @@ public class Traduccion {
     
     public String Golang(ArrayList<NodoAST> nodo){
         String cadena="";
+        nombres=0;
         boolean metodo = false;
         int indice=0;
         String tabulacion="";
@@ -78,7 +83,7 @@ public class Traduccion {
                     return "";
                 }
                 flagMain=false;
-                return "\n}";
+                return Repetir(padre,index)+"\n}";
             case "ejecutar":
                 if (flagEjecutar) {
                 }else{
@@ -87,11 +92,11 @@ public class Traduccion {
                 }
                                 
 
-                return"";
+                return Repetir(padre,index)+"";
             case "ingresar":
                 flagEjecutar = false;
                 flagIngresar=true;
-                return "\tvar ";
+                return Repetir(padre,index)+"\tvar ";
             case "funcion":
                 nombres=0;
                 flagFuncion=true;
@@ -99,7 +104,7 @@ public class Traduccion {
                     flagMain=false;
                     return "\n}\nfunc ";    
                 }
-                return "func ";    
+                return Repetir(padre,index)+"func ";    
             case "metodo":
                 nombres=0;
                 flagMetodo=true;
@@ -107,15 +112,15 @@ public class Traduccion {
                     flagMain=false;
                     return "\n}\nfunc ";    
                 }
-                return "func ";
+                return Repetir(padre,index)+"func ";
             case "fin_funcion":
                 flagFuncion=false;
                 flagNomFunc=false;
-                return "\n}\n";    
+                return Repetir(padre,index)+"\n}\n";    
             case "fin_metodo":
                 flagMetodo=false;
                 flagNomFunc=false;
-                return "\n}\n";
+                return Repetir(padre,index)+"\n}\n";
             case "con_parametros":
                 flagConParametros = true;
                 flagEjecutar=false;
@@ -131,19 +136,19 @@ public class Traduccion {
                 flagIf = true;
                 flagEjecutar=false;
                 ntabulaciones++;
-                return "\tif (";
+                return Repetir(padre,index)+"\tif (";
             case "o_si":    
                 flagElIf = true;
                 flagEjecutar=false;
-                return "\n"+tabulacion()+"}else if (";
+                return Repetir(padre,index)+"\n"+tabulacion()+"}else if (";
             case "de_lo_contrario":    
                 if (flagHacer) {
                     return "\n"+tabulacion()+"default: \n\t";
                 }
-                return "\n"+tabulacion()+"}else {\n\t";
+                return Repetir(padre,index)+"\n"+tabulacion()+"}else {\n\t";
             case "fin_si":
                 ntabulaciones--;
-                return "\n\t"+tabulacion()+"}\n";
+                return Repetir(padre,index)+"\n\t"+tabulacion()+"}\n";
             case "entonces":    
                 if (flagIf) {
                      int j=0;
@@ -288,16 +293,121 @@ public class Traduccion {
                 flagEjecutar=false;
                 ntabulaciones++;
                 flagSwitch=true;
-                return "\tswitch ";    
-                
+                return Repetir(padre,index)+"\tswitch ";    
+            case "incremental":
+                incre = true;
+                return "";
+            case "retornar":
+                flagReturn=true;
+                flagEjecutar=false;
+                return Repetir(padre,index)+"\treturn ";
             case "hacer":
                 flagHacer=true;
-                return "{ \n";
+                if (flagFor) {
+                    int j=0;
+                    while(!padre.get(index-j).getToken().equals("para")){
+                        if (padre.get(index-j).getToken().equals("potencia")) {
+                            indicepot=indicePotencia(padre,index-j);
+                            indices.add(indicepot);
+                            flagPotencia=true;
+                        }
+                        j++;
+                        System.out.println("j="+j);
+                    }
+                    for (int i = index-j+1; i < index; i++) {
+                        if (!indices.isEmpty()) {
+                            for (int k = 0; k < indices.size(); k++) {
+                                if (indices.get(k)[0]==i) {
+                                    indicepot=indices.get(k);
+                                    flagPotencia=true;
+                                    estaEnPot=true;
+                                }
+                            }
+                        }
+                        
+                        if (flagPotencia&&estaEnPot) {
+                            if (i>=indicepot[0]&&i<indicepot[2]) {
+                                expresionAux+=conector(padre.get(i));
+                            }else if (i==indicepot[2]) {
+                                expresion+=conector(padre.get(i))+expresionAux+"),float64(";
+                                expresionAux="";
+                            }else if (i>indicepot[2]&&i<=indicepot[1]) {
+                                expresionAux+=conector(padre.get(i));
+                            }
+                            if (!flagPotencia) {
+                                expresion+=expresionAux;
+                                estaEnPot=false;
+                                expresionAux="";
+                            }
+ 
+                        }else{
+                            if (incre) {
+                                expresion+=conector(padre.get(i));
+                            }else{
+                                expresion+=conector(padre.get(i));
+                                if (i+1==index) {
+                                    expresion+=";"+ decFor+"++";
+                                }
+                            }
+                            
+                        }
+                    }
+                    incre=false;
+                    flagFor=false;
+                    flagHacer=false;
+                    return expresion+"{ \n"+tabulacion();
+                }
+                if (flagWhile) {
+                    int j=0;
+                    while(!padre.get(index-j).getToken().equals("mientras")){
+                        if (padre.get(index-j).getToken().equals("potencia")) {
+                            indicepot=indicePotencia(padre,index-j);
+                            indices.add(indicepot);
+                            flagPotencia=true;
+                        }
+                        j++;
+                        System.out.println("j="+j);
+                    }
+                    for (int i = index-j+1; i < index; i++) {
+                        if (!indices.isEmpty()) {
+                            for (int k = 0; k < indices.size(); k++) {
+                                if (indices.get(k)[0]==i) {
+                                    indicepot=indices.get(k);
+                                    flagPotencia=true;
+                                    estaEnPot=true;
+                                }
+                            }
+                        }
+                        
+                        if (flagPotencia&&estaEnPot) {
+                            if (i>=indicepot[0]&&i<indicepot[2]) {
+                                expresionAux+=conector(padre.get(i));
+                            }else if (i==indicepot[2]) {
+                                expresion+=conector(padre.get(i))+expresionAux+"),float64(";
+                                expresionAux="";
+                            }else if (i>indicepot[2]&&i<=indicepot[1]) {
+                                expresionAux+=conector(padre.get(i));
+                            }
+                            if (!flagPotencia) {
+                                expresion+=expresionAux;
+                                estaEnPot=false;
+                                expresionAux="";
+                            }
+ 
+                        }else{
+                            expresion+=conector(padre.get(i));
+                        }
+                    } 
+                    flagHacer=false;
+                    flagWhile=false;
+                    return "\n\t"+tabulacion()+"if("+expresion+"){\n\t"+tabulacion()+"break\n"+tabulacion()+"\t}\n"+tabulacion();
+                }
+                return expresion+"{ \n";
             
             case "fin_segun":
                 ntabulaciones--;
                 ntabulaciones--;
-                return "\n\t"+tabulacion()+"}\n";
+                return Repetir(padre,index)+"\n\t"+tabulacion()+"}\n";
             case "¿":
                 
                 if (padre.get(index-1).getToken().equals("hacer")) {
@@ -310,27 +420,51 @@ public class Traduccion {
                 return "";
             case "para":
                 flagEjecutar=false;
-                return "for";
+                flagFor = true;
+                ntabulaciones++;
+                decFor = padre.get(index+1).getToken();
+                return Repetir(padre,index)+"\tfor ";
             case "fin_para":
                 flagHacer=false;
-                return"}";
+                ntabulaciones--;
+                return Repetir(padre,index)+"\n\t"+tabulacion()+"}\n";
+            case "mientras":
+                flagEjecutar=false;
+                flagWhile = true;
+                ntabulaciones++;
+                return Repetir(padre,index)+"\tfor true {";
             case "fin_mientras":
                 flagHacer=false;
-                return"}";
+                ntabulaciones--;
+                return Repetir(padre,index)+"\n\t"+tabulacion()+"}";
+            case "repetir":
+                flagEjecutar=false;
+                ntabulaciones++;
+                return Repetir(padre,index)+"\tfor true {\n"+tabulacion();    
+            case "hasta_que":
+                flagEjecutar=false;
+                flagDoWhile = true;
+                flagHasta = true;
+                String expreson="";
+                
+                
+                
+                
+                return Repetir(padre,index)+"";
             case "imprimir":
                 flagEjecutar=false;
                 flagPrint=true;
                 if (!importaciones.contains("\"fmt\"")) {
                    importaciones.add("\"fmt\"");
                 }
-                return "\tfmt.Print(";
+                return Repetir(padre,index)+"\tfmt.Print(";
             case "imprimir_nl":  
                 flagEjecutar=false;
                 flagPrintln=true;
                 if (!importaciones.contains("\"fmt\"")) {
                    importaciones.add("\"fmt\"");
                 }
-                return "\tfmt.Println(";
+                return Repetir(padre,index)+"\tfmt.Println(";
             case "cadena":
                 if (padre.get(index-2).getToken().equals("funcion")) {
                     tipoFunc="string";
@@ -355,7 +489,7 @@ public class Traduccion {
                     return "";
                 }
                 for (int i = index; i < padre.size(); i++) {
-                    if (flagMetodo||flagFuncion) {
+                    if (flagConParametros) {
                         break;
                     }
                     if ((padre.get(i+1).getToken().equals(";")&&padre.get(i).getToken().contains("."))||(padre.get(i).getToken().equals("potencia"))) {
@@ -382,6 +516,52 @@ public class Traduccion {
                 return ", ";
             case ";":
                 System.out.println("nombres "+nombres);
+                
+                if (flagReturn) {
+                     int j=0;
+                    while(!padre.get(index-j).getToken().equals("retornar")){
+                        if (padre.get(index-j).getToken().equals("potencia")) {
+                            indicepot=indicePotencia(padre,index-j);
+                            indices.add(indicepot);
+                            flagPotencia=true;
+                        }
+                        j++;
+                        System.out.println("j="+j);
+                    }
+                    for (int i = index-j+1; i < index; i++) {
+                        if (!indices.isEmpty()) {
+                            for (int k = 0; k < indices.size(); k++) {
+                                if (indices.get(k)[0]==i) {
+                                    indicepot=indices.get(k);
+                                    flagPotencia=true;
+                                    estaEnPot=true;
+                                }
+                            }
+                        }
+                        
+                        if (flagPotencia&&estaEnPot) {
+                            if (i>=indicepot[0]&&i<indicepot[2]) {
+                                expresionAux+=conector(padre.get(i));
+                            }else if (i==indicepot[2]) {
+                                expresion+=conector(padre.get(i))+expresionAux+"),float64(";
+                                expresionAux="";
+                            }else if (i>indicepot[2]&&i<=indicepot[1]) {
+                                expresionAux+=conector(padre.get(i));
+                            }
+                            if (!flagPotencia) {
+                                expresion+=expresionAux;
+                                estaEnPot=false;
+                                expresionAux="";
+                            }
+ 
+                        }else{
+                            expresion+=conector(padre.get(i));
+                        }
+                    } 
+                    flagReturn=false;
+                    return expresion+"\n"+tabulacion();
+                }
+                
                 
                 if (flagPrint) {
                      int j=0;
@@ -481,6 +661,7 @@ public class Traduccion {
                 if (flagElIf) {
                     return ""+tabulacion();
                 }
+                
                 if (flagEjecutar) {
                     int num=0;
                     
@@ -537,7 +718,7 @@ public class Traduccion {
                     flagBool=false;
                     nombres=0;
                     listaAsign=new ArrayList<String>();
-                    return expresion+"\n"+tabulacion();
+                    return Repetir(padre,index)+expresion+"\n"+tabulacion();
                 }
                 
                 if (flagIngresar) {
@@ -652,13 +833,16 @@ public class Traduccion {
                 flagBool=false;
                 nombres=0;
                 listaAsign=new ArrayList<String>();
-                return asignacion+"\n"+tabulacion();
+                return Repetir(padre,index)+asignacion+"\n"+tabulacion();
             
             default:
                 if (token.startsWith("_")&& token.endsWith("_")) {
                     if(padre.get(index-1).getToken().equals(";")||
                             padre.get(index-1).getToken().equals("entonces")||
-                            padre.get(index-1).getToken().equals("de_lo_contrario")){//ir agregando el resto de palabras reservadas
+                            padre.get(index-1).getToken().equals("de_lo_contrario")||
+                            padre.get(index-1).getToken().equals("hacer")||
+                            flagHasta){//ir agregando el resto de palabras reservadas
+                        flagHacer=false;
                         flagAsignacion=true;
                     }else{
                         
@@ -723,6 +907,64 @@ public class Traduccion {
                 }
                 return "";//" "+token+" ";
         }
+    }
+    
+    public String Repetir(ArrayList<NodoAST> padre, int index){
+        String expresion="";
+        String expresionAux="";
+        String cadena="";
+        int[] indicepot=new int[3];
+        boolean estaEnPot=false;
+        ArrayList<int[]> indices = new ArrayList<int[]>();
+
+        if (flagDoWhile) {
+                    int j=0;
+                    while(!padre.get(index-j).getToken().equals("hasta_que")){
+                        if (padre.get(index-j).getToken().equals("potencia")) {
+                            indicepot=indicePotencia(padre,index-j);
+                            indices.add(indicepot);
+                            flagPotencia=true;
+                        }
+                        j++;
+                        System.out.println("j="+j);
+                    }
+                    for (int i = index-j+1; i < index; i++) {
+                        if (!indices.isEmpty()) {
+                            for (int k = 0; k < indices.size(); k++) {
+                                if (indices.get(k)[0]==i) {
+                                    indicepot=indices.get(k);
+                                    flagPotencia=true;
+                                    estaEnPot=true;
+                                }
+                            }
+                        }
+                        
+                        if (flagPotencia&&estaEnPot) {
+                            if (i>=indicepot[0]&&i<indicepot[2]) {
+                                expresionAux+=conector(padre.get(i));
+                            }else if (i==indicepot[2]) {
+                                expresion+=conector(padre.get(i))+expresionAux+"),float64(";
+                                expresionAux="";
+                            }else if (i>indicepot[2]&&i<=indicepot[1]) {
+                                expresionAux+=conector(padre.get(i));
+                            }
+                            if (!flagPotencia) {
+                                expresion+=expresionAux;
+                                estaEnPot=false;
+                                expresionAux="";
+                            }
+ 
+                        }else{
+                            expresion+=conector(padre.get(i));
+                        }
+                    } 
+                    flagDoWhile=false;
+                    flagHasta=false;
+                    cadena= "\n\t"+tabulacion()+"if("+expresion+"){\n\t"+tabulacion()+"\tbreak\n"+tabulacion()+"\t}\n"+tabulacion()+"}";
+                    ntabulaciones--;
+
+                }
+                return cadena;
     }
     
     public String tabulacion(){
@@ -794,6 +1036,18 @@ public class Traduccion {
                                 break;
                             case "ejecutar":
                                 break;
+                            case "->":
+                                if (flagFor) {
+                                    expresion+=":=";
+                                }
+                                break;
+                            case "hasta":
+                                expresion+="; "+decFor+" == ";
+                                break;
+                                
+                            case "incremental":
+                                expresion+="; "+decFor+" + ";
+                                break;
                             default:
                                 expresion+=padre.getToken()+" ";
                                 break;
@@ -826,11 +1080,11 @@ public class Traduccion {
     }
     
     public String agregarImportaciones(){
-        String cadena = "package main\n\nimport {\n";
+        String cadena = "package main\n\nimport (\n";
         for (int i = 0; i < importaciones.size(); i++) {
             cadena+="\t"+importaciones.get(i)+"\n";
         }
-        cadena+="}\n\n";
+        cadena+=")\n\n";
         return cadena;
     }
     
