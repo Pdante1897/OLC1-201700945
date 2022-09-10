@@ -1,15 +1,82 @@
 inicio 
-	ingresar _nombredeesta_, _otro_, _aver_ como cadena con_valor "esta mierda";
-	ingresar _indice2_ como cadena con_valor "esta mierda";
-	ingresar _esta_ como cadena con_valor "esta mierda";
+	ingresar _nombredeesta_, _otro_, _aver_ como cadena con_valor "esta cosa";
+	ingresar _indice2_ como cadena con_valor "esta cosa";
+	ingresar _esta_ como cadena con_valor "esta cosa";
 	_nombreesta_ -> 1+1;
 	_esta_ -> -_nombredeesta_+_esta_;
 fin
 
+
 inicio 
-	ingresar _esta_ como cadena con_valor "esta mierda";
-	ingresar _esta_ como cadena con_valor "esta mierda";
-	ingresar _nombredeesta_, _otro_, _aver_ como cadena con_valor "esta mierda";
+	ingresar _nombredeesta_, _otro_, _aver_ como cadena con_valor "esta cosa";
+	ingresar _indice2_ como cadena con_valor "esta cosa";
+	ingresar _esta_ como cadena con_valor "esta cosa";
+	_nombreesta_ -> 1+1;
+	_esta_ -> -_nombredeesta_+_esta_;
+	
+	imprimir "holamundo";
+	imprimir_nl 2 potencia [5+5];
+	si _x_ mayor 1 entonces
+		_nombreesta_ -> 1+1;
+		_nombreesta_ -> 1+2;
+		_nombreesta_ -> 1+23;
+		_nombreesta_ -> 1+24;
+		si (_x_ mayor 1) and (_y_ menor 2) entonces
+			_nombreesta_ -> 1+1;
+			_nombreesta_ -> 1+2;
+			_nombreesta_ -> 1+23;
+			_nombreesta_ -> 1+24;
+
+		fin_si
+	o_si _z_ es_igual 0 entonces
+		si (_x_ mayor 1) and (_y_ menor 2) entonces
+			_nombreesta_ -> 1+1;
+			_nombreesta_ -> 1+2;
+			_nombreesta_ -> 1+23;
+			_nombreesta_ -> 1+24;
+
+		fin_si
+	de_lo_contrario
+		si (_x_ mayor 1) and (_y_ menor 2) entonces
+			_nombreesta_ -> 1+1;
+			_nombreesta_ -> 1+2;
+			_nombreesta_ -> 1+23;
+			_nombreesta_ -> 1+24;
+
+		fin_si
+	fin_si
+fin
+
+
+inicio 
+	ingresar _nombredeesta_, _otro_, _aver_ como cadena con_valor "esta cosa";
+	ingresar _indice2_ como cadena con_valor "esta cosa";
+	ingresar _esta_ como cadena con_valor "esta cosa";
+	_nombreesta_ -> 1+1;
+	_esta_ -> -_nombredeesta_+_esta_;
+	
+
+	si _x_ mayor 1 entonces
+		_nombreesta_ -> 1+1;
+		_nombreesta_ -> 1+2;
+		_nombreesta_ -> 1+23;
+		_nombreesta_ -> 1+24;
+		si (_x_ mayor 1) and (_y_ menor 2) entonces
+			_nombreesta_ -> 1+1;
+			_nombreesta_ -> 1+2;
+			_nombreesta_ -> 1+23;
+			_nombreesta_ -> 1+24;
+
+		fin_si
+
+	fin_si
+fin
+
+
+inicio 
+	ingresar _esta_ como cadena con_valor "esta cosa";
+	ingresar _esta_ como cadena con_valor "esta cosa";
+	ingresar _nombredeesta_, _otro_, _aver_ como cadena con_valor "esta cosa";
 	ingresar _esta_ como numero con_valor 11.23;
 	ingresar _esta_ como numero con_valor 11523;
 	_esta_ -> 1+1;
@@ -19,8 +86,8 @@ inicio
 fin
 
 inicio 
-	ingresar _esta_ como cadena con_valor "esta mierda";
-	ingresar _esta_ como cadena con_valor "esta mierda";
+	ingresar _esta_ como cadena con_valor "esta cosa";
+	ingresar _esta_ como cadena con_valor "esta cosa";
 	ingresar _nombredeesta_, _otro_, _aver_ como boolean con_valor verdadero;
 	ingresar _esta_ como numero con_valor 11.23;
 	ingresar _esta_ como numero con_valor 11523;
@@ -34,16 +101,16 @@ fin
 
 
 inicio 
-	ingresar _nombredeesta_, _otro_, _aver_ como cadena con_valor "esta mierda";
-	ingresar _indice2_ como cadena con_valor "esta mierda";
-	ingresar _esta_ como cadena con_valor "esta mierda";
+	ingresar _nombredeesta_, _otro_, _aver_ como cadena con_valor "esta cosa";
+	ingresar _indice2_ como cadena con_valor "esta cosa";
+	ingresar _esta_ como cadena con_valor "esta cosa";
 	_nombreesta_ -> 1+1;
 	_esta_ -> -_nombredeesta_+_esta_;
 	
 
 	si _x_ mayor 1 entonces
 		_nombreesta_ -> 1+1;
-	o_si _x_ menor 1
+	o_si _x_ menor 1 entonces
 		_nombreesta_ -> 1+2;
 	de_lo_contrario
 		_nombreesta_ -> 1+3;
@@ -142,3 +209,268 @@ funcion _esteMetodo_ numero con_parametros (_A_ cadena, _numero_ numero, _otro_ 
 		fin_para
 		retornar 1;
 fin_funcion
+
+
+inicio 
+	ingresar _nombredeesta_, _otro_, _aver_ como cadena con_valor "esta cosa";
+	ingresar _indice2_ como cadena con_valor "esta cosa";
+	ingresar _esta_ como cadena con_valor "esta cosa";
+	ingresar _flotante_ como numero con_valor 3 potencia[55];
+	_nombreesta1_,_variable2_,_variable3_ -> 1+1;
+	_esta1_ -> _nombredeesta2_+_esta3_;
+	_otra_-> 56;
+	_flotante_ -> 3 potencia[55];
+	_flotante2_ -> (1+3) + (2+5+10+22 )potencia [_X_] * 13 + (2+3*5*7) potencia[13/5+6*2];
+	imprimir "holamundo";
+	imprimir (1+3) + (2+5+10+22 )potencia [_X_] * 13 + (2+3*5*7) potencia[13/5+6*2];
+	
+	segun _A_ hacer
+		¿ "<valor 1>" ? entonces
+			_B_->"valoor 1111";
+		¿ "<valor 2>" ? entonces
+			_B_->"valoooor 2";
+		¿ "<valor 3>" ? entonces
+			_B_->"valor   3";
+		de_lo_contrario entonces	
+			_B_->"holamundo";
+	fin_segun
+
+	si _x_ mayor 1 entonces
+		_nombreesta_ -> 1+1;
+		_nombreesta_ -> 1+2;
+		_nombreesta_ -> 1+23;
+		_nombreesta_ -> 1+24;
+		si (_x_ mayor 1) and (_y_ menor 2) entonces
+			_nombreesta_ -> 1+1;
+			_nombreesta_ -> 1+2;
+			_nombreesta_ -> 1+23;
+			_nombreesta_ -> 1+24;
+
+		fin_si
+	o_si _z_ es_igual 0 entonces
+		si (_x_ mayor 1) and (_y_ menor 2) entonces
+			_nombreesta_ -> 1+1;
+			_nombreesta_ -> 1+2;
+			_nombreesta_ -> 1+23;
+			_nombreesta_ -> 1+24;
+			_flotante2_ -> (1+3) + (2+5+10+22 )potencia [_X_] * 13 + (2+3*5*7) potencia[13/5+6*2];
+
+		fin_si
+	de_lo_contrario
+		si (_x_ mayor 1) and (_y_ menor 2) entonces
+			_nombreesta_ -> 1+1;
+			_nombreesta_ -> 1+2;
+			_nombreesta_ -> 1+23;
+			_nombreesta_ -> 1+24;
+			segun _A_ hacer
+				¿ "<valor 1>" ? entonces
+					_B_->"valoor 1111";
+				¿ "<valor 2>" ? entonces
+					_B_->"valoooor 2";
+				¿ "<valor 3>" ? entonces
+					_B_->"valor   3";
+				de_lo_contrario entonces	
+					_B_->"holamundo";
+					_flotante2_ -> (1+3) + (2+5+10+22 )potencia [_X_] * 13 + (2+3*5*7) potencia[13/5+6*2];
+			fin_segun
+
+		fin_si
+	fin_si
+fin
+
+
+
+inicio
+/////inicio de la traduccion
+
+ingresar _variable1_ como Numero con_valor 5;
+ingresar _v1_, _v2_, _v3_ como Cadena con_valor  "esta es una cadena";
+
+_v1_ -> "esta es la cadena numero 1";
+_v2_, _v3_ -> "estas cadenas deben ser diferentes";
+
+imprimir_nl (_v3_);
+
+si _v1_ es_igual _v2_ entonces
+	imprimir_nl "Al parecer no funciona la asignacion";
+	mientras not _variable1_ mayor_o_igual 5*5+8/2 hacer
+		imprimir _variable1_;
+		_variable1_ -> _variable1_ + 1;
+	fin_mientras
+fin_si
+
+
+ingresar _varB_ como Boolean con_valor falso; //tomar como "falso" o "verdadero" los valores booleanos
+
+si _varB_ entonces
+	imprimir_nl "Estas definiendo bien los valores";
+	ingresar _varaux_ como Numero con_valor _variable1_ mod 2;
+	segun _varaux_ hacer
+		¿0? entonces
+			imprimir "el valor es mayor a 0 y menos a 2";
+		¿2? entonces
+			imprimir "el valor es mayor a 2";
+	fin_segun
+fin_si
+
+ejecutar _metodo_1_();
+
+/*Ahora empezamos con las funciones y procedimientos*/
+
+metodo _potenciaManual_ con_parametros (_base_ Numero, _exponenete_ Numero)
+	ingresar _i_ como Numero con_valor 0;
+	ingresar _acumulado_ como Numero con_valor 0;
+	para _i_->0 hasta 1 hacer
+		_acumulado_ -> _acumulado_ + _acumulado_;
+	fin_para	
+	imprimir _acumulado_;
+	imprimir_nl " Esta es la potencia Manual";	
+fin_metodo
+
+funcion _potenciaFuncion_ Numero con_parametros (_base_ Numero, _exponente_ Numero) 
+	ingresar _potencia_ como Numero con_valor _base_ potencia[ _exponente_];
+	retornar _potencia_;
+fin_funcion
+
+metodo _metodo_1_
+	imprimir_nl "estamos entrando al metodo 1";	
+	ejecutar _potenciaManual_(3*1+4/2, 3+2);
+
+	imprimir_nl " Esta es la potencia Funcion";
+fin_metodo
+
+fin
+
+inicio
+/////inicio de la traduccion
+
+ingresar _variable1_ como Numero con_valor 5;
+ingresar _v1_, _v2_, _v3_ como Cadena con_valor  "esta es una cadena";
+
+_v1_ -> "esta es la cadena numero 1";
+_v2_, _v3_ -> "estas cadenas deben ser diferentes";
+
+imprimir_nl (_v3_);
+
+si _v1_ es_igual _v2_ entonces
+	imprimir_nl "Al parecer no funciona la asignacion";
+	ingresar _potencia_ como Numero con_valor _base_ potencia[ _exponente_];
+	mientras not _variable1_ mayor_o_igual 5*5+8/2 hacer
+		imprimir _variable1_;
+		_variable1_ -> _variable1_ + 1;
+	fin_mientras
+
+fin_si
+
+
+ingresar _varB_ como Boolean con_valor falso; //tomar como "falso" o "verdadero" los valores booleanos
+
+si _varB_ entonces
+	imprimir_nl "Estas definiendo bien los valores";
+	ingresar _varaux_, _var_ como Numero con_valor _variable1_ mod 2 + _variable3_;
+	segun _varaux_ hacer
+		¿0? entonces
+			imprimir "el valor es mayor a 0 y menos a 2";
+		¿2? entonces
+			imprimir "el valor es mayor a 2";
+		de_lo_contrario entonces
+			imprimir "nada";
+	fin_segun
+fin_si
+
+ejecutar _metodo_1_();
+
+/*Ahora empezamos con las funciones y procedimientos*/
+
+metodo _potenciaManual_ con_parametros (_base_ Numero, _exponenete_ Numero)
+	ingresar _i_ como Numero con_valor 0;
+	ingresar _acumulado_ como Numero con_valor 0;
+	para _i_->0 hasta 1 hacer
+		_acumulado_ -> _acumulado_ + _acumulado_;
+	fin_para	
+	imprimir _acumulado_;
+	imprimir_nl " Esta es la potencia Manual";	
+fin_metodo
+
+funcion _potenciaFuncion_ Numero con_parametros (_base_ Numero, _exponente_ Numero) 
+	ingresar _potencia_ como Numero con_valor _base_ potencia[ _exponente_];
+	retornar _potencia_;
+fin_funcion
+
+metodo _metodo_1_
+	imprimir_nl "estamos entrando al metodo 1";	
+	ejecutar _potenciaManual_(3*1+4/2, 3+2);
+
+	imprimir_nl " Esta es la potencia Funcion";
+fin_metodo
+
+fin
+
+inicio
+/////inicio de la traduccion
+
+ingresar _variable1_ como Numero con_valor 5;
+ingresar _v1_, _v2_, _v3_ como Cadena con_valor  "esta es una cadena";
+
+_v1_ -> "esta es la cadena numero 1";
+_v2_, _v3_ -> "estas cadenas deben ser diferentes";
+	ingresar _potencia_, _otrapotencia_ como Numero con_valor _base_ potencia[ _exponente_];
+ejecutar _esteMetodote_(_unaVariable_, _jajajaQuePedooo_, "esta es una cadenooota");
+imprimir_nl ejecutar _esto_(_otrometodo_, "Ahhh perro trais el ocnitris");
+
+si _v1_ es_igual _v2_ entonces
+	ingresar _potencia_, _otrapotencia_ como Numero con_valor _base_ potencia[ _exponente_];
+	imprimir_nl "Al parecer no funciona la asignacion";
+	ejecutar _esteMetodote_(_unaVariable_, _jajajaQuePedooo_, "esta es una cadenooota");
+	imprimir_nl ejecutar _esto_(_otrometodo_, "Ahhh perro trais el ocnitris");
+	ingresar _potencia_ como Numero con_valor _base_ potencia[ _exponente_];
+	mientras not _variable1_ mayor_o_igual 5*5+8/2 hacer
+		imprimir _variable1_;
+		_variable1_ -> _variable1_ + 1;
+	fin_mientras
+
+fin_si
+
+
+ingresar _varB_ como Boolean con_valor falso; //tomar como "falso" o "verdadero" los valores booleanos
+
+si _varB_ entonces
+	imprimir_nl "Estas definiendo bien los valores";
+	ingresar _varaux_, _var_ como Numero con_valor _variable1_ mod 2 + _variable3_;
+	segun _varaux_ hacer
+		¿0? entonces
+			ingresar _potencia_ como Numero con_valor _base_ potencia[ _exponente_];
+			imprimir "el valor es mayor a 0 y menos a 2";
+			ingresar _potencia_ como Numero con_valor _base_ potencia[ _exponente_];
+		¿2? entonces
+			imprimir "el valor es mayor a 2";
+	fin_segun
+fin_si
+
+ejecutar _metodo_1_();
+
+/*Ahora empezamos con las funciones y procedimientos*/
+
+metodo _potenciaManual_ con_parametros (_base_ Numero, _exponenete_ Numero)
+	ingresar _i_ como Numero con_valor 0;
+	ingresar _acumulado_ como Numero con_valor 0;
+	para _i_->0 hasta 1 hacer
+		_acumulado_ -> _acumulado_ + _acumulado_;
+	fin_para	
+	imprimir _acumulado_;
+	imprimir_nl " Esta es la potencia Manual";	
+fin_metodo
+
+funcion _potenciaFuncion_ Numero con_parametros (_base_ Numero, _exponente_ Numero) 
+	ingresar _potencia_, _otrapotencia_ como Numero con_valor _base_ potencia[ _exponente_];
+	retornar _potencia_;
+fin_funcion
+
+metodo _metodo_1_
+	imprimir_nl "estamos entrando al metodo 1";	
+	ejecutar _potenciaManual_(3*1+4/2, 3+2);
+
+	imprimir_nl " Esta es la potencia Funcion";
+fin_metodo
+
+fin
