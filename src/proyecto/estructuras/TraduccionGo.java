@@ -6,7 +6,7 @@ package proyecto.estructuras;
 
 import java.util.ArrayList;
 
-public class Traduccion {
+public class TraduccionGo {
     
     public boolean lenguaje; //verdadero golang, falso python 
     public static int ntabulaciones=0;
@@ -39,10 +39,10 @@ public class Traduccion {
     public static String decFor="";
     public static ArrayList<String> listaAsign= new ArrayList<String>();
     public static ArrayList<String> importaciones=new ArrayList<String>();
-    public Traduccion() {
+    public TraduccionGo() {
     }
 
-    public Traduccion(boolean lenguaje, String cadena) {
+    public TraduccionGo(boolean lenguaje, String cadena) {
         this.lenguaje = lenguaje;
     }
     
