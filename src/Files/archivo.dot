@@ -1,0 +1,36 @@
+digraph G{
+node[shape="box" shape="record"]
+nodo0[label ="GLOBAL"]; nodo0->nodo0;
+nodo1[label ="T_inicio"]; nodo0->nodo1;
+nodo2[label ="inicio"]; nodo1->nodo2;
+nodo3[label ="Instrucciones"]; nodo0->nodo3;
+nodo4[label ="Instrucciones"]; nodo3->nodo4;
+nodo5[label ="CICLO_REPETIR"]; nodo4->nodo5;
+nodo6[label ="T_repetir"]; nodo5->nodo6;
+nodo7[label ="repetir"]; nodo6->nodo7;
+nodo8[label ="T_Instrucciones"]; nodo5->nodo8;
+nodo9[label ="Instrucciones"]; nodo8->nodo9;
+nodo10[label ="IMPRIMIR"]; nodo9->nodo10;
+nodo11[label ="T_imprimir"]; nodo10->nodo11;
+nodo12[label ="imprimir"]; nodo11->nodo12;
+nodo13[label ="T_expresion"]; nodo10->nodo13;
+nodo14[label ="T_expresion"]; nodo13->nodo14;
+nodo15[label ="holamundo"]; nodo14->nodo15;
+nodo16[label ="T_;"]; nodo10->nodo16;
+nodo17[label =";"]; nodo16->nodo17;
+nodo18[label ="T_hasta_que"]; nodo5->nodo18;
+nodo19[label ="hasta_que"]; nodo18->nodo19;
+nodo20[label ="T_expresion"]; nodo5->nodo20;
+nodo21[label ="T_expresion"]; nodo20->nodo21;
+nodo22[label ="T_expresion"]; nodo21->nodo22;
+nodo23[label ="T_identificador"]; nodo22->nodo23;
+nodo24[label ="_x_"]; nodo23->nodo24;
+nodo25[label ="T_mayor"]; nodo20->nodo25;
+nodo26[label ="mayor"]; nodo25->nodo26;
+nodo27[label ="T_expresion"]; nodo20->nodo27;
+nodo28[label ="T_expresion"]; nodo27->nodo28;
+nodo29[label ="5"]; nodo28->nodo29;
+nodo30[label ="T_fin"]; nodo0->nodo30;
+nodo31[label ="fin"]; nodo30->nodo31;
+
+}

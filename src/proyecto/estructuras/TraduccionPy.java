@@ -24,7 +24,8 @@ public class TraduccionPy {
     public static boolean flagPrint = false;
     public static boolean flagPrintln = false;
     public static boolean flagPotencia = false;
-    public static boolean flagSwitch = false;
+    public static boolean flagSwitch = false;   
+    public static boolean flagSegun = false;    
     public static boolean flagHacer = false;
     public static boolean flagFor = false;
     public static boolean flagWhile = false;
@@ -41,6 +42,7 @@ public class TraduccionPy {
     public static int ejecuciones =0;
     public static boolean incre = false;
     public static String decFor="";
+    public static ArrayList<String> listaSwitch= new ArrayList<String>();
     public static ArrayList<String> listaAsign= new ArrayList<String>();
     public static ArrayList<String> importaciones=new ArrayList<String>();
     public TraduccionPy() {
@@ -50,7 +52,7 @@ public class TraduccionPy {
         this.lenguaje = lenguaje;
     }
     
-    public String Golang(ArrayList<NodoAST> nodo){
+    public String Python(ArrayList<NodoAST> nodo){
         String cadena="";
         nombres=0;
         boolean metodo = false;
@@ -60,14 +62,14 @@ public class TraduccionPy {
             if (ntabulaciones!=0) {
                 
             }
-            cadena+=enumGolang(nodo.get(i), nodo, i, metodo);
+            cadena+=enumPython(nodo.get(i), nodo, i, metodo);
         }
         String encabezado=agregarImportaciones();
 
-        return encabezado+cadena;
+        return cadena;
     }
     
-    public String enumGolang(NodoAST nodo, ArrayList<NodoAST> padre, int index, boolean metodo){
+    public String enumPython(NodoAST nodo, ArrayList<NodoAST> padre, int index, boolean metodo){
         String tabulaciones="";
         String token = nodo.getToken();
         NodoAST nodito;
@@ -77,17 +79,18 @@ public class TraduccionPy {
         int[] indicepot=new int[3];
         boolean estaEnPot=false;
         ArrayList<int[]> indices = new ArrayList<int[]>();
+        padre.get(index).setToken(padre.get(index).getToken().toLowerCase());
         switch(token.toLowerCase()){
             case "inicio":
                 flagMain=true;
                 
-                return "func main (){\n";
+                return "def main():\n";
             case "fin":
                 if (!flagMain) {
                     return "";
                 }
                 flagMain=false;
-                return Repetir(padre,index)+"\n}";
+                return Repetir(padre,index)+"\n";
             case "ejecutar":
                 if (flagEjecutar) {
                 }else{
@@ -100,31 +103,31 @@ public class TraduccionPy {
             case "ingresar":
                 flagEjecutar = false;
                 flagIngresar=true;
-                return Repetir(padre,index)+"\tvar ";
+                return Repetir(padre,index)+"\t";
             case "funcion":
                 nombres=0;
                 flagFuncion=true;
                 if (flagMain) {
                     flagMain=false;
-                    return "\n}\nfunc ";    
+                    return "\n\ndef ";    
                 }
-                return Repetir(padre,index)+"func ";    
+                return Repetir(padre,index)+"def ";    
             case "metodo":
                 nombres=0;
                 flagMetodo=true;
                 if (flagMain) {
                     flagMain=false;
-                    return "\n}\nfunc ";    
+                    return "\n\ndef ";    
                 }
-                return Repetir(padre,index)+"func ";
+                return Repetir(padre,index)+"def ";
             case "fin_funcion":
                 flagFuncion=false;
                 flagNomFunc=false;
-                return Repetir(padre,index)+"\n}\n";    
+                return Repetir(padre,index)+"\n\n";    
             case "fin_metodo":
                 flagMetodo=false;
                 flagNomFunc=false;
-                return Repetir(padre,index)+"\n}\n";
+                return Repetir(padre,index)+"\n\n";
             case "con_parametros":
                 flagConParametros = true;
                 flagEjecutar=false;
@@ -133,26 +136,26 @@ public class TraduccionPy {
                 if (flagConParametros) {
                     nombres = 0;
                     flagConParametros = false;
-                    return ") "+tipoFunc+"{\n";
+                    return ") "+tipoFunc+"\n";
                 }
                 return "";    
             case "si":    
                 flagIf = true;
                 flagEjecutar=false;
                 ntabulaciones++;
-                return Repetir(padre,index)+"\tif (";
+                return Repetir(padre,index)+"\tif ";
             case "o_si":    
                 flagElIf = true;
                 flagEjecutar=false;
-                return Repetir(padre,index)+"\n"+tabulacion()+"}else if (";
+                return Repetir(padre,index)+"\n"+tabulacion()+"elif ";
             case "de_lo_contrario":    
                 if (flagHacer) {
-                    return "\n"+tabulacion()+"default: \n\t";
+                    return Repetir(padre,index)+"\n"+tabulacion()+"else";
                 }
-                return Repetir(padre,index)+"\n"+tabulacion()+"}else {\n\t";
+                return Repetir(padre,index)+"\n"+tabulacion()+"else: \n\t";
             case "fin_si":
                 ntabulaciones--;
-                return Repetir(padre,index)+"\n\t"+tabulacion()+"}\n";
+                return Repetir(padre,index)+"\n\t"+tabulacion()+"\n";
             case "entonces":    
                 if (flagIf) {
                      int j=0;
@@ -180,7 +183,7 @@ public class TraduccionPy {
                             if (i>=indicepot[0]&&i<indicepot[2]) {
                                 expresionAux+=conector(padre.get(i));
                             }else if (i==indicepot[2]) {
-                                expresion+=conector(padre.get(i))+expresionAux+"),float64(";
+                                expresion+=conector(padre.get(i))+expresionAux+")**(";
                                 expresionAux="";
                             }else if (i>indicepot[2]&&i<=indicepot[1]) {
                                 expresionAux+=conector(padre.get(i));
@@ -222,7 +225,7 @@ public class TraduccionPy {
                             if (i>=indicepot[0]&&i<indicepot[2]) {
                                 expresionAux+=conector(padre.get(i));
                             }else if (i==indicepot[2]) {
-                                expresion+=conector(padre.get(i))+expresionAux+"),float64(";
+                                expresion+=conector(padre.get(i))+expresionAux+")**(";
                                 expresionAux="";
                             }else if (i>indicepot[2]&&i<=indicepot[1]) {
                                 expresionAux+=conector(padre.get(i));
@@ -238,7 +241,14 @@ public class TraduccionPy {
                         }
                     } 
                 }
-                String retorno = expresion+"){ \n"+tabulacion();
+                String retorno= "";
+                if (padre.get(index-1).getToken().equals("de_lo_contrario")) {
+                     retorno = expresion+"\n"+tabulacion();
+
+                }else{
+                     retorno = expresion+":\n"+tabulacion();
+
+                }
                 
                 if (flagSwitch||flagHacer) {
                     int j=0;
@@ -266,7 +276,7 @@ public class TraduccionPy {
                             if (i>=indicepot[0]&&i<indicepot[2]) {
                                 expresionAux+=conector(padre.get(i));
                             }else if (i==indicepot[2]) {
-                                expresion+=conector(padre.get(i))+expresionAux+"),float64(";
+                                expresion+=conector(padre.get(i))+expresionAux+")**(";
                                 expresionAux="";
                             }else if (i>indicepot[2]&&i<=indicepot[1]) {
                                 expresionAux+=conector(padre.get(i));
@@ -295,9 +305,9 @@ public class TraduccionPy {
                 return retorno;
             case "segun":
                 flagEjecutar=false;
-                ntabulaciones++;
                 flagSwitch=true;
-                return Repetir(padre,index)+"\tswitch ";    
+                flagSegun = true;
+                return " ";    //se maneja como if
             case "incremental":
                 incre = true;
                 return "";
@@ -333,7 +343,7 @@ public class TraduccionPy {
                             if (i>=indicepot[0]&&i<indicepot[2]) {
                                 expresionAux+=conector(padre.get(i));
                             }else if (i==indicepot[2]) {
-                                expresion+=conector(padre.get(i))+expresionAux+"),float64(";
+                                expresion+=conector(padre.get(i))+expresionAux+")**(";
                                 expresionAux="";
                             }else if (i>indicepot[2]&&i<=indicepot[1]) {
                                 expresionAux+=conector(padre.get(i));
@@ -359,7 +369,7 @@ public class TraduccionPy {
                     incre=false;
                     flagFor=false;
                     flagHacer=false;
-                    return expresion+"{ \n"+tabulacion();
+                    return expresion+" \n"+tabulacion();
                 }
                 if (flagWhile) {
                     int j=0;
@@ -387,7 +397,7 @@ public class TraduccionPy {
                             if (i>=indicepot[0]&&i<indicepot[2]) {
                                 expresionAux+=conector(padre.get(i));
                             }else if (i==indicepot[2]) {
-                                expresion+=conector(padre.get(i))+expresionAux+"),float64(";
+                                expresion+=conector(padre.get(i))+expresionAux+")**(";
                                 expresionAux="";
                             }else if (i>indicepot[2]&&i<=indicepot[1]) {
                                 expresionAux+=conector(padre.get(i));
@@ -404,22 +414,22 @@ public class TraduccionPy {
                     } 
                     flagHacer=false;
                     flagWhile=false;
-                    return "\n\t"+tabulacion()+"if("+expresion+"){\n\t"+tabulacion()+"break\n"+tabulacion()+"\t}\n"+tabulacion();
+                    return "("+expresion+"):\t\n"+tabulacion();
                 }
-                return expresion+"{ \n";
+                return expresion+" \n";
             
             case "fin_segun":
                 ntabulaciones--;
-                ntabulaciones--;
-                return Repetir(padre,index)+"\n\t"+tabulacion()+"}\n";
+                listaSwitch.remove(listaSwitch.size()-1);
+                return Repetir(padre,index)+"\n\t"+tabulacion()+"\n";
             case "¿":
-                
+                flagHacer=true;
                 if (padre.get(index-1).getToken().equals("hacer")) {
                     ntabulaciones++;
-                    return tabulacion()+"case ";
+                    return tabulacion()+"if "+listaSwitch.get(listaSwitch.size()-1)+"==";
                     
                 }
-                return "\n"+tabulacion()+"case ";
+                return "\n"+tabulacion()+"elif "+listaSwitch.get(listaSwitch.size()-1)+"==";
             case "?":
                 return "";
             case "para":
@@ -431,20 +441,21 @@ public class TraduccionPy {
             case "fin_para":
                 flagHacer=false;
                 ntabulaciones--;
-                return Repetir(padre,index)+"\n\t"+tabulacion()+"}\n";
+                return Repetir(padre,index)+"\n\t"+tabulacion()+"\n";
             case "mientras":
                 flagEjecutar=false;
                 flagWhile = true;
                 ntabulaciones++;
-                return Repetir(padre,index)+"\tfor true {";
+                return Repetir(padre,index)+"\twhile ";
             case "fin_mientras":
                 flagHacer=false;
+                flagWhile=false;
                 ntabulaciones--;
-                return Repetir(padre,index)+"\n\t"+tabulacion()+"}";
+                return Repetir(padre,index)+"\n"+tabulacion();
             case "repetir":
                 flagEjecutar=false;
                 ntabulaciones++;
-                return Repetir(padre,index)+"\tfor true {\n"+tabulacion();    
+                return Repetir(padre,index)+"\twhile true \n"+tabulacion();    
             case "hasta_que":
                 flagEjecutar=false;
                 flagDoWhile = true;
@@ -454,36 +465,36 @@ public class TraduccionPy {
                 
                 
                 
-                return Repetir(padre,index)+"";
+                return "";
             case "imprimir":
                 flagEjecutar=false;
                 flagPrint=true;
                 if (!importaciones.contains("\"fmt\"")) {
                    importaciones.add("\"fmt\"");
                 }
-                return Repetir(padre,index)+"\tfmt.Print(";
+                return Repetir(padre,index)+"\tprint(";
             case "imprimir_nl":  
                 flagEjecutar=false;
                 flagPrintln=true;
                 if (!importaciones.contains("\"fmt\"")) {
                    importaciones.add("\"fmt\"");
                 }
-                return Repetir(padre,index)+"\tfmt.Println(";
+                return Repetir(padre,index)+"\tprint(";
             case "cadena":
                 if (padre.get(index-2).getToken().equals("funcion")) {
-                    tipoFunc="string";
+                    tipoFunc="str";
                     return "";
                 }
-                return "string ";
+                return "str ";
             case "caracter":
                 if (padre.get(index-2).getToken().equals("funcion")) {
-                    tipoFunc="byte";
+                    tipoFunc="str";
                     return "";
                 }
                 return "byte ";
             case "boolean":
                 if (padre.get(index-2).getToken().equals("funcion")) {
-                    tipoFunc="boolean";
+                    tipoFunc="bool";
                     return "";
                 }
                 return "bool ";
@@ -497,7 +508,7 @@ public class TraduccionPy {
                         break;
                     }
                     if ((padre.get(i+1).getToken().equals(";")&&padre.get(i).getToken().contains("."))||(padre.get(i).getToken().equals("potencia"))) {
-                        return "float64 ";
+                        return "float ";
                     }
                     if (padre.get(i).getToken().equals(";"))break;
                 }
@@ -547,7 +558,7 @@ public class TraduccionPy {
                             if (i>=indicepot[0]&&i<indicepot[2]) {
                                 expresionAux+=conector(padre.get(i));
                             }else if (i==indicepot[2]) {
-                                expresion+=conector(padre.get(i))+expresionAux+"),float64(";
+                                expresion+=conector(padre.get(i))+expresionAux+")**(";
                                 expresionAux="";
                             }else if (i>indicepot[2]&&i<=indicepot[1]) {
                                 expresionAux+=conector(padre.get(i));
@@ -593,7 +604,7 @@ public class TraduccionPy {
                             if (i>=indicepot[0]&&i<indicepot[2]) {
                                 expresionAux+=conector(padre.get(i));
                             }else if (i==indicepot[2]) {
-                                expresion+=conector(padre.get(i))+expresionAux+"),float64(";
+                                expresion+=conector(padre.get(i))+expresionAux+")**(";
                                 expresionAux="";
                             }else if (i>indicepot[2]&&i<=indicepot[1]) {
                                 expresionAux+=conector(padre.get(i));
@@ -640,7 +651,7 @@ public class TraduccionPy {
                             if (i>=indicepot[0]&&i<indicepot[2]) {
                                 expresionAux+=conector(padre.get(i));
                             }else if (i==indicepot[2]) {
-                                expresion+=conector(padre.get(i))+expresionAux+"),float64(";
+                                expresion+=conector(padre.get(i))+expresionAux+")**(";
                                 expresionAux="";
                             }else if (i>indicepot[2]&&i<=indicepot[1]) {
                                 expresionAux+=conector(padre.get(i));
@@ -698,7 +709,7 @@ public class TraduccionPy {
                             if (i>=indicepot[0]&&i<indicepot[2]) {
                                 expresionAux+=conector(padre.get(i));
                             }else if (i==indicepot[2]) {
-                                cadena+=conector(padre.get(i))+expresionAux+"),float64(";
+                                cadena+=conector(padre.get(i))+expresionAux+")**(";
                                 expresionAux="";
                             }else if (i>indicepot[2]&&i<=indicepot[1]) {
                                 expresionAux+=conector(padre.get(i));
@@ -754,7 +765,7 @@ public class TraduccionPy {
                             if (i>=indicepot[0]&&i<indicepot[2]) {
                                 expresionAux+=conector(padre.get(i));
                             }else if (i==indicepot[2]) {
-                                cadena+=conector(padre.get(i))+expresionAux+"),float64(";
+                                cadena+=conector(padre.get(i))+expresionAux+")**(";
                                 expresionAux="";
                             }else if (i>indicepot[2]&&i<=indicepot[1]) {
                                 expresionAux+=conector(padre.get(i));
@@ -810,7 +821,7 @@ public class TraduccionPy {
                             if (i>=indicepot[0]&&i<indicepot[2]) {
                                 expresionAux+=conector(padre.get(i));
                             }else if (i==indicepot[2]) {
-                                expresion+=conector(padre.get(i))+expresionAux+"),float64(";
+                                expresion+=conector(padre.get(i))+expresionAux+")**(";
                                 expresionAux="";
                             }else if (i>indicepot[2]&&i<=indicepot[1]) {
                                 expresionAux+=conector(padre.get(i));
@@ -868,7 +879,11 @@ public class TraduccionPy {
                             else if(padre.get(i).getToken().equals("->"))break;
                         }
                     }
-                    
+                    if (flagSegun) {
+                        listaSwitch.add(token);
+                        flagSegun =false;
+                        return"";
+                    }
                     if (flagFuncion&&!flagNomFunc||flagMetodo&&!flagNomFunc) {
                         flagNomFunc=true;
                         if (padre.get(index+1).getToken().equals("con_parametros")||padre.get(index+2).getToken().equals("con_parametros")) {
@@ -922,7 +937,7 @@ public class TraduccionPy {
         ArrayList<int[]> indices = new ArrayList<int[]>();
 
         if (flagDoWhile) {
-                    int j=0;
+                     int j=0;
                     while(!padre.get(index-j).getToken().equals("hasta_que")){
                         if (padre.get(index-j).getToken().equals("potencia")) {
                             indicepot=indicePotencia(padre,index-j);
@@ -947,7 +962,7 @@ public class TraduccionPy {
                             if (i>=indicepot[0]&&i<indicepot[2]) {
                                 expresionAux+=conector(padre.get(i));
                             }else if (i==indicepot[2]) {
-                                expresion+=conector(padre.get(i))+expresionAux+"),float64(";
+                                expresion+=conector(padre.get(i))+expresionAux+")**(";
                                 expresionAux="";
                             }else if (i>indicepot[2]&&i<=indicepot[1]) {
                                 expresionAux+=conector(padre.get(i));
@@ -961,14 +976,14 @@ public class TraduccionPy {
                         }else{
                             expresion+=conector(padre.get(i));
                         }
-                    } 
+                    }
                     flagDoWhile=false;
                     flagHasta=false;
-                    cadena= "\n\t"+tabulacion()+"if("+expresion+"){\n\t"+tabulacion()+"\tbreak\n"+tabulacion()+"\t}\n"+tabulacion()+"}";
+                    cadena= "\n\t"+tabulacion()+"if "+expresion+": \n\t"+tabulacion()+"\tbreak"+"\t\n"+tabulacion();
                     ntabulaciones--;
 
                 }
-                return cadena;
+        return cadena;
     }
     
     public String tabulacion(){
@@ -1004,13 +1019,13 @@ public class TraduccionPy {
                                 expresion+="!=";
                                 break;
                             case "or":
-                                expresion+="||";
+                                expresion+="or";
                                 break;
                             case "and":
-                                expresion+="&&";
+                                expresion+="and";
                                 break;
                             case "not":
-                                expresion+="!";
+                                expresion+="not";
                                 break;
                             case "verdadero":
                                 expresion+="true";
@@ -1019,7 +1034,7 @@ public class TraduccionPy {
                                 expresion+="false";
                                 break;
                             case "potencia":
-                                expresion+="math.Pow(float64(";
+                                expresion+="(";
                                 if (!importaciones.contains("\"math\"")) {
                                     importaciones.add("\"math\"");
                                 }
@@ -1027,7 +1042,7 @@ public class TraduccionPy {
                             case "[":
                                 break;
                             case"]":
-                                expresion+="))";
+                                expresion+=")";
                                 flagPotencia = false;
                                 break;
                             case "?":
@@ -1110,7 +1125,7 @@ public class TraduccionPy {
         boolean metodo = false;
         int indice=0;
         if (nodo.Nodos==null) {
-            //cadena =  enumGolang(nodo, padre, index, metodo);
+            //cadena =  enumPython(nodo, padre, index, metodo);
         }else{
             while(nodo.Nodos.size()>indice){
                 cadena += recorrerNodos(nodo.Nodos.get(indice), padre, indice);

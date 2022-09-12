@@ -4,12 +4,22 @@
  */
 package com.bryan.ui;
 
+import java.awt.Desktop;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.io.StringReader;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import proyecto.analizadores.*;
 import proyecto.estructuras.ArbolAST;
 import proyecto.estructuras.NodoAST;
 import proyecto.estructuras.TraduccionGo;
+import proyecto.estructuras.TraduccionPy;
 import proyecto.main.*;
 
 /**
@@ -58,6 +68,8 @@ public class principal extends javax.swing.JFrame {
         jMenuItem3 = new javax.swing.JMenuItem();
         jMenuItem1 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
+        jMenu3 = new javax.swing.JMenu();
+        jMenuItem5 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(102, 102, 102));
@@ -169,6 +181,18 @@ public class principal extends javax.swing.JFrame {
         jMenu2.setText("Edit");
         jMenuBar1.add(jMenu2);
 
+        jMenu3.setText("Reportes");
+
+        jMenuItem5.setText("Arbol AST");
+        jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem5ActionPerformed(evt);
+            }
+        });
+        jMenu3.add(jMenuItem5);
+
+        jMenuBar1.add(jMenu3);
+
         setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -228,34 +252,95 @@ public class principal extends javax.swing.JFrame {
         System.out.println("--------------------------------------");
         
         System.out.println(Datos.arbol.imprimir_nodo(Datos.arbol.raiz));
+        
         if (lenguaje) {
+            TraduccionPy traduccion = new TraduccionPy();
+            ArrayList<NodoAST> lista= new ArrayList<NodoAST>();
+            Datos.arbol.getNodos(Datos.arbol.raiz, lista);
+            for (int i = 0; i < lista.size(); i++) {
+                System.out.println(lista.get(i).getToken());
+            }
+            jTextArea2.setText(traduccion.Python(lista));
+            for (int i = 0; i < traduccion.importaciones.size(); i++) {
+                System.out.println(traduccion.importaciones.get(i));
+            }
             
         }else{
             TraduccionGo traduccion = new TraduccionGo();
             ArrayList<NodoAST> lista= new ArrayList<NodoAST>();
             Datos.arbol.getNodos(Datos.arbol.raiz, lista);
             for (int i = 0; i < lista.size(); i++) {
-               System.out.println(lista.get(i).getToken());
+                System.out.println(lista.get(i).getToken());
             }
             jTextArea2.setText(traduccion.Golang(lista));
             for (int i = 0; i < traduccion.importaciones.size(); i++) {
                 System.out.println(traduccion.importaciones.get(i));
             }
+            Datos.arbol.setIdNodos(Datos.arbol.raiz);
+            System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+            System.out.println(Datos.arbol.imprimir_nodo(Datos.arbol.raiz));
+            System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+            generarDot("archivo");
+            try {
+                crearCmd("archivo", "arbol");
+            } catch (IOException ex) {
+                Logger.getLogger(principal.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         
-        TraduccionGo traduccion = new TraduccionGo();
-        ArrayList<NodoAST> lista= new ArrayList<NodoAST>();
-        Datos.arbol.getNodos(Datos.arbol.raiz, lista);
-        for (int i = 0; i < lista.size(); i++) {
-            System.out.println(lista.get(i).getToken());
-        }
-        jTextArea2.setText(traduccion.Golang(lista));
-        for (int i = 0; i < traduccion.importaciones.size(); i++) {
-            System.out.println(traduccion.importaciones.get(i));
-        }
         
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    
+    public void generarDot(String nombre){
+        FileWriter archivo = null;
+        PrintWriter pw = null;
+        try {
+            archivo = new FileWriter("./src/Files/" + nombre + ".dot");
+            pw = new PrintWriter(archivo);
+            pw.println("digraph G{");
+            pw.println("node[shape=\"box\" shape=\"record\"]");
+            pw.println(Datos.arbol.recorrido(Datos.arbol.raiz));
+            pw.println("}");
+
+
+        } catch (Exception e) {
+            System.out.println("error, no se realizo el archivo");
+        } finally {
+            try {
+                if (null != archivo) {
+                    archivo.close();
+                }
+            } catch (Exception e2) {
+                e2.printStackTrace();
+            }
+        }
+    }
+    
+    public void crearCmd(String nombre, String nombre1) throws FileNotFoundException, IOException{
+        String dir=System.getProperty("user.dir")+"/src/Files";
+        dir.replace('/', '\\');
+        String variable="cd c:\\program files\\graphviz\\bin\n  ";
+        String variable2="dot -Tpdf \""+dir+"\\"+nombre+".dot\" -o \""+dir+"\\"+nombre1+".pdf\"\n  ";        
+        try
+        {
+            PrintWriter comando;
+            FileWriter archivo = new FileWriter("./src/Files/comando"+nombre+".cmd");
+            comando = new PrintWriter(archivo);
+            comando.println(variable);
+            comando.println(variable2);
+            comando.println("exit");
+            comando.close();
+            
+            Runtime rt=Runtime.getRuntime();
+            rt.exec("cmd /c start "+dir+"\\comando"+nombre+".cmd");
+            
+        }catch(IOException e)
+        {
+            
+        }
+    }
+    
     private void jToggleButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton1ActionPerformed
         if (rootPaneCheckingEnabled) {
             lenguaje=!lenguaje;
@@ -268,6 +353,18 @@ public class principal extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_jToggleButton1ActionPerformed
+
+    private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
+        String dir=System.getProperty("user.dir")+"/src/Files/arbol.pdf";    
+        try {
+            File path = new File (dir);
+            Desktop.getDesktop().open(path);
+        }catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        
+        
+    }//GEN-LAST:event_jMenuItem5ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -309,11 +406,13 @@ public class principal extends javax.swing.JFrame {
     private javax.swing.JButton jButton2;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
+    private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;

@@ -8,6 +8,7 @@ public class NodoAST {
     public String token;
     public String tipo;
     public ArrayList<NodoAST> Nodos;
+    public int id;
 
     public NodoAST() {
     }
@@ -47,6 +48,14 @@ public class NodoAST {
 
     public void setNodos(ArrayList Nodos) {
         this.Nodos = Nodos;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getId() {
+        return id;
     }
     
 }

@@ -34,6 +34,8 @@ public class TraduccionGo {
     public static boolean flagEjecutar = false;
     public static boolean flagReturn = false;
     public static boolean flagHasta = false;
+    public static boolean flagCase = false;
+
     public static int ejecuciones =0;
     public static boolean incre = false;
     public static String decFor="";
@@ -72,7 +74,8 @@ public class TraduccionGo {
         String asignacion="";
         int[] indicepot=new int[3];
         boolean estaEnPot=false;
-        ArrayList<int[]> indices = new ArrayList<int[]>();
+        ArrayList<int[]> indices = new ArrayList<int[]>(); 
+        padre.get(index).setToken(padre.get(index).getToken().toLowerCase());
         switch(token.toLowerCase()){
             case "inicio":
                 flagMain=true;
@@ -142,7 +145,8 @@ public class TraduccionGo {
                 flagEjecutar=false;
                 return Repetir(padre,index)+"\n"+tabulacion()+"}else if (";
             case "de_lo_contrario":    
-                if (flagHacer) {
+                if (flagCase) {
+                    flagCase=false;
                     return "\n"+tabulacion()+"default: \n\t";
                 }
                 return Repetir(padre,index)+"\n"+tabulacion()+"}else {\n\t";
@@ -234,7 +238,15 @@ public class TraduccionGo {
                         }
                     } 
                 }
-                String retorno = expresion+"){ \n"+tabulacion();
+                
+                String retorno= "";
+                if (padre.get(index-1).getToken().equals("de_lo_contrario")) {
+                     retorno = expresion+"\n"+tabulacion();
+
+                }else{
+                     retorno = expresion+"){ \n"+tabulacion();
+
+                }
                 
                 if (flagSwitch||flagHacer) {
                     int j=0;
@@ -409,7 +421,8 @@ public class TraduccionGo {
                 ntabulaciones--;
                 return Repetir(padre,index)+"\n\t"+tabulacion()+"}\n";
             case "¿":
-                
+                flagHacer=true;
+                flagCase=true;
                 if (padre.get(index-1).getToken().equals("hacer")) {
                     ntabulaciones++;
                     return tabulacion()+"case ";
@@ -450,7 +463,7 @@ public class TraduccionGo {
                 
                 
                 
-                return Repetir(padre,index)+"";
+                return "";
             case "imprimir":
                 flagEjecutar=false;
                 flagPrint=true;
@@ -842,7 +855,9 @@ public class TraduccionGo {
                             padre.get(index-1).getToken().equals("de_lo_contrario")||
                             padre.get(index-1).getToken().equals("hacer")||
                             flagHasta){//ir agregando el resto de palabras reservadas
-                        flagHacer=false;
+                        if (!flagSwitch) {
+                            flagHacer=false;
+                        }
                         flagAsignacion=true;
                     }else{
                         
