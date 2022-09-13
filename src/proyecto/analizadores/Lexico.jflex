@@ -10,6 +10,7 @@ import java_cup.runtime.*;
 %unicode
 %ignorecase
 
+
 %init{ 
 	yyline = 1; 
 	yychar = 1; 
@@ -20,8 +21,10 @@ blancos = [ \t\r\n]+
 letra = [a-zA-Z]
 digito = [0-9]+
 decimal= [0-9]+"."[0-9]+ 
-caracter = "'"["("|")"|"/"|"!"|"#"|"$"|"&"|"@"|"`"|"<"|"["|"]"|"^"|"_"|"\\"]+"'"
-cadena = (\"([^\"\\\n]|\\.)*\")
+charascii=("'""$""{"{digito}"}""'")
+caracter = "'"(["("|")"|"/"|"!"|"#"|"$"|"&"|"@"|"`"|"<"|"["|"]"|"^"|"_"|"\\"|[a-zA-Z]|[0-9]])"'"
+
+cadena = (\"([^\"\\\n]|\\.|"\n")*\")
 var_identificador = "_"({letra}({letra}|"_"|{digito})*)"_"
 identificador = {letra}({letra}|"_"|{digito})*
 
@@ -68,8 +71,6 @@ cmultilinea = ("/""*"[^\!]*"*""/")
 ")" {return new Symbol(sym.cparentecis,yycolumn,yyline,yytext());}
 "(" {return new Symbol(sym.aparentecis,yycolumn,yyline,yytext());}
 
-"}" {return new Symbol(sym.cllave,yycolumn,yyline,yytext());}
-"{" {return new Symbol(sym.allave,yycolumn,yyline,yytext());}
 "[" {return new Symbol(sym.acorchete,yycolumn,yyline,yytext());}
 "]" {return new Symbol(sym.ccorchete,yycolumn,yyline,yytext());}
 //ESPECIALES
@@ -139,7 +140,10 @@ cmultilinea = ("/""*"[^\!]*"*""/")
 {identificador} {return new Symbol(sym.identificador,yycolumn,yyline,yytext());}
 {digito} {return new Symbol(sym.digito,yycolumn,yyline,yytext());}
 {decimal} {return new Symbol(sym.decimal,yycolumn,yyline,yytext());}
+{charascii} {return new Symbol(sym.carAscii,yycolumn,yyline,yytext());}
+
 {caracter} {return new Symbol(sym.caracter,yycolumn,yyline,yytext());}
+
 {blancos} {/*Se ignoran*/} // Espacios en Blanco
 {comentariolinea} {/*Se ignoran*/}
 {cmultilinea} {/*Se ignoran*/}

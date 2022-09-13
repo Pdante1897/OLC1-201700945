@@ -70,6 +70,7 @@ public class sym {
   public static final int verdadero = 66;
   public static final int error = 1;
   public static final int si = 46;
+  public static final int carAscii = 80;
   public static final int digito = 77;
   public static final int fin_si = 50;
   public static final int esigual = 25;
@@ -168,7 +169,8 @@ public class sym {
   "var_identificador",
   "digito",
   "decimal",
-  "caracter"
+  "caracter",
+  "carAscii"
   };
 }
 
