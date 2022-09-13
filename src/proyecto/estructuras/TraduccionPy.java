@@ -315,6 +315,8 @@ public class TraduccionPy {
                 flagReturn=true;
                 flagEjecutar=false;
                 return Repetir(padre,index)+"\treturn ";
+            case "con":
+                return "";
             case "hacer":
                 flagHacer=true;
                 if (flagFor) {
@@ -357,10 +359,13 @@ public class TraduccionPy {
                         }else{
                             if (incre) {
                                 expresion+=conector(padre.get(i));
+                                if (i+1==index) {
+                                    expresion+="):";
+                                }
                             }else{
                                 expresion+=conector(padre.get(i));
                                 if (i+1==index) {
-                                    expresion+=";"+ decFor+"++";
+                                    expresion+="):";
                                 }
                             }
                             
@@ -1019,13 +1024,13 @@ public class TraduccionPy {
                                 expresion+="!=";
                                 break;
                             case "or":
-                                expresion+="or";
+                                expresion+=" or ";
                                 break;
                             case "and":
-                                expresion+="and";
+                                expresion+=" and ";
                                 break;
                             case "not":
-                                expresion+="not";
+                                expresion+=" not ";
                                 break;
                             case "verdadero":
                                 expresion+="true";
@@ -1057,18 +1062,26 @@ public class TraduccionPy {
                                 break;
                             case "->":
                                 if (flagFor) {
-                                    expresion+=":=";
+                                    expresion+=" in range(";
                                 }
                                 break;
                             case "hasta":
-                                expresion+="; "+decFor+" == ";
+                                expresion+=", ";
                                 break;
                                 
                             case "incremental":
-                                expresion+="; "+decFor+" + ";
+                                //expresion+="; "+decFor+" + ";
+                                break;
+                            case "con":
+                                expresion = ", ";
                                 break;
                             default:
                                 expresion+=padre.getToken()+" ";
+                                if (flagFor && padre.getToken().startsWith("_")&&padre.getToken().endsWith("_")) {
+                                    expresion="";
+                                }else if (flagFor) {
+                                    expresion=padre.getToken();
+                                }
                                 break;
                         }
         return expresion;

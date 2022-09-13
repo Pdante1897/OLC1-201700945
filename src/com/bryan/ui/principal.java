@@ -264,7 +264,9 @@ public class principal extends javax.swing.JFrame {
             for (int i = 0; i < traduccion.importaciones.size(); i++) {
                 System.out.println(traduccion.importaciones.get(i));
             }
-            
+            for (NodoAST hijos:lista) {
+                System.out.println(hijos.getToken());
+            }
         }else{
             TraduccionGo traduccion = new TraduccionGo();
             ArrayList<NodoAST> lista= new ArrayList<NodoAST>();

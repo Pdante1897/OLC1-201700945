@@ -45,7 +45,7 @@ terminal String igual, suma, por, div, disyuncion, potencia, modulo, punto, inte
 terminal String porcentaje, dospuntos, puntocoma, mayor, menor, mayorigual, menorigual, esdiferente, esigual, or, and, not, cllave, allave, cparentecis, aparentecis, salto, comillasimple, comillasd, flecha;
 terminal String tnumero, tcadena, tbooleano, tcaracter, inicio, fin, ingresar, como, con_valor, si, enton, de_lo_contrario, o_si, fin_si, segun, hacer, fin_segun;
 terminal String para, hasta, con, incremental, fin_para, mientras, fin_mientras, hasta_que, repetir, retornar, metodo, fin_metodo, verdadero, falso;
-terminal String funcion, fin_funcion, con_parametros, ejecutar, imprimir, imprimir_nl, cadena, identificador, var_identificador, digito, decimal, caracter;
+terminal String funcion, fin_funcion, con_parametros, ejecutar, imprimir, imprimir_nl, cadena, identificador, var_identificador, digito, decimal, caracter, carAscii;
 
 
 non terminal ArrayList<NodoAST> INICIO, COMIENZO, CODIGO,CONTENIDO,  DECLARACION, TIPODATO, EXPRESIONVAL;
@@ -719,6 +719,17 @@ EXPRESIONVAL ::= digito:var_val{:
                 |caracter:var_val{:
                         NodoAST n_expresion = new NodoAST();                  
                         n_expresion.setToken(var_val);
+                        n_expresion.setTipo("token");
+                        nodo_aux_val = n_expresion;
+                    :}
+                |carAscii:var_val{:
+                        int num;
+                        String valor = var_val.replace("$", "").replace("{", "").replace("}", "").replace("\'", "");
+                        num = Integer.parseInt(valor);
+                        char convertido = (char)num;
+
+                        NodoAST n_expresion = new NodoAST();                  
+                        n_expresion.setToken("\'"+convertido+"\'");
                         n_expresion.setTipo("token");
                         nodo_aux_val = n_expresion;
                     :}
@@ -2120,9 +2131,9 @@ CICLOPARA::= para:vari1 var_identificador:vari2 flecha:vari3 digito:vari4 hasta:
                         //tnodo6.Nodos.add(token6);
                         tnodo7.Nodos.add(token7);
                         tnodo8.Nodos.add(token8);
-                        tnodo8.Nodos.add(token9);
-                        tnodo8.Nodos.add(token10);
-                        tnodo8.Nodos.add(token11);
+                        tnodo9.Nodos.add(token9);
+                        tnodo10.Nodos.add(token10);
+                        tnodo11.Nodos.add(token11);
                         
                         RESULT = new ArrayList<NodoAST>();
                         RESULT.add(tnodo);
