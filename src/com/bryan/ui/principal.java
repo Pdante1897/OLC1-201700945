@@ -4,12 +4,22 @@
  */
 package com.bryan.ui;
 
+import java.awt.Desktop;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.io.StringReader;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import proyecto.analizadores.*;
 import proyecto.estructuras.ArbolAST;
 import proyecto.estructuras.NodoAST;
-import proyecto.estructuras.Traduccion;
+import proyecto.estructuras.TraduccionGo;
+import proyecto.estructuras.TraduccionPy;
 import proyecto.main.*;
 
 /**
@@ -21,8 +31,17 @@ public class principal extends javax.swing.JFrame {
     /**
      * Creates new form principal
      */
+    
+    public boolean lenguaje= false; // false significa que traducira a golang, true significa que traducira a python
     public principal() {
         initComponents();
+        if (lenguaje) {
+                System.out.println("Traduccion a Python");
+                jToggleButton1.setText("Python");
+            }else{
+                System.out.println("Traduccion a Golang");
+                jToggleButton1.setText("Golang");
+            }
     }
 
     /**
@@ -41,6 +60,7 @@ public class principal extends javax.swing.JFrame {
         jTextArea2 = new javax.swing.JTextArea();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
+        jToggleButton1 = new javax.swing.JToggleButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem2 = new javax.swing.JMenuItem();
@@ -48,6 +68,8 @@ public class principal extends javax.swing.JFrame {
         jMenuItem3 = new javax.swing.JMenuItem();
         jMenuItem1 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
+        jMenu3 = new javax.swing.JMenu();
+        jMenuItem5 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(102, 102, 102));
@@ -71,7 +93,7 @@ public class principal extends javax.swing.JFrame {
         jTextArea2.setDisabledTextColor(new java.awt.Color(153, 153, 150));
         jScrollPane2.setViewportView(jTextArea2);
 
-        jButton1.setText("Traducir");
+        jButton1.setText("Run");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -85,21 +107,32 @@ public class principal extends javax.swing.JFrame {
             }
         });
 
+        jToggleButton1.setText("jToggleButton1");
+        jToggleButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jToggleButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 614, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 538, Short.MAX_VALUE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(6, 6, 6)
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(52, 52, 52)
+                        .addComponent(jToggleButton1)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 614, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 538, Short.MAX_VALUE))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -110,7 +143,8 @@ public class principal extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jToggleButton1))
                 .addContainerGap())
         );
 
@@ -146,6 +180,18 @@ public class principal extends javax.swing.JFrame {
         jMenu2.setBackground(new java.awt.Color(153, 153, 153));
         jMenu2.setText("Edit");
         jMenuBar1.add(jMenu2);
+
+        jMenu3.setText("Reportes");
+
+        jMenuItem5.setText("Arbol AST");
+        jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem5ActionPerformed(evt);
+            }
+        });
+        jMenu3.add(jMenuItem5);
+
+        jMenuBar1.add(jMenu3);
 
         setJMenuBar(jMenuBar1);
 
@@ -206,18 +252,121 @@ public class principal extends javax.swing.JFrame {
         System.out.println("--------------------------------------");
         
         System.out.println(Datos.arbol.imprimir_nodo(Datos.arbol.raiz));
-        Traduccion traduccion = new Traduccion();
-        ArrayList<NodoAST> lista= new ArrayList<NodoAST>();
-        Datos.arbol.getNodos(Datos.arbol.raiz, lista);
-        for (int i = 0; i < lista.size(); i++) {
-            System.out.println(lista.get(i).getToken());
-        }
-        jTextArea2.setText(traduccion.Golang(lista));
-        for (int i = 0; i < traduccion.importaciones.size(); i++) {
-            System.out.println(traduccion.importaciones.get(i));
+        
+        if (lenguaje) {
+            TraduccionPy traduccion = new TraduccionPy();
+            ArrayList<NodoAST> lista= new ArrayList<NodoAST>();
+            Datos.arbol.getNodos(Datos.arbol.raiz, lista);
+            for (int i = 0; i < lista.size(); i++) {
+                System.out.println(lista.get(i).getToken());
+            }
+            jTextArea2.setText(traduccion.Python(lista));
+            for (int i = 0; i < traduccion.importaciones.size(); i++) {
+                System.out.println(traduccion.importaciones.get(i));
+            }
+            for (NodoAST hijos:lista) {
+                System.out.println(hijos.getToken());
+            }
+        }else{
+            TraduccionGo traduccion = new TraduccionGo();
+            ArrayList<NodoAST> lista= new ArrayList<NodoAST>();
+            Datos.arbol.getNodos(Datos.arbol.raiz, lista);
+            for (int i = 0; i < lista.size(); i++) {
+                System.out.println(lista.get(i).getToken());
+            }
+            jTextArea2.setText(traduccion.Golang(lista));
+            for (int i = 0; i < traduccion.importaciones.size(); i++) {
+                System.out.println(traduccion.importaciones.get(i));
+            }
+            Datos.arbol.setIdNodos(Datos.arbol.raiz);
+            System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+            System.out.println(Datos.arbol.imprimir_nodo(Datos.arbol.raiz));
+            System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+            generarDot("archivo");
+            try {
+                crearCmd("archivo", "arbol");
+            } catch (IOException ex) {
+                Logger.getLogger(principal.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         
+        
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    
+    public void generarDot(String nombre){
+        FileWriter archivo = null;
+        PrintWriter pw = null;
+        try {
+            archivo = new FileWriter("./src/Files/" + nombre + ".dot");
+            pw = new PrintWriter(archivo);
+            pw.println("digraph G{");
+            pw.println("node[shape=\"box\" shape=\"record\"]");
+            pw.println(Datos.arbol.recorrido(Datos.arbol.raiz));
+            pw.println("}");
+
+
+        } catch (Exception e) {
+            System.out.println("error, no se realizo el archivo");
+        } finally {
+            try {
+                if (null != archivo) {
+                    archivo.close();
+                }
+            } catch (Exception e2) {
+                e2.printStackTrace();
+            }
+        }
+    }
+    
+    public void crearCmd(String nombre, String nombre1) throws FileNotFoundException, IOException{
+        String dir=System.getProperty("user.dir")+"/src/Files";
+        dir.replace('/', '\\');
+        String variable="cd c:\\program files\\graphviz\\bin\n  ";
+        String variable2="dot -Tpdf \""+dir+"\\"+nombre+".dot\" -o \""+dir+"\\"+nombre1+".pdf\"\n  ";        
+        try
+        {
+            PrintWriter comando;
+            FileWriter archivo = new FileWriter("./src/Files/comando"+nombre+".cmd");
+            comando = new PrintWriter(archivo);
+            comando.println(variable);
+            comando.println(variable2);
+            comando.println("exit");
+            comando.close();
+            
+            Runtime rt=Runtime.getRuntime();
+            rt.exec("cmd /c start "+dir+"\\comando"+nombre+".cmd");
+            
+        }catch(IOException e)
+        {
+            
+        }
+    }
+    
+    private void jToggleButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton1ActionPerformed
+        if (rootPaneCheckingEnabled) {
+            lenguaje=!lenguaje;
+            if (lenguaje) {
+                System.out.println("Traduccion a Python");
+                jToggleButton1.setText("Python");
+            }else{
+                System.out.println("Traduccion a Golang");
+                jToggleButton1.setText("Golang");
+            }
+        }
+    }//GEN-LAST:event_jToggleButton1ActionPerformed
+
+    private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
+        String dir=System.getProperty("user.dir")+"/src/Files/arbol.pdf";    
+        try {
+            File path = new File (dir);
+            Desktop.getDesktop().open(path);
+        }catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        
+        
+    }//GEN-LAST:event_jMenuItem5ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -259,15 +408,18 @@ public class principal extends javax.swing.JFrame {
     private javax.swing.JButton jButton2;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
+    private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTextArea jTextArea1;
     private javax.swing.JTextArea jTextArea2;
+    private javax.swing.JToggleButton jToggleButton1;
     // End of variables declaration//GEN-END:variables
 }
