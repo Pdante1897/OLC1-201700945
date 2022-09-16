@@ -17,6 +17,7 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import proyecto.analizadores.*;
 import proyecto.estructuras.ArbolAST;
+import proyecto.estructuras.ArchivoError;
 import proyecto.estructuras.NodoAST;
 import proyecto.estructuras.TraduccionGo;
 import proyecto.estructuras.TraduccionPy;
@@ -231,6 +232,7 @@ public class principal extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem4ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        Datos.listaErrores= new ArrayList<int[]>();
         Datos.arbol = new ArbolAST();
         Datos.arbol.raiz = new NodoAST();
         Datos.arbol.raiz.Nodos = new ArrayList<NodoAST>();
@@ -289,10 +291,46 @@ public class principal extends javax.swing.JFrame {
                 Logger.getLogger(principal.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        
+        ArchivoError ArchivoError = new ArchivoError(jTextArea1.getText());
+        ArchivoError.generarCadena(Datos.listaErrores);
+        if (!Datos.listaErrores.isEmpty()) {
+            generarArchivoErrores ("errores",ArchivoError.getCadenaResultante());
+        }
         
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    
+    public void generarArchivoErrores(String nombre, String contenido){
+        FileWriter archivo = null;
+        PrintWriter pw = null;
+        String dir = "./src/Files/" + nombre + ".txt";
+        try {
+            archivo = new FileWriter(dir);
+            pw = new PrintWriter(archivo);
+            pw.println(contenido);
+            
+
+
+        } catch (Exception e) {
+            System.out.println("error, no se realizo el archivo");
+        } finally {
+            try {
+                if (null != archivo) {
+                    archivo.close();
+                }
+            } catch (Exception e2) {
+                e2.printStackTrace();
+            }
+        }
+        
+        try {
+            File path = new File (dir);
+            Desktop.getDesktop().open(path);
+        }catch (IOException ex) {
+            ex.printStackTrace();
+        }
+    }
+    
     
     public void generarDot(String nombre){
         FileWriter archivo = null;
@@ -323,7 +361,7 @@ public class principal extends javax.swing.JFrame {
         String dir=System.getProperty("user.dir")+"/src/Files";
         dir.replace('/', '\\');
         String variable="cd c:\\program files\\graphviz\\bin\n  ";
-        String variable2="dot -Tpdf \""+dir+"\\"+nombre+".dot\" -o \""+dir+"\\"+nombre1+".pdf\"\n  ";        
+        String variable2="dot -Tsvg \""+dir+"\\"+nombre+".dot\" -o \""+dir+"\\"+nombre1+".svg\"\n  ";        
         try
         {
             PrintWriter comando;
@@ -357,7 +395,7 @@ public class principal extends javax.swing.JFrame {
     }//GEN-LAST:event_jToggleButton1ActionPerformed
 
     private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
-        String dir=System.getProperty("user.dir")+"/src/Files/arbol.pdf";    
+        String dir=System.getProperty("user.dir")+"/src/Files/arbol.svg";    
         try {
             File path = new File (dir);
             Desktop.getDesktop().open(path);

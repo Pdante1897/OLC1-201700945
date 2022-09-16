@@ -35,6 +35,7 @@ public class TraduccionGo {
     public static boolean flagReturn = false;
     public static boolean flagHasta = false;
     public static boolean flagCase = false;
+    public static boolean flagDefault=false;
 
     public static int ejecuciones =0;
     public static boolean incre = false;
@@ -49,6 +50,9 @@ public class TraduccionGo {
     }
     
     public String Golang(ArrayList<NodoAST> nodo){
+        for (int i = 0; i < nodo.size(); i++) {
+            nodo.get(i).setToken(nodo.get(i).getToken().toLowerCase());
+        }
         String cadena="";
         nombres=0;
         boolean metodo = false;
@@ -77,6 +81,9 @@ public class TraduccionGo {
         ArrayList<int[]> indices = new ArrayList<int[]>(); 
         padre.get(index).setToken(padre.get(index).getToken().toLowerCase());
         switch(token.toLowerCase()){
+            case "<error>":
+                nombres=0;                
+                return "";
             case "inicio":
                 flagMain=true;
                 
@@ -145,8 +152,9 @@ public class TraduccionGo {
                 flagEjecutar=false;
                 return Repetir(padre,index)+"\n"+tabulacion()+"}else if (";
             case "de_lo_contrario":    
-                if (flagCase) {
+                if (flagDefault) {
                     flagCase=false;
+                    flagDefault=false;
                     return "\n"+tabulacion()+"default: \n\t";
                 }
                 return Repetir(padre,index)+"\n"+tabulacion()+"}else {\n\t";
@@ -305,6 +313,7 @@ public class TraduccionGo {
                 flagEjecutar=false;
                 ntabulaciones++;
                 flagSwitch=true;
+                flagDefault=true;
                 return Repetir(padre,index)+"\tswitch ";    
             case "incremental":
                 incre = true;
@@ -419,6 +428,7 @@ public class TraduccionGo {
             case "fin_segun":
                 ntabulaciones--;
                 ntabulaciones--;
+                flagDefault=false;
                 return Repetir(padre,index)+"\n\t"+tabulacion()+"}\n";
             case "¿":
                 flagHacer=true;
@@ -853,8 +863,10 @@ public class TraduccionGo {
                     if(padre.get(index-1).getToken().equals(";")||
                             padre.get(index-1).getToken().equals("entonces")||
                             padre.get(index-1).getToken().equals("de_lo_contrario")||
+                            padre.get(index-1).getToken().equals("<error>")||
                             padre.get(index-1).getToken().equals("hacer")||
                             flagHasta){//ir agregando el resto de palabras reservadas
+
                         if (!flagSwitch) {
                             flagHacer=false;
                         }

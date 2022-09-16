@@ -1,5 +1,8 @@
 package proyecto.analizadores;
 import java_cup.runtime.*;
+import javax.swing.JOptionPane;
+import proyecto.main.*;
+
 %%
 
 %class Lexico
@@ -14,6 +17,7 @@ import java_cup.runtime.*;
 %init{ 
 	yyline = 1; 
 	yychar = 1; 
+   yycolumn=1;
 %init} 
 
 
@@ -34,7 +38,6 @@ cmultilinea = ("/""*"[^\!]*"*""/")
 %}
 
 %%
-\n {yycolumn=1;}
 "=" {return new Symbol(sym.igual,yycolumn,yyline,yytext());}
 "+" {return new Symbol(sym.suma,yycolumn,yyline,yytext());}
 "*" {return new Symbol(sym.por,yycolumn,yyline,yytext());}
@@ -145,11 +148,17 @@ cmultilinea = ("/""*"[^\!]*"*""/")
 {caracter} {return new Symbol(sym.caracter,yycolumn,yyline,yytext());}
 
 {blancos} {/*Se ignoran*/} // Espacios en Blanco
-{comentariolinea} {/*Se ignoran*/}
-{cmultilinea} {/*Se ignoran*/}
+{comentariolinea} {return new Symbol(sym.comentariolinea,yycolumn,yyline,yytext());}
+{cmultilinea} {return new Symbol(sym.cmultilinea,yycolumn,yyline,yytext());}
+
+
 . {
-   // JOptionPane.showMessageDialog(null, "Se Encontraron Errores Lexicos");
-    System.err.println("Error lexico: "+yytext()+ " Linea:"+(yyline)+" Columna:"+(yycolumn));
+   int[] arregloError = new int[2];
+   arregloError[0]= yyline;
+   arregloError[1]= yycolumn+1;
+   Datos.listaErrores.add(arregloError);
+   System.err.println("Error lexico: "+yytext()+ " Linea:"+(yyline)+" Columna:"+(yycolumn));
+   yycolumn++;
     //ErrorLexicoySintactico.listaerrores.add(new ErrorLexicoySintactico("Error Lexico", "El caracter :"+yytext()+"no pertenece al lenguaje",  (yyline), (yycolumn)));
      //ErrorLexicoySintactico.contadorerror++;
   }

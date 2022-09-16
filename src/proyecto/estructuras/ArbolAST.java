@@ -80,12 +80,16 @@ public class ArbolAST {
             String cadena = hijo.getToken().replace("<", "").replace("\"", "").replace( ">", "").replace( "\'", "");
             
             if (hijo.Nodos!=null) {
-                contenido += "nodo"+hijo.getId()+"[label =\""+cadena+"\"]; nodo"+raiz.getId()+"->nodo"+hijo.getId()+";\n";
-                contenido += recorrido(hijo);
-                
+                if (hijo.getId()==0) {
+                    contenido += "nodo"+hijo.getId()+"[label =\""+cadena+"\"];\n";
+                    contenido += recorrido(hijo);
+
+                }else{ 
+                    contenido += "nodo"+hijo.getId()+"[label =\""+cadena+"\"]; nodo"+raiz.getId()+"->nodo"+hijo.getId()+";\n";
+                    contenido += recorrido(hijo);}            
             }else{
-                contenido += "nodo"+hijo.getId()+"[label =\""+cadena+"\"]; nodo"+raiz.getId()+"->nodo"+hijo.getId()+";\n";
-                System.out.println(hijo.getToken()+"---------------------------------------");
+                    contenido += "nodo"+hijo.getId()+"[label =\""+cadena+"\"]; nodo"+raiz.getId()+"->nodo"+hijo.getId()+";\n";
+                
             }
 
         }
