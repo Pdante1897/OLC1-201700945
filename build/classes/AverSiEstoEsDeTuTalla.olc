@@ -107,7 +107,7 @@ fin_si
 
 ingresar _varB_ como Boolean con_valor falso; 
 
-if _varB_ entonces
+si _varB_ entonces
 	imprimir_nl "Estas definiendo bien los valores";
 	ingresar _varaux_ como Numeror con_valor _variable1_ % 2;
 	segun _varaux_ hacer
@@ -118,6 +118,7 @@ if _varB_ entonces
 	fin_segun
 fin_si
 
+ejecutar _metodo_1_();
 
 
 /*Ahora empezamos con las funciones y procedimientos*/
@@ -144,7 +145,6 @@ metodo _metodo_1_
 	imprimit_nl " Esta es la potencia Funcion";
 fin_metodo
 
-ejecutar _metodo_1_();
 
 
 fin

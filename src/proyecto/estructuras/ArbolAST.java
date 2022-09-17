@@ -20,7 +20,7 @@ public class ArbolAST {
             if (padre.Nodos != null) {
                 if (padre.Nodos.get(cont)!=null) {
                     cadena += padre.Nodos.get(cont).getToken() + " ";
-
+                    cadena += padre.Nodos.get(cont).getId() + " ";
                 }
             }
             cont++;
@@ -57,8 +57,6 @@ public class ArbolAST {
     
     public void setIdNodos(NodoAST raiz){
         for (NodoAST hijo : raiz.Nodos) {
-            
-            
             if (hijo.Nodos!=null) {
                 hijo.setId(cont);
                 cont++;
@@ -80,13 +78,9 @@ public class ArbolAST {
             String cadena = hijo.getToken().replace("<", "").replace("\"", "").replace( ">", "").replace( "\'", "");
             
             if (hijo.Nodos!=null) {
-                if (hijo.getId()==0) {
-                    contenido += "nodo"+hijo.getId()+"[label =\""+cadena+"\"];\n";
-                    contenido += recorrido(hijo);
-
-                }else{ 
+                
                     contenido += "nodo"+hijo.getId()+"[label =\""+cadena+"\"]; nodo"+raiz.getId()+"->nodo"+hijo.getId()+";\n";
-                    contenido += recorrido(hijo);}            
+                    contenido += recorrido(hijo);         
             }else{
                     contenido += "nodo"+hijo.getId()+"[label =\""+cadena+"\"]; nodo"+raiz.getId()+"->nodo"+hijo.getId()+";\n";
                 
