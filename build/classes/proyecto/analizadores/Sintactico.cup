@@ -45,7 +45,7 @@ action code {:
 
 :}
 
-terminal String comentariolinea, cmultilinea,igual, suma, por, div, disyuncion, potencia, modulo, punto, interrogacionA, interrogacionC, acorchete, ccorchete, resta, coma, colocho;
+terminal String igual, suma, por, div, disyuncion, potencia, modulo, punto, interrogacionA, interrogacionC, acorchete, ccorchete, resta, coma, colocho;
 terminal String porcentaje, dospuntos, puntocoma, mayor, menor, mayorigual, menorigual, esdiferente, esigual, or, and, not, cllave, allave, cparentecis, aparentecis, salto, comillasimple, comillasd, flecha;
 terminal String tnumero, tcadena, tbooleano, tcaracter, inicio, fin, ingresar, como, con_valor, si, enton, de_lo_contrario, o_si, fin_si, segun, hacer, fin_segun;
 terminal String para, hasta, con, incremental, fin_para, mientras, fin_mientras, hasta_que, repetir, retornar, metodo, fin_metodo, verdadero, falso;
@@ -540,16 +540,24 @@ INSTRUCCIONES ::= DECLARACION:lista_dec puntocoma:var_pyc{:
                         RESULT = new ArrayList<NodoAST>();
                         RESULT.add(t_expresion);
                         lista_auxNodo3 = new ArrayList<NodoAST>();
-                        :}     
-                    |error de_lo_contrario {:
+                        :}
+                     |error fin_para {:
                         NodoAST t_expresion = new NodoAST();
                         t_expresion.setToken("<ERROR>");
                         t_expresion.setTipo("error");
                         RESULT = new ArrayList<NodoAST>();
                         RESULT.add(t_expresion);
                         lista_auxNodo3 = new ArrayList<NodoAST>();
-                        :}     
-                          
+                        :}        
+                     |error fin_mientras {:
+                        NodoAST t_expresion = new NodoAST();
+                        t_expresion.setToken("<ERROR>");
+                        t_expresion.setTipo("error");
+                        RESULT = new ArrayList<NodoAST>();
+                        RESULT.add(t_expresion);
+                        lista_auxNodo3 = new ArrayList<NodoAST>();
+                        :} 
+                         
                     ;
 
 PRINT::= imprimir:vari1 EXPRESION:lista_expresiones puntocoma:vari2{:

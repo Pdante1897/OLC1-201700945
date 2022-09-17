@@ -33,7 +33,7 @@ var_identificador = "_"({letra}({letra}|"_"|{digito})*)"_"
 identificador = {letra}({letra}|"_"|{digito})*
 
 comentariolinea = ("//".*\n)|("//".*\r)
-cmultilinea = ("/""*"[^\!]*"*""/") 
+cmultilinea = [/][*][^*]*[*]+([^/*][^*]*[*]+)*[/]
 %{
 %}
 
@@ -148,8 +148,8 @@ cmultilinea = ("/""*"[^\!]*"*""/")
 {caracter} {return new Symbol(sym.caracter,yycolumn,yyline,yytext());}
 
 {blancos} {/*Se ignoran*/} // Espacios en Blanco
-{comentariolinea} {return new Symbol(sym.comentariolinea,yycolumn,yyline,yytext());}
-{cmultilinea} {return new Symbol(sym.cmultilinea,yycolumn,yyline,yytext());}
+{comentariolinea} {}
+{cmultilinea} {}
 
 
 . {
