@@ -27,6 +27,10 @@ parser code
     //-----------------------------------------para errores sintacticos-------------------------------------------------------------------------------------------
     public void syntax_error(Symbol s)
     {
+        int[] arregloError = new int[2];
+        arregloError[0]= s.right;
+        arregloError[1]= s.left+1;
+        Datos.listaErrores.add(arregloError);
         System.err.println("Error SINTACTICO en la Línea " + (s.right) +" Columna "+(s.left+1)+ ". Identificador "+s.value + " no reconocido. Se ha recuperado del error." );
         
     }
@@ -201,7 +205,15 @@ INICIO::= inicio:varin CODIGO:lista_codigo fin:varfin  {:
                                                 Datos.arbol.raiz.Nodos.add(t_global);
                                                 System.out.println(Datos.arbol.raiz.getToken() + " Nodo del Datos.arbol");
 
-                                                :};
+                                                :}
+                        |error puntocoma {:
+                        NodoAST t_expresion = new NodoAST();
+                        t_expresion.setToken("<ERROR>");
+                        t_expresion.setTipo("error");
+                        RESULT = new ArrayList<NodoAST>();
+                        RESULT.add(t_expresion);
+                        lista_auxNodo3 = new ArrayList<NodoAST>();
+                        :} ;
 
 COMIENZO ::= CONTENIDO:lista_contenido{:
                           
@@ -228,7 +240,8 @@ COMIENZO ::= CONTENIDO:lista_contenido{:
                         RESULT = new ArrayList<NodoAST>(); 
                         RESULT.add(t_expresion);
                         RESULT.add(t_expresion2);
-                        :};
+                        :}
+                ;
 
 CONTENIDO ::= METODO:lista_metodo{:
                         NodoAST t_metodo = new NodoAST();
@@ -275,7 +288,7 @@ CODIGO ::= INSTRUCCIONES:lista_instrucciones {:
                         RESULT = new ArrayList<NodoAST>(); 
                         RESULT.add(t_Codigo);
                         RESULT.add(t_expresion2);
-                        :} ;
+                        :};
 INSTRUCCIONES ::= DECLARACION:lista_dec puntocoma:var_pyc{:
                                             NodoAST t_declaracion = new NodoAST();
                                             t_declaracion.Nodos = lista_dec; //acarreo de nodos inferiores
@@ -488,6 +501,63 @@ INSTRUCCIONES ::= DECLARACION:lista_dec puntocoma:var_pyc{:
                         
 
                         :}
+                        |error puntocoma {:
+                        NodoAST t_expresion = new NodoAST();
+                        t_expresion.setToken("<ERROR>");
+                        t_expresion.setTipo("error");
+                        RESULT = new ArrayList<NodoAST>();
+                        RESULT.add(t_expresion);
+                        lista_auxNodo3 = new ArrayList<NodoAST>();
+                        :}
+                        |error fin_metodo {:
+                        NodoAST t_expresion = new NodoAST();
+                        t_expresion.setToken("<ERROR>");
+                        t_expresion.setTipo("error");
+                        RESULT = new ArrayList<NodoAST>();
+                        RESULT.add(t_expresion);
+                        lista_auxNodo3 = new ArrayList<NodoAST>();
+                        :} 
+                        |error fin_funcion {:
+                        NodoAST t_expresion = new NodoAST();
+                        t_expresion.setToken("<ERROR>");
+                        t_expresion.setTipo("error");
+                        RESULT = new ArrayList<NodoAST>();
+                        RESULT.add(t_expresion);
+                        lista_auxNodo3 = new ArrayList<NodoAST>();
+                        :} 
+                        |error fin_si {:
+                        NodoAST t_expresion = new NodoAST();
+                        t_expresion.setToken("<ERROR>");
+                        t_expresion.setTipo("error");
+                        RESULT = new ArrayList<NodoAST>();
+                        RESULT.add(t_expresion);
+                        lista_auxNodo3 = new ArrayList<NodoAST>();
+                        :} 
+                    |error fin_segun {:
+                        NodoAST t_expresion = new NodoAST();
+                        t_expresion.setToken("<ERROR>");
+                        t_expresion.setTipo("error");
+                        RESULT = new ArrayList<NodoAST>();
+                        RESULT.add(t_expresion);
+                        lista_auxNodo3 = new ArrayList<NodoAST>();
+                        :}
+                     |error fin_para {:
+                        NodoAST t_expresion = new NodoAST();
+                        t_expresion.setToken("<ERROR>");
+                        t_expresion.setTipo("error");
+                        RESULT = new ArrayList<NodoAST>();
+                        RESULT.add(t_expresion);
+                        lista_auxNodo3 = new ArrayList<NodoAST>();
+                        :}        
+                     |error fin_mientras {:
+                        NodoAST t_expresion = new NodoAST();
+                        t_expresion.setToken("<ERROR>");
+                        t_expresion.setTipo("error");
+                        RESULT = new ArrayList<NodoAST>();
+                        RESULT.add(t_expresion);
+                        lista_auxNodo3 = new ArrayList<NodoAST>();
+                        :} 
+                         
                     ;
 
 PRINT::= imprimir:vari1 EXPRESION:lista_expresiones puntocoma:vari2{:
@@ -711,8 +781,9 @@ EXPRESIONVAL ::= digito:var_val{:
                         nodo_aux_val = n_expresion;
                     :}
                 |cadena:var_val{:
+                        var_val.replace("\n", "\\\n");
                         NodoAST n_expresion = new NodoAST();                  
-                        n_expresion.setToken(var_val);
+                        n_expresion.setToken(var_val.replace("\n","\\n"));
                         n_expresion.setTipo("token");
                         nodo_aux_val = n_expresion;
                     :}
