@@ -860,6 +860,7 @@ public class TraduccionPy {
                     if(padre.get(index-1).getToken().equals(";")||
                             padre.get(index-1).getToken().equals("entonces")||
                             padre.get(index-1).getToken().equals("de_lo_contrario")||
+                            padre.get(index-1).getToken().equals("<error>")||
                             padre.get(index-1).getToken().equals("hacer")||
                             flagHasta){//ir agregando el resto de palabras reservadas
                         flagHacer=false;
