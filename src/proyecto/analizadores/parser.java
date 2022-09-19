@@ -1269,7 +1269,11 @@ class CUP$parser$actions {
                                             t_declaracion.Nodos.add(t_pyc);
                                             System.out.println("se agrego token punto y coma");
                                             
-                                            
+                                            Instruccion inst = new Instruccion();
+                                            inst.setTipo("declaracion");
+                                            inst.setFigura("parallelogram");
+                                            inst.setArbol(t_declaracion);
+                                            Datos.listaInstrucciones.add(inst);
                                             RESULT = new ArrayList<NodoAST>();
                                             RESULT.add(t_declaracion);
 
@@ -1306,7 +1310,12 @@ class CUP$parser$actions {
                         t_pyc.Nodos.add(n_pyc);
                         t_asignacion.Nodos.add(t_pyc);
                         System.out.println("se agrego token punto y coma");
-                        
+                        Instruccion inst = new Instruccion();
+                        inst.setTipo("asignacion");
+                        inst.setFigura("rectangle");
+
+                        inst.setArbol(t_asignacion);
+                        Datos.listaInstrucciones.add(inst);
                         RESULT = new ArrayList<NodoAST>();
                         RESULT.add(t_asignacion);
                         System.out.println("se agregaron todos los nombres al nodo de la produccion de Instrucciones");
@@ -1349,6 +1358,13 @@ class CUP$parser$actions {
                         t_si.Nodos.add(t_fin_si);
                         System.out.println("se agrego token fin si");
                         
+                        Instruccion inst = new Instruccion();
+                        inst.setTipo("si");
+                        inst.setFigura("diamond");
+                        inst.setArbol(t_si);
+                        Datos.listaInstrucciones.add(inst);
+
+
                         RESULT = new ArrayList<NodoAST>();
                         RESULT.add(t_si);
                         System.out.println("se agregaron Instrucciones SI");
@@ -1386,6 +1402,12 @@ class CUP$parser$actions {
                         t_segun.Nodos.add(t_fin_segun);
                         System.out.println("se agrego token fin segun");
                         
+                        Instruccion inst = new Instruccion();
+                        inst.setTipo("segun");
+                        inst.setFigura("diamond");
+                        inst.setArbol(t_segun);
+                        Datos.listaInstrucciones.add(inst);
+
                         RESULT = new ArrayList<NodoAST>();
                         RESULT.add(t_segun);
                         System.out.println("se agregaron Instrucciones SEGUN");
@@ -1408,7 +1430,12 @@ class CUP$parser$actions {
                         t_print.setToken("<IMPRIMIR>");
                         t_print.setTipo("IMPRIMIR");
                         
-                        
+                        Instruccion inst = new Instruccion();
+                        inst.setTipo("imprimir");
+                        inst.setFigura("folder");
+                        inst.setArbol(t_print);
+                        Datos.listaInstrucciones.add(inst);
+
                         RESULT = new ArrayList<NodoAST>();
                         RESULT.add(t_print);
                         System.out.println("se agregaron Instrucciones IMPRIMIR");
@@ -1430,6 +1457,11 @@ class CUP$parser$actions {
                         t_print.setToken("<IMPRIMIR_NL>");
                         t_print.setTipo("IMPRIMIR");
                         
+                        Instruccion inst = new Instruccion();
+                        inst.setTipo("imprimir");
+                        inst.setFigura("folder");
+                        inst.setArbol(t_print);
+                        Datos.listaInstrucciones.add(inst);
                         
                         RESULT = new ArrayList<NodoAST>();
                         RESULT.add(t_print);
@@ -1451,7 +1483,6 @@ class CUP$parser$actions {
                         t_para.Nodos = lista_para; //acarreo de nodos inferiores
                         t_para.setToken("<CICLO_PARA>");
                         t_para.setTipo("para");
-                        
                         
                         RESULT = new ArrayList<NodoAST>();
                         RESULT.add(t_para);
