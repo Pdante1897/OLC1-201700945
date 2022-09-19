@@ -544,7 +544,7 @@ public class principal extends javax.swing.JFrame {
         try {
             File path = new File (dir);
             Desktop.getDesktop().open(path);
-        }catch (IOException ex) {
+        }catch (IOException ex) { 
             ex.printStackTrace();
         }
     }//GEN-LAST:event_jMenuItem6ActionPerformed
