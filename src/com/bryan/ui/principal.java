@@ -20,11 +20,7 @@ import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import proyecto.analizadores.*;
-import proyecto.estructuras.ArbolAST;
-import proyecto.estructuras.ArchivoError;
-import proyecto.estructuras.NodoAST;
-import proyecto.estructuras.TraduccionGo;
-import proyecto.estructuras.TraduccionPy;
+import proyecto.estructuras.*;
 import proyecto.main.*;
 
 /**
@@ -79,6 +75,7 @@ public class principal extends javax.swing.JFrame {
         jMenu2 = new javax.swing.JMenu();
         jMenu3 = new javax.swing.JMenu();
         jMenuItem5 = new javax.swing.JMenuItem();
+        jMenuItem6 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(102, 102, 102));
@@ -209,6 +206,14 @@ public class principal extends javax.swing.JFrame {
             }
         });
         jMenu3.add(jMenuItem5);
+
+        jMenuItem6.setText("Diagrama de Flujo");
+        jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem6ActionPerformed(evt);
+            }
+        });
+        jMenu3.add(jMenuItem6);
 
         jMenuBar1.add(jMenu3);
 
@@ -356,7 +361,13 @@ public class principal extends javax.swing.JFrame {
         if (!Datos.listaErrores.isEmpty()) {
             generarArchivoErrores ("errores",ArchivoError.getCadenaResultante());
         }
-        
+        Diagrama diagrama = new Diagrama();
+        generarDotDiagrama("diagramaFlujo",diagrama.cadena(Datos.listaInstrucciones));
+        try {
+            crearCmd("diagramaFlujo", "diagramaFlujo");
+        } catch (IOException ex) {
+            Logger.getLogger(principal.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     
@@ -402,6 +413,27 @@ public class principal extends javax.swing.JFrame {
             pw.println("node[shape=\"box\" shape=\"record\"]");
             pw.println(Datos.arbol.recorrido(Datos.arbol.raiz));
             pw.println("}");
+
+
+        } catch (Exception e) {
+            System.out.println("error, no se realizo el archivo");
+        } finally {
+            try {
+                if (null != archivo) {
+                    archivo.close();
+                }
+            } catch (Exception e2) {
+                e2.printStackTrace();
+            }
+        }
+    }
+    public void generarDotDiagrama(String nombre, String cadena){
+        FileWriter archivo = null;
+        PrintWriter pw = null;
+        try {
+            archivo = new FileWriter("./src/Files/" + nombre + ".dot");
+            pw = new PrintWriter(archivo);
+            pw.println(cadena);
 
 
         } catch (Exception e) {
@@ -507,6 +539,16 @@ public class principal extends javax.swing.JFrame {
         
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
+    private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
+        String dir=System.getProperty("user.dir")+"/src/Files/diagramaFlujo.svg";    
+        try {
+            File path = new File (dir);
+            Desktop.getDesktop().open(path);
+        }catch (IOException ex) {
+            ex.printStackTrace();
+        }
+    }//GEN-LAST:event_jMenuItem6ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -554,6 +596,7 @@ public class principal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
+    private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
